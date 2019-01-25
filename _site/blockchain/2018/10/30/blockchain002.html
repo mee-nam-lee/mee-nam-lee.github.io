@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta charset="UTF-8">
+  <title>Cafe Latte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#157878">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/cayman.css">
+</head>
+
+  <body>
+    <section class="page-header">
+  <!--h1 class="project-name"><a href="http://localhost:4000">Cafe Latte</a></h1-->
+  <h1 class="project-name">Cafe Latte</h1>
+  <h2 class="project-tagline">MN Lee's Personal Blog</h2>
+  <!--
+  <a href="#" class="btn">View on GitHub</a>
+  <a href="#" class="btn">Download .zip</a>
+  <a href="#" class="btn">Download .tar.gz</a>
+  -->
+</section>
+
+    <section class="main-content">
+      
+      <h1 id="오라클-블록체인-클라우드에-hyperledger-fabric-샘플-체인코드-fabcar-배포하기">오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기</h1>
+
+<p>지난 기고에서 <strong>Oracle Autonomous Blockchain Cloud Service</strong>의 편리한 관리기능에 대해 살펴보았고, 이번 글에서는 체인코드 배포 방법과 테스트하는 과정에 대해 설명하려고 합니다. Oracle Blockchain Cloud는 오픈 소스인 Hyperleder Fabric을 기반으로 하고 있기 때문에 <strong>Hyperledger Fabric</strong>에서 제공하는 샘플 코드들을 그대로 배포할 수 있습니다. 따라서 여기에서는 Hyperleder Fabric에서 샘플 체인코드로 많이 사용되고 있는 <strong>fabcar</strong> 예제를 사용하여 배포하는 과정을 설명하려고 합니다.</p>
+
+<h2 id="fabric-sample-코드--다운-받기">Fabric Sample 코드  다운 받기</h2>
+<p>먼저 Fabric-Samples를 git을 이용하여 다운 받습니다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/hyperledger/fabric-samples.git
+</code></pre></div></div>
+<p>다운로드가 완료되면 fabric-samples/chaincode 밑에 fabcar 샘플 폴더가 있고 그 아래 <strong>go</strong>와 <strong>node</strong> 샘플이 각각 다른 디렉토리로 아래와 같이 존재 합니다.</p>
+
+<p><img src="https://monosnap.com/image/jCjWgqqva4Wqf0v5mOp2lyEfrX0Qb3.png" alt="Alt text" /></p>
+
+<p>먼저 go 샘플을 Oracle Blockchain Cloud에 배포해 보도록 하겠습니다.</p>
+
+<h2 id="fabcar-go-체인코드-배포하기">Fabcar GO 체인코드 배포하기</h2>
+
+<p>샘플 fabcar.go를 fabcar_go.zip으로 압축합니다.</p>
+
+<p><img src="https://monosnap.com/image/abg4v3iucJF37hzpGlyYHMlLjmWows.png" alt="Alt text" /></p>
+
+<p>이제 Oracle Blockchain Cloud 서비스 콘솔로 이동합니다. 콘솔 접속 및 각 메뉴는 <a href="http://www.oracloud.kr/post/blockchain001/">이전 글</a>을 참고하세요.</p>
+
+<p><strong>Chaincodes</strong> 탭으로 이동하여 <strong>Deploy a New Chaincode</strong> 버튼을 클릭합니다.</p>
+
+<p><img src="https://monosnap.com/image/YdRC18togyaXfGfRSwaMFs4j16hBkP.png" alt="Alt text" /></p>
+
+<p>Oracle Blockchain Cloud는 다음 두 가지 배포 방법을 제공하고 있습니다. <strong>Quick Deployment</strong>는 체인코드의 설치(Install), 인스턴스화(Instantiate), 프록시에 등록하는 일련의 과정을 한페이지에서 한번에 수행할 수 있도록 배포 과정을 간략화 한 형태이고 <strong>Advanced Deployment</strong> 옵션은 이 배포 과정을 몇 스템으로 나누어 좀더 상세한 설정을 할 수 있게 한 옵션입니다. 
+여기에서는 <strong>Quick Deployment</strong> 옵션을 선택합니다.</p>
+
+<p><img src="https://monosnap.com/image/baqaaGJtYO1AebWIfWGVA0Z81UJmGC.png" alt="Alt text" /></p>
+
+<p>아래와 같이 입력하고 chaincode source 항목에 이전 과정에서 압축해 둔 <strong>fabcar_go.zip</strong>을 업로드 합니다. <strong>Submit</strong>을 클릭하면 <strong>Confirm</strong> 창이 나타나는데, 여기서 <strong>Yes</strong>를 클릭하여 확인하면 설치 및 instantiate가 모두 완료됩니다.</p>
+
+<p><img src="https://monosnap.com/image/qNSkaNgBNgOpAW3TI2Za0qyn6zBhat.png" alt="Alt text" /></p>
+
+<p>배포가 성공하였습니다.</p>
+
+<p><img src="https://monosnap.com/image/67mjPuM1Yxq35uCvhwmKreidO13rcm.png" alt="Alt text" /></p>
+
+<p>Oracle Blockchain Cloud의 <strong>Chaincodes</strong> 탭에서도 배포된 체인코드 상태를 확인할 수 있습니다.</p>
+
+<p><img src="https://monosnap.com/image/TO7pjKUf1rQVpC35AYHzc0oCPzgltj.png" alt="Alt text" /></p>
+
+<p>배포가 정상적으로 잘 이루어졌는지 체인코드를 테스트 해 보도록 하겠습니다. Oracle Blockchain Cloud에서는 배포된 체인코드의 메소드 invoke 및 query를 편리하게 하기 위해 <strong>REST Proxy</strong>라는 기능을 두고 있고 이 REST Proxy를 통해 체인코드의 각 메소드가 REST call을 통해 수행될 수 있게 해 줍니다.</p>
+
+<p><img src="https://monosnap.com/image/APaoPaF4WPpxOvBUZ4hiObFB243Hv6.png" alt="Alt text" /></p>
+
+<p>따라서 체인코드 Transaction 호출은 REST를 지원하는 cURL 유틸리티나 Postman 같은 툴을 이용할 수 있는데, 여기에서는 Postman을 이용해 테스트 해보도록 하겠습니다.</p>
+
+<p>fabcar의 Ledger를 initialize하는 <strong>initLedger</strong> 메소트를 호출할 예정입니다. 이 메소드는 invoke로 호출해야 하는 메소드이며 Oracle Blockchain에서 invoke 메소드를 호출하기 위하여 Postman을 다음과 같이 설정합니다.</p>
+
+<ul>
+  <li>HTTP Method : POST</li>
+  <li>url : https://{<strong>REST-PROXY-URL</strong>}/bcsgw/rest/v1/transaction/invocation</li>
+  <li>Username : Oracle Cloud 사용자 계정</li>
+  <li>Password : Oracle Cloud 사용자 계정에 대한 패스워드</li>
+</ul>
+
+<p><img src="https://monosnap.com/image/jPJ4OoNpl4B47yChVssHvlbb4k9r0G.png" alt="Alt text" /></p>
+
+<blockquote>
+  <p>REST PROXY URL은 Oracle Blockchain Cloud의 Nodes 탭에서 다음과 같이 확인할 수 있습니다.
+<img src="https://monosnap.com/image/AJBkkUG5cVuVAZRSjFedmHcNlaunlX.png" alt="Alt text" /></p>
+</blockquote>
+
+<p><strong>Headers</strong> 탭에서 <strong>Content-Type</strong>을 추가하고 <strong>application/json</strong>으로 설정합니다.</p>
+
+<p><img src="https://monosnap.com/image/EUDeB7U8vvPFg8qAoAItz9EpXPKdxc.png" alt="Alt text" /></p>
+
+<p><strong>Body</strong> 탭에서 다음과 같이 request body를 입력하고 <strong>Send</strong>를 클릭하면 fabcar_go 체인코드에 transaction이 호출되고 호출이 성공하면 Response Body에 아래와 같이 성공 메시지를 받게 됩니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "channel": "default",
+  "chaincode": "fabcar_go",
+  "chaincodeVer": "v1",
+  "method": "initLedger",
+  "args":[]
+}
+</code></pre></div></div>
+<p><img src="https://monosnap.com/image/PQg22Y0QvXwZDJ30h8IR0ED6w9qNDw.png" alt="Alt text" /></p>
+
+<p>fabcar의 Ledger가 잘 생성되었는지 query 메소드를 호출하여 Ledger를 조회해 보겠습니다. invoke 방법과 유사하게 Postman을 설정합니다. REST url이 invoke와 상이하니 url을 정확히 입력합니다. <strong>Authorization</strong> 설정과 <strong>Headers</strong> 설정은 invoke 설정과 동일합니다.</p>
+
+<ul>
+  <li>HTTP Method : POST</li>
+  <li>url : https://{REST-PROXY-URL}/bcsgw/rest/v1/transaction/query</li>
+  <li>Username : Oracle Cloud 사용자 계정</li>
+  <li>Password : Oracle Cloud 사용자 계정에 대한 패스워드</li>
+</ul>
+
+<p>Request Body를 다음과 같이 입력하고 <strong>Send</strong>를 클릭합니다. 여기서는 모든 Fabcar Ledger를 호출하는 <strong>queryAllCars</strong> 메소드를 호출하는 예시 입니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "channel": "default",
+  "chaincode": "fabcar_go",
+  "chaincodeVer": "v1",
+  "method": "queryAllCars",
+  "args":[]
+}
+</code></pre></div></div>
+<p><img src="https://monosnap.com/image/oRPi1OOrFYhVXBB5YfA5KjIwiOWSr5.png" alt="Alt text" /></p>
+
+<p>fabcar 예제에서 제공하는 다른 메소드들도 동일 방법으로 테스트 할 수 있습니다.</p>
+
+<p>이제 동일 fabcar 코드 이지만 Node.js로 작성된 체인코드를 Oracle Blockchain Cloud에 배포해 보도록 하겠습니다.</p>
+
+<h2 id="fabcar-nodejs-체인코드-배포하기">Fabcar Node.js 체인코드 배포하기</h2>
+
+<blockquote>
+  <p><a href="https://github.com/hyperledger/fabric-sdk-node">Hyperledger Fabric SDK for Node.js 문서</a>에 의하면 지원하는 노드 버전이 <strong>8.9.0 or higher</strong>로 되어있기 때문에, 노드 버전을 맞춰서 테스트하도록 하는 것이 좋습니다. 
+다음과 같이 설치된 노드 버전을 확인 합니다.</p>
+
+  <p><img src="https://monosnap.com/image/89kdq8LjN25GGgCdKzsIzaHiyJQYEs.png" alt="Alt text" /></p>
+</blockquote>
+
+<p>fabric-samples의 fabcar 디렉토리에 <strong>node</strong> 디렉토리로 이동합니다.
+node.js로 작성된 fabcar 체인코드 샘플이 있을 것입니다. <br />
+<strong>npm install</strong> 명령어를 수행하여 필요한 npm_module들을 설치 합니다.</p>
+
+<p><img src="https://monosnap.com/image/gniHdsWypRkqf5prYCIzaebO76GmxW.png" alt="Alt text" /></p>
+
+<p>설치가 완료된 디렉토리는 다음과 같습니다. 디렉토리 내의 모든 파일들을 다음과 같이 zip으로 archiving 합니다.</p>
+
+<p><img src="https://monosnap.com/image/4kvaRBoGmPCxFPhf74suqkwqolwDNC.png" alt="Alt text" /></p>
+
+<p>위 fabcar_go 체인코드를 배포했던 것과 동일하게 Oracle Blockchain Cloud 콘솔의 <strong>Chaincodes</strong> 탭에서 <strong>Quick Deployment</strong> 옵션을 선택하여 fabcar_node 체인코드를 배포합니다.</p>
+
+<p><img src="https://monosnap.com/image/g7I2KuOpXLmDUF0AthUi5DIcfqpPSz.png" alt="Alt text" /></p>
+
+<p>배포가 완료되면 <strong>Chaincodes</strong> 탭에서 체인코드 배포 상태를 확인할 수 있습니다.</p>
+
+<p><img src="https://monosnap.com/image/qIWWRRTXNJxniGgvHOEd1ujO9f21QC.png" alt="Alt text" /></p>
+
+<p>이제 fabcar_go를 테스트 했던 방법과 동일하게 fabcar_node 체인코드를 테스트 해보겠습니다. fabcar_go와 fabcar_node는 <strong>default</strong>라는 동일 채널에 배포했지만 이는 서로 다른 체인 코드이기 때문에 서로 다른 Ledger 입니다. 즉 신규로 배포된 fabcar_node는 fabcar ledger가 현재 존재하지 않습니다. 이 ledger를 초기화 하기 위해서는 <strong>initLedger</strong> 메소드를 수행해 주어야 합니다.</p>
+
+<p>ledger가 없음을 확인하기 위하여 <strong>initLedger</strong> 메소드를 호출하기 전에 <strong>queryAllCars</strong> 메소드 먼저 수행해 보겠습니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "channel": "default",
+  "chaincode": "fabcar_node",
+  "chaincodeVer": "v1",
+   "method": "queryAllCars",
+  "args":[]
+}
+</code></pre></div></div>
+<p>다음에서 보듯이 Response Payload가 empty인 것을 확인할 수 있습니다.</p>
+
+<p><img src="https://monosnap.com/image/B3kTSF3N4QCGlY9TiHqVy0zgWj7xmG.png" alt="Alt text" /></p>
+
+<p><strong>initLedger</strong> 메소드를 호출하여 fabcar_node ledger를 초기화 합니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "channel": "default",
+  "chaincode": "fabcar_node",
+  "chaincodeVer": "v1",
+  "method": "initLedger",
+  "args":[]
+}
+</code></pre></div></div>
+<p>ledger가 초기화 되었습니다.</p>
+
+<p><img src="https://monosnap.com/image/uCzXU7NLsmIkhT3cVIDErQY8CEfRqU.png" alt="Alt text" /></p>
+
+<p>이제 다시 <strong>queryAllCars</strong>를 수행하면 초기화된 ledger 정보가 조회될 것입니다.</p>
+
+<p><img src="https://monosnap.com/image/IScYL4RANulcQFGmNpndnhoWWVMmiD.png" alt="Alt text" /></p>
+
+<p>특정 Car만 조회하는 <strong>queryCar</strong> 메소드를 호출하고자 한다면 다음과 깉이 method와 args 옵션을 원하는 형태로 입력하면 됩니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "channel": "default",
+  "chaincode": "fabcar_node",
+  "chaincodeVer": "v1",
+   "method": "queryCar",
+  "args":["CAR0"]
+}
+</code></pre></div></div>
+<p><img src="https://monosnap.com/image/XzJdTAY4HJC9qRfgYqLaBP2bR1Q9Vy.png" alt="Alt text" /></p>
+
+<p>여기까지 Oracle Autonomous Blockchain Cloud Service를 이용하여 Opensource Hyperledger fabric에서 제공하는 fabcar 샘플 체인코드를 배포하고 테스트 하는 과정에 대해 살펴보았습니다.</p>
+
+<p>더 자세한 사항은 아래 제품 자료를 참고하세요.</p>
+
+<h2 id="관련글">관련글</h2>
+<ul>
+  <li>이전글 : <a href="https://mee-nam-lee.github.io/docs/blockchain001/">Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</a></li>
+  <li>다음글 : <a href="https://mee-nam-lee.github.io/docs/blockchain003/">Node.js Fabric Client SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출하기</a></li>
+</ul>
+
+<h2 id="참고-자료">참고 자료</h2>
+<ul>
+  <li><a href="https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html">Oracle Blockchian Cloud</a></li>
+  <li><a href="https://docs.oracle.com/en/cloud/paas/blockchain-cloud/user/deploy-and-manage-chaincodes.html">Oracle Blockchian Cloud - 체인코드 배포 및 관리</a></li>
+</ul>
+
+
+      <footer class="site-footer">
+  <span class="site-footer-owner"><a href="http://localhost:4000">Cafe Latte</a> is maintained by <a href="http://yourhomepage.com">MN Lee</a>.</span>
+  <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+</footer>
+
+
+    </section>
+
+  </body>
+</html>
