@@ -1,6 +1,6 @@
 # Setup
-title:        Cafe Latte
-tagline:      MN Lee's Personal Blog
+title:        MN Lee's IT Blog
+tagline:      MN Lee's IT Blog
 baseurl:      ""
 paginate:     1
 locale:       "en"
@@ -8,7 +8,7 @@ locale:       "en"
 # About/contact
 author:
   name:       MN Lee
-  url:        http://yourhomepage.com 
+  url:        https://github.com/mee-nam-lee/ 
 
 # Gems
 gems:
