@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta charset="UTF-8">
+  <title>MN Lee's IT Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#157878">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/cayman.css">
+</head>
+
+  <body>
+    <section class="page-header">
+  <!--h1 class="project-name"><a href="http://localhost:4000">MN Lee's IT Blog</a></h1-->
+  <h1 class="project-name">MN Lee's IT Blog</h1>
+  <!--
+  <h2 class="project-tagline">MN Lee's IT Blog</h2>
+  -->
+  <!--
+  <a href="#" class="btn">View on GitHub</a>
+  <a href="#" class="btn">Download .zip</a>
+  <a href="#" class="btn">Download .tar.gz</a>
+  -->
+</section>
+
+    <section class="main-content">
+      
+      <h2 id="lab-02-소개">Lab 02 소개</h2>
+
+<p>이 Lab은 <strong>Oracle Developer Cloud</strong>와 Container기반의 <strong>Application Container Cloud Service</strong>를 사용하여 DevOps 자동화 과정의 핵심 부분인 <strong>CI(Continuous Integration) / CD (Continuous Delivery)</strong> 실습을 위한 Lab입니다.</p>
+
+<h2 id="목표">목표</h2>
+
+<ul>
+  <li>로컬 컴퓨터의 개발자툴(IDE)에서 Developer Cloud와 연결하여 코드 가져오기</li>
+  <li>소스 수정하여 commit/push하기</li>
+  <li>Developer Cloud Service의 자동 빌드와 자동 배포 기능 활용하기</li>
+</ul>
+
+<h2 id="필수-아티팩트">필수 아티팩트</h2>
+
+<ul>
+  <li>이 실습에서는 귀강사가 제공한 <a href="env/env.md"><code class="highlighter-rouge">클라우드 환경 정보</code></a>가 필요합니다.</li>
+  <li>이 Lab에서는 로컬 호스트 컴퓨터에서 <strong><code class="highlighter-rouge">Brackets</code></strong> 편집기를 사용한다고 가정합니다.</li>
+</ul>
+
+<h2 id="필수-선수-과정">필수 선수 과정</h2>
+<ul>
+  <li>만약 자신의 컴퓨터에 Bracket과 Git이 설치 되어 있지 않다면 이 과정에서 두 소프트웨어를 설치 하십시오</li>
+  <li><a href="./gitclient.md"><strong>GIT 설치</strong></a></li>
+  <li><a href="./brackets.md"><strong>Bracket 설치</strong></a></li>
+</ul>
+
+<h2 id="특별주의-사항">특별주의 사항</h2>
+
+<ul>
+  <li>복사하여 붙여 넣을 때 주의하십시오. 복사한 내용의 <em>이전</em>이나 <em>이후</em>에 <strong>공백</strong>을 넣게 되면 오류가 발생할 수 있습니다.</li>
+</ul>
+
+<h1 id="ide에서-프로그램-코드-수정">IDE에서 프로그램 코드 수정</h1>
+
+<h3 id="bracket-text-editor에-프로젝트-복제">Bracket Text Editor에 프로젝트 복제</h3>
+
+<p>본 Lab에서는 귀하가 인터넷에 직접 연결되어 있다고 가정합니다 (예 : 프록시 사용 불가**).</p>
+
+<ul>
+  <li>Brackets 텍스트 편집기를 시작하려면 <strong>Brackets</strong>바탕 화면 아이콘, [시작] 메뉴 단추 또는 해당 컴퓨터의 바로 가기를 두 번 클릭하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/110.startbrackets.png" alt="" /></p>
+
+<ul>
+  <li><strong>File</strong> 풀다운 메뉴에서 <strong>Open Folder</strong>를 선택하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/111.open.png" alt="" /></p>
+
+<ul>
+  <li>
+    <p>로컬 하드 디스크에 소스 코드를 저장할 폴더를 선택하십시오. 예를 들어 왼쪽에 <strong>d:\oracle</strong>을 입력하고 하부 폴더로 <strong>Rep## , 예: Rep01</strong>을 생성합니다. <code class="highlighter-rouge">해당 폴더 명은 각자 만든 Repository 명과 동일합니다</code>. - 선택한 폴더 아래에 새 폴더가 생성되게 됩니다.`</p>
+  </li>
+  <li>
+    <p>생성한 폴더를 엽니다.</p>
+  </li>
+</ul>
+
+<p><img src="/assets/images/devops/113.openfolder.png" alt="" /></p>
+
+<ul>
+  <li><strong>Developer Cloud Service</strong>로 돌아가세요. 화면 우측의 <strong>REPOSITORY</strong> 부분에서 본인이 생성한 Repository를 찾습니다.</li>
+  <li><strong>HTTP</strong>를 클릭하여 Git HTTP URL을 표시한 후 url을 클립보드로 복사합니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/115.copyurl.png" alt="" /></p>
+
+<ul>
+  <li>브라켓 편집기로 돌아가서 편집기의 오른쪽에 있는 <strong>GIT</strong> 아이콘을 클릭하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/116.gitbutton.png" alt="" /></p>
+
+<ul>
+  <li>Git 패널에서 <strong>[ Clone ]</strong>을 클릭하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/117.gitclone.png" alt="" /></p>
+
+<ul>
+  <li>
+    <p>Developer Cloud Service에서 복사 한 GIT URL을 붙여 넣습니다. 사용자 이름은 자동으로 채워 져야합니다. 비밀번호를 입력하고 <strong>Save credentials to remote url</strong>을 선택하십시오.</p>
+  </li>
+  <li>
+    <p><strong>[OK]</strong> 버튼을 클릭하십시오.</p>
+  </li>
+</ul>
+
+<p><img src="/assets/images/devops/118.gitlogin.png" alt="" /></p>
+
+<ul>
+  <li>브래킷이 원격 프로젝트를 로컬 폴더에 복제 할 때까지 기다립니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/119.gitwaitclone.png" alt="" /></p>
+
+<ul>
+  <li>이제 Git 저장소의 로컬 사본이 있습니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/120.cloned.png" alt="" /></p>
+
+<h3 id="환경에-맞게-소스-코드-편집">환경에 맞게 소스 코드 편집</h3>
+
+<ul>
+  <li>Brackets로 home.html 파일을 엽니다 (더블 클릭).</li>
+  <li>home.html은 <code class="highlighter-rouge">doc_root / js / views</code> 내에 있습니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/121.openjs.png" alt="" /></p>
+
+<ul>
+  <li>5 행에서 headline 부분을 변경합니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/122.line12.png" alt="" /></p>
+
+<ul>
+  <li>파일을 저장하십시오. (<strong>Ctrl-S</strong>또는 풀다운 메뉴 <strong>File &gt; Save</strong>중에서 선택하십시오.)</li>
+</ul>
+
+<h3 id="변경-커밋-및-push">변경 커밋 및 Push</h3>
+
+<ul>
+  <li>파일이 저장되면 하단 창에 Modified 된 파일이 보입니다. 해당 파일 옆의 <strong>check 박스</strong>를 클릭하고 <strong>Commit 버튼 몇 체크 박스</strong>도 클릭합니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/126.commitcheck.png" alt="" /></p>
+
+<ul>
+  <li><strong>Commit</strong>을 클릭하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/127.commit.png" alt="" /></p>
+
+<ul>
+  <li>팝업에서 <strong>주석</strong><code class="highlighter-rouge">Header Change</code>을 입력하고 <strong>OK</strong>을 클릭하십시오. 이것은 귀하의 LOCAL GIT REPOSITORY에 변경 사항을 적용합니다. (<code class="highlighter-rouge">코드 검사 문제는 무시할 수 있습니다.</code> 확인하기 전에 코드 변경 사항을 검토 할 수 있습니다)</li>
+</ul>
+
+<p><img src="/assets/images/devops/128.commitmsg.png" alt="" /></p>
+
+<ul>
+  <li><strong>Git Push</strong>아이콘을 클릭하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/129.push.png" alt="" /></p>
+
+<ul>
+  <li>팝업 창에서 모든 기본값을 그대로 두고 <strong>Ok</strong>을 클릭하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/130.pushok.png" alt="" /></p>
+
+<ul>
+  <li>Git Push가 완료되면 <strong>Ok</strong>를 클릭하십시오.</li>
+</ul>
+
+<p><img src="/assets/images/devops/131.pushdone.png" alt="" /></p>
+
+<ul>
+  <li>변경 사항을 개발자 클라우드 서비스로 푸시해야 합니다. 원하는 경우 <strong>Developer Cloud Service</strong>로 이동하여 푸시 된 코드를 확인할 수 있습니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/132.developerui.png" alt="" /></p>
+
+<ul>
+  <li>좌측 사이드 메뉴의 <strong>Code</strong>를 선택하면 Repository 화면으로 이동합니다.</li>
+  <li>만약 현재 Repository가 자신의 Repository가 아니라면 <strong>Repository 선택 List 박스</strong>에서 자신의 Repository를 선택합니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/133.selectrepo.png" alt="" /></p>
+
+<ul>
+  <li>Brackets에서 Push 할때 입력한 주석 <strong>header change</strong>가 보일 것입니다. 이것을 클릭하면 변경된 소스로 바로 이동합니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/132.codeview.png" alt="" /></p>
+
+<ul>
+  <li>변경된 소스가 다음과 같이 보이면 정상입니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/132.changedcode.png" alt="" /></p>
+
+<ul>
+  <li>
+    <p>이전 Lab에서 신규 code가 push되면 자동으로 빌드가 되게 <strong>Triger</strong>를 설정해 두었기 때문에 <strong>Build</strong>에 가면 빌드가 진행중이거나 이미 완료 되었을 것입니다.</p>
+  </li>
+  <li>좌측 메뉴의 <strong>Build</strong>를 선택하여 Build 화면으로 이동합니다.</li>
+  <li>자신의 빌드명 (에 : <strong>Rep01_build</strong> )를 클릭합니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/132.buildcheck.png" alt="" /></p>
+
+<ul>
+  <li>새로운 빌드가 진행중이거나 완료되었을 것입니다. 현재 진행중이라면 완료될 때까지 기다리면 됩니다. <strong>Status</strong> 아이콘이 <strong>Green</strong>이면 완료입니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/132.secondbuild.png" alt="" /></p>
+
+<ul>
+  <li>빌드가 완료되었으면 <strong>Deploy</strong> 메뉴로 이동합니다. 빌드가 정상적으로 완료되면 <strong>자동으로 배포</strong>가 되도록 이전 Lab에서 구성해 두었기 때문에 여기서는 아무런 작업이 필요 없습니다.</li>
+  <li>새롭게 빌드된 산출물로 배포가 이미 완료되었거나 진행중일 수 있습니다. 아직 완료가 되지 않았다면 잠시 기다리면 됩니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/132.redeploy.png" alt="" /></p>
+
+<ul>
+  <li>배포명 우측의 화살표가 Green으로 변경되면 정상입니다.
+변경된 서비스를 확인하기 위하여 다시 Application Container Cloud Service(ACCS) 콘솔로 갑니다.
+아래 Yellow로 마킹된 링크를 클릭하면 이동합니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/028.accessaccs.png" alt="" /></p>
+
+<ul>
+  <li>ACCS 콘솔에서 본인의 application을 찾습니다.(예 : <code class="highlighter-rouge">a01</code>)** 애플리캐에션 하단의 URL 부분을 클릭하여 애플리케이션을 엽니다.</li>
+</ul>
+
+<p><img src="/assets/images/devops/037.url.png" alt="" /></p>
+
+<ul>
+  <li>Home Content Area 부분에 변경 내용이 잘 나온다면 모든 과정이 완료된 것입니다.
+<img src="/assets/images/devops/132.alldone.png" alt="" /></li>
+</ul>
+
+<p><strong>축하합니다. CI/CI 과정 자동화 과정을 마쳤습니다.</strong></p>
+
+<h1 id="devops-workshop-lab">DevOps Workshop Lab</h1>
+
+<ul>
+  <li><a href="./DevOpsWorkshop_1.html">DevOps Workshop 개요</a></li>
+  <li><a href="./DevOpsWorkshop_2.html">Lab 01로 이동</a></li>
+  <li><a href="./DevOpsWorkshop_3.html">Lab 02로 이동</a></li>
+</ul>
+
+
+
+      <footer class="site-footer">
+  <span class="site-footer-comment">이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다.</span>
+  <span class="site-footer-comment">기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</span>
+  <span class="site-footer-owner"><a href="http://localhost:4000">MN Lee's IT Blog</a> is maintained by <a href="https://github.com/mee-nam-lee/">MN Lee</a>.</span>
+ <!--
+  <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+  -->
+</footer>
+
+
+    </section>
+
+  </body>
+</html>
