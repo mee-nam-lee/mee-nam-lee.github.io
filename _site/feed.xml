@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-31T15:25:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (6) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_6/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (6) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_6</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_6/"></content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-31T15:39:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
 &lt;h1 id=&quot;채널-연결-web-chat-연결하기&quot;&gt;[채널 연결] Web Chat 연결하기&lt;/h1&gt;
 
 &lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
@@ -408,7 +408,7 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (3) 피자봇 만들기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (5) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (5) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_5</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/"></content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (3) 피자봇 만들기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
 
 &lt;p&gt;Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.
 Training 과정을 통해 더욱 정교한 대화가 가능한 챗봇으로 진화시키는 과정을 체험하고, 비즈니스 처리를 위한 로직을 쉽게 작성하여 챗봇을 통해 서비스하게 하는 경험을 하시게 될 것입니다.&lt;/p&gt;
@@ -1330,4 +1330,208 @@ Ledger는 채널 별로 저장되므로 Channel 하부 메뉴에서 Ledger 기�
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html&quot;&gt;Oracle Blockchian Cloud&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/admintasks.html&quot;&gt;Oracle Blockchian Cloud - 네트워크 관리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</summary></entry><entry><title type="html">Developer Cloud의 Build Pipeline 사용하기</title><link href="http://localhost:4000/devops/2018/devcs002/" rel="alternate" type="text/html" title="Developer Cloud의 Build Pipeline 사용하기" /><published>2018-10-02T02:50:00+09:00</published><updated>2018-10-02T02:50:00+09:00</updated><id>http://localhost:4000/devops/2018/devcs002</id><content type="html" xml:base="http://localhost:4000/devops/2018/devcs002/">&lt;h1 id=&quot;developer-cloud의-build-pipeline-사용하기&quot;&gt;Developer Cloud의 Build Pipeline 사용하기&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Oracle Developer Cloud Service&lt;/strong&gt;는 자동화된 &lt;strong&gt;CI/CD&lt;/strong&gt;를 위한 빌드 파이프라인 관리를 제공하는 클라우드 서비스입니다. &lt;br /&gt;
+이 문서에서는 지난번 신기능에서 소개해 드린 &lt;strong&gt;Pipleline&lt;/strong&gt; 사용법에 대해서 좀 더 상세히 알아보려고 합니다. 이전 버전의 Developer Cloud에서는 빌드를 위해서 하나의 단위 Build Job을 구성하고 해당 Job들은 서로 연관 관계를 가지지 않고 독립적으로 돌아가는 형태였습니다. &lt;br /&gt;여기서 소개하는 &lt;strong&gt;Pipeline&lt;/strong&gt; 기능은 기존 단위 Job들을 유기적으로 연결하여 Job들간의 연관성을 가지게 구성하는 것입니다.
+Pipeline으로 구성된 Job들은 이전 Job의 성공 또는 실패 결과가 이후 Job의 시작 유무에 영향을 미치게 됩니다.
+예를 들어 다음과 같은 Pipeline을 구성할 수 있을 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/1mIljkwte2V2RxHKyk6NnyurEMCRbf.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 예시는 이전 Job들의 결과에 따라 후속 Job들의 실행이 결정되는 순차적인 관계를 가집니다. 각 Job들이 모두 정상적으로 수행되고 성공한다면 일련의 Job들로 연결된 Pipeline 빌드가 성공하고 빌드 작업이 종료되는 구조 입니다.&lt;/p&gt;
+
+&lt;p&gt;Pipeline은 기존에 생성된 단위 빌드들을 연결하는 과정입니다. 각 단위 빌드 구성에 대해서는 이전 문서를 참고하세요. 이 문서에는 이미 생성되어 있는 Build Job을 기반으로 한 Pipeline 구성에 대해서만 다룰 것 입니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;pipeline-생성하기&quot;&gt;Pipeline 생성하기&lt;/h2&gt;
+&lt;p&gt;Pipeline을 생성하기 위해서 Job 탭 우측의 &lt;strong&gt;Pipelines&lt;/strong&gt; 탭을 클릭하여 이동합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/HdsW0kIxTH4sLaxe9z6ry3tpN7Zqrb.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;New Pipeline&lt;/strong&gt; 버튼을 클릭하여 위 예시에서 보았던 것과 유사한 순차형 Pipeline을 생성해 보도록 하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/P8xtVZiHdfT989ZdDIeYfH3Q9iX2Zh.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Pipeline 이름을 다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt;를 클릭합니다. 나머지 설정은 기본값으로 둡니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/N7gjKmrBVZR5MfpD9qsOkaDwBXSccZ.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;왼편의 &lt;strong&gt;Jobs&lt;/strong&gt; 리스트에서 이미 구성되어있는 Job을 선택하여 오른쪽 캔버스에 드래그 합니다. Job들 간의 순서를 화살표를 드래그 앤 드롭 하여 연결합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/4U0OjFhvVIhZ2qHqfcukLUlQqF0FoO.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;pipeline이 구성되었고 바로 빌드를 수행하려면 우측의 &lt;strong&gt;Run&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/n4lTI2mKxCbVB2MbPbFO38tYthgSGM.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Pipeline의 각 빌드 Job들이 순서대로 Queuing 되면서 실행되는 것을 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/pTZOikxhnVZu6sXfAEw5iK3390VDZb.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;pipeline의 빌드가 모두 완료되면 빌드된 instance들의 상태 및 내용을 볼 수 있습니다. 각 Job들의 빌드 #number를 클릭하면 각 빌드별 로그도 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/73g5YVMhP9Ncn5yDPR58jtVTSleDqr.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음의 예시와 같은 병렬 처리 흐름을 가지는 Pipeline도 작성할 수 있습니다.
+아래의 Pipeline에서는 Job1이 완료된 후 Job2, Job3, Job4의 빌드가 트리거 되고 Build Queue에 쌓이는 순서에 따라 처리됩니다. Job2, Job3, Job4가 서로 다른 빌드 VM을 사용한다면 동시에 수행될 수도 있습니다. 동일한 빌드 VM을 사용하여 빌드가 수행된다면, Queue에 먼저 쌓이는 순서대로 처리 됩니다.
+Job5는 Job4가 완료된 후 트리거 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/4aAYBnHZlmuaWz8qaxhS0hymLqyEwg.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 Pipeline을 실행해 보면 다음과 같이 Job1 종료 후  Job2, Job3, Job4가 Queuing 된 것을 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/syp4FDT5YSDCGOcPQUqGZ5RxH16oIK.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위에서 설명한 Pipeline은 이전 Job 성공했을 때 후속 Job으로 넘어가는 것 만 예시하였으나, 이전 Job이 실패 하였을 경우에 처리하는 Job을 두고 싶을 경우에는 연결된 화살표를 더블클릭하여 조건을 &lt;strong&gt;Failed&lt;/strong&gt;로 변경해 주면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/sLIv4H9JaHywNvbbSEMXW0FETPHbzZ.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기까지 Developer Cloud 사용하여 여러 빌드들을 조합하여 일련의 빌드 순서를 만드는 Pipeline이라는 기능에 대해 알아보았습니다.
+더 자세한 사항은 아래 제품 자료를 참고하세요&lt;/p&gt;
+
+&lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/managing-project-jobs-and-builds.html#GUID-8A6787EF-2D7E-4322-A7C9-00509920FC1C&quot;&gt;Oracle Developer Cloud - Pipeline&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud의 Build Pipeline 사용하기</summary></entry><entry><title type="html">Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기</title><link href="http://localhost:4000/devops/2018/devcs001/" rel="alternate" type="text/html" title="Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기" /><published>2018-09-20T02:50:00+09:00</published><updated>2018-09-20T02:50:00+09:00</updated><id>http://localhost:4000/devops/2018/devcs001</id><content type="html" xml:base="http://localhost:4000/devops/2018/devcs001/">&lt;h1 id=&quot;developer-cloud를-사용한-docker-image-빌드-및-ociroracle-cloud-infrastructure-registry에-docker-image-push하기&quot;&gt;Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/uW0UJiWfZhsj6piiD3rMdVXqZYyNTE.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Oracle Developer Cloud Service는 자동화된 CI/CD를 위한 빌드 파이프라인 관리를 제공하는 클라우드 서비스입니다. &lt;br /&gt;
+이 문서에서는 지난번 신기능에서 소개해 드린 여려가지 Builder 중에서 Docker Builder에 대해 좀 더 상세히 알아보려고 합니다. Developer Cloud의 Docker Builder를 사용하면 로컬 환경에 Docker 환경을 구성할 필요 없이 Developer Cloud가 제공하는 환경 하에서 Docker Image를 빌드하고 &lt;a href=&quot;https://cloud.oracle.com/containers/registry&quot;&gt;Oracle Cloud Infrastructure Registry (OCIR)&lt;/a&gt;을 포함한 Docker Registry에 빌드한 이미지를 Push할 수 있습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;oracle-container-infrastructure-registry에-repository-생성하기&quot;&gt;Oracle Container Infrastructure Registry에 Repository 생성하기&lt;/h2&gt;
+&lt;p&gt;Docker Registry로 Oracle Cloud Infrastructure Registry(이하 OCIR)를 사용하기 위해서는 Oracle Cloud Infrastructure(이하 OCI) 콘솔로 로그인 하여 Registry를 생성하여야 합니다. OCIR 메뉴는 아래와 같이 접근 합니다.
+&lt;img src=&quot;https://monosnap.com/image/QXRofQWho5YNEWtvedLmA4gh1oFnw0.png&quot; alt=&quot;OCIR 메뉴&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Create Repository&lt;/strong&gt; 버튼을 클릭하여 새로운 Repository를 하나 생성합니다.
+&lt;img src=&quot;https://monosnap.com/image/sT1IqQOYCSyQExMITE3jbO4BmjGPU2.png&quot; alt=&quot;Create Repository&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/UUfBflIWQss148sSMR6hH2I4C0uXvr.png&quot; alt=&quot;Create Repository&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;새로운 빈 Repository가 생성되었습니다. 이 Repository에 앞으로 Developer Cloud를 통해 빌드한 이미지를 Push할 것입니다.
+&lt;img src=&quot;https://monosnap.com/image/MwxCiOYAJGHoKaXQzMDYayVLTfC4VB.png&quot; alt=&quot;New Repository&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;oracle-container-infrastructure-registry-등록하기&quot;&gt;Oracle Container Infrastructure Registry 등록하기&lt;/h2&gt;
+&lt;p&gt;Developer Cloud에서 OCIR을 Docker Registry로 등록하기 위해서는 OCI의 사용자 Token이 필요합니다.
+OCI의 사용자 Token은 다음과정을 통해 얻을 수 있습니다. 우측의 사용자 아이콘을 클릭하여 &lt;strong&gt;User Settings&lt;/strong&gt; 메뉴를 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/V8NOylU0L7EV3R4IeK7uBtr1YSb4Rl.png&quot; alt=&quot;User Settings&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;좌측 메뉴의 &lt;strong&gt;Auth Token&lt;/strong&gt; 메뉴를 클릭하고 &lt;strong&gt;Generate Token&lt;/strong&gt; 버튼을 클릭하여 접속을 위한 Token을 새롭게 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/23SA9JiV6UXPcjw12TP66V2HSOUi8m.png&quot; alt=&quot;Token&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Generate Token&lt;/strong&gt; 버튼 클릭 후 다음 창에 나오는 &lt;strong&gt;GENERATED TOKEN&lt;/strong&gt;을 다음 사용을 위해 복사해 둡니다.
+&lt;img src=&quot;https://monosnap.com/image/8BweeZdXIFjobBF9ItsFMXr5iPNR5F.png&quot; alt=&quot;Token&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;OCIR 등록을 위해 Developer Cloud 콘솔로 이동합니다.
+좌측 메뉴에서 &lt;strong&gt;Docker Registry&lt;/strong&gt;를 선택하고 &lt;strong&gt;Link External Registry&lt;/strong&gt; 버튼을 클릭하여 OCIR에서 새롭게 생성한 레지스트리를 등록합니다.
+&lt;img src=&quot;https://monosnap.com/image/mATKELea0932uoMpKTsR73FEzNbskb.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Registry URL은 사용하는 데이터 센터 위치에 따라 다음 규칙에 맞게 입력합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;&amp;lt;region-code&amp;gt;&lt;/strong&gt;.ocir.io&lt;/li&gt;
+  &lt;li&gt;Frankfurt : fra&lt;/li&gt;
+  &lt;li&gt;Ashburn : iad&lt;/li&gt;
+  &lt;li&gt;London : lhr&lt;/li&gt;
+  &lt;li&gt;Phoenix : phx&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/W1I5vephtZzF7WHW5Qsg4lVE0EbPYA.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Basic Authentication 옵션을 선택하고 ID는 &lt;strong&gt;tenancy_name/username&lt;/strong&gt; 형태로 입력
+Password는 위 과정에서 생성해둔 &lt;strong&gt;Auth Token&lt;/strong&gt;을 입력합니다.&lt;/p&gt;
+
+&lt;p&gt;Registry가 등록되었고 OCIR에서 생성한 Registry가 보일 것입니다.
+&lt;img src=&quot;https://monosnap.com/image/y4G8i1saiZxoVLcXYqXNlGXrvN31d4.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;vm-template-구성하기&quot;&gt;VM Template 구성하기&lt;/h2&gt;
+&lt;p&gt;Developer Cloud에서 Build를 구성할 때 각 Build 환경마다 서로 다른 Software Package들을 필요로 할 수 있기 때문에, 각자의 Build 내용에 따라 필요한 Software 군들을 가지는 VM Template을 생성해야 합니다.
+ 여기서는 Docker 빌드를 구성할 것이 때문에 Docker가 설치되어 있는 VM이 필요하게 됩니다. 이 빌드에 사용하는 VM을 구성하기 위해서 Developer Cloud의 &lt;strong&gt;Organization&lt;/strong&gt; 메뉴로 이동합니다.
+ &lt;strong&gt;Username&lt;/strong&gt; 아이콘을 클릭하면 다음과 같이 Organization으로 이동하는 메뉴가 보이게 됩니다.
+ &lt;img src=&quot;https://monosnap.com/image/0PNv2sHfMyLzjsFZWIbFI59U1BiBLG.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;New Templates&lt;/strong&gt; 버튼을 클릭하여 새로운 탬플릿을 생성합니다
+ &lt;img src=&quot;https://monosnap.com/image/OeigMWNBzdqrKehaBu8uP8sU1Q5p2K.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;원하는 이름과 원하는 OS 버전을 선택합니다.
+&lt;img src=&quot;https://monosnap.com/image/pgyAAEKKSLfmKMWkhgrDQNe0JH0nj8.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Configure Software&lt;/strong&gt; 버튼을 클릭하여 원하는 Software들을 선택합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/zZEaqReJ6csJEaYozKZwuT7MN7Lek0.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;VM Template이 구성되었으면 그 Template을 사용하는 VM을 생성하여야 합니다.
+&lt;strong&gt;Virtual Machine&lt;/strong&gt; 메뉴로 이동하여 &lt;strong&gt;New VM&lt;/strong&gt; 버튼을 클릭하여 새로운 VM을 생성합니다.
+이 VM은 Build가 수행중일때만 구동되고 Build가 완료되면 자동으로 정지 됩니다.
+&lt;img src=&quot;https://monosnap.com/image/K5M3k2GqUkGVxfqYRcOkNZpciflc9R.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;빌드에 사용할 VM이 잘 생성된 것을 확인 합니다.
+&lt;img src=&quot;https://monosnap.com/image/6qtnwUbcA1fdSssImnD1Jex7IiVHmS.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;build-구성하기&quot;&gt;Build 구성하기&lt;/h2&gt;
+&lt;p&gt;이 문서에서는 Developer Cloud 서비스 인스턴스 생성 및 Code Repository 설정에 대해서는 다루지 않습니다.
+Developer Cloud 인스턴스 생성 및 접속, 신규 프로젝트 생성 방법은 다음을 참고합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/accessing-oracle-developer-cloud-service.html#GUID-10C35594-34F6-4040-96AB-A2C8AA88C010&quot;&gt;Developer Cloud 인스턴스 생성 및 접속&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/developer/get_started_project/get_started_project.html&quot;&gt;Develoer Cloud에 프로젝트 생성&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Code Repository에 Docker Build에 사용할 소스코드와 Dockerfile이 있어야 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/44fs5c4gwcg6LqLqREdJgCXNI7s7Qw.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 Build를 구성해 보겠습니다.
+&lt;strong&gt;Build&lt;/strong&gt; 메뉴에서 &lt;strong&gt;New Job&lt;/strong&gt; 버튼을 클릭하여 새로운 Build Job을 생성합니다.
+&lt;img src=&quot;https://monosnap.com/image/tgIsDjvOMlu1RhxhuE0uk9g7iNt99M.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Build 구성에서 다른 항목들의 설명은 생략하고 Docker Build와 관련된 내용만 살펴보겠습니다. &lt;a href=&quot;http://www.oracloud.kr/post/devcs000/&quot;&gt;이전 문서&lt;/a&gt;에서 Developer Cloud에 새롭게 추가된 Builder들에 대해서 소개했었습니다.
+이 Builder들 중 Docker Builder만 살펴보면 다음과 같습니다.
+&lt;img src=&quot;https://monosnap.com/image/kVwBAGnBPiWQajvnv3azHjDh1Flyno.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 Build Job에서는 Docker Image를 빌드하고 OCIR의 Registry에 빌드된 Image를 Push할 것이 때문에 Build Step을 다음과 같이 구성합니다.
+Docker Build Step에서 Image Name은 OCIR에서 생성한 Registry에 Push할 것이기 때문에 다음 규칙으로 적어 줍니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Image Name : &lt;strong&gt;tenancy-name/registry-name&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/rvzZX3FeJFpl2ND7qUllBfwCwODpeY.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;OCIR에 로그인하기 위하여 &lt;strong&gt;Docker Login&lt;/strong&gt; Step에 OCIR 접속 정보를 다음과 같이 적어 줍니다. Registry Host는 위에서 설명한 Region 별 접근 방법을 따릅니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/hmFbP5yvDght6slm426wAKE4EXGZzU.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;빌드된 Docker Image를 OCIR Registry에 Push하기 위해 &lt;strong&gt;Docker Push&lt;/strong&gt; Step을 추가합니다. Image Name은 위 Docker Build Step에서 사용한 Image Name을 참고하면 되고 이 이름에 따라 Full Image Name이 자동 완성됩니다.
+&lt;img src=&quot;https://monosnap.com/image/PZKdFzHlpd4Rykk2zDlRqWHMvaiHUu.png&quot; alt=&quot;Alt text&quot; /&gt;
+빌드가 구성되었으면 구성을 저장하고 &lt;strong&gt;Build Now&lt;/strong&gt;를 클릭하여 Build Job을 수행합니다. 
+빌드가 Queuing 되고 정상적으로 수행이 되고 나면 빌드된 Docker Image가 OCIR Registry에 Push되어 있을 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/nLxwGMVa3pdeTexlweAgCP692a68c2.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;빌드가 성공하였으므로 Developer Cloud 서비스의 Docker Registry에서 Push된 이미지 정보를 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/VUfg3hwAXT3hrUoinMMxiTwiSfCc2C.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;OCIR의 Registry 화면에서 확인하면 다음과 같습니다.
+&lt;img src=&quot;https://monosnap.com/image/zgagO00JaWhOgR3395wQ71hU7OTXrB.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기까지 Developer Cloud 사용하여 로컬의 개발자 환경에 별도의 Docker를 구성할 필요없이 Cloud 상에서 Docker Image를 빌드하고 바로 OCIR로 빌드된 이미지를 Push하는 방법에 대해 알아보았습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/managing-project-jobs-and-builds.html#GUID-A29C7055-6E8F-424D-B212-E0EE7E236991&quot;&gt;Oracle Developer Cloud - Adding a Docker Builder&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;[Oracle Cloud Infrastructure Registry (OCIR)](https://docs.cloud.oracle.com/iaas/Content/Registry/Concepts/registryoverview.htm?TocPath=Services&lt;/td&gt;
+          &lt;td&gt;Registry&lt;/td&gt;
+          &lt;td&gt;_____0)&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”</summary></entry></feed>
