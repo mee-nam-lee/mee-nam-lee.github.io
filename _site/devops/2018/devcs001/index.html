@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”" />
+<meta property="og:description" content="Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”" />
+<link rel="canonical" href="http://localhost:4000/devops/2018/devcs001/" />
+<meta property="og:url" content="http://localhost:4000/devops/2018/devcs001/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-09-20T02:50:00+09:00" />
+<script type="application/ld+json">
+{"description":"Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”","@type":"BlogPosting","url":"http://localhost:4000/devops/2018/devcs001/","headline":"Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기","dateModified":"2018-09-20T02:50:00+09:00","datePublished":"2018-09-20T02:50:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/devops/2018/devcs001/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+        </div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="developer-cloud를-사용한-docker-image-빌드-및-ociroracle-cloud-infrastructure-registry에-docker-image-push하기">Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”</h1>
+
+<p><img src="https://monosnap.com/image/uW0UJiWfZhsj6piiD3rMdVXqZYyNTE.png" alt="" /></p>
+
+<p>Oracle Developer Cloud Service는 자동화된 CI/CD를 위한 빌드 파이프라인 관리를 제공하는 클라우드 서비스입니다. <br />
+이 문서에서는 지난번 신기능에서 소개해 드린 여려가지 Builder 중에서 Docker Builder에 대해 좀 더 상세히 알아보려고 합니다. Developer Cloud의 Docker Builder를 사용하면 로컬 환경에 Docker 환경을 구성할 필요 없이 Developer Cloud가 제공하는 환경 하에서 Docker Image를 빌드하고 <a href="https://cloud.oracle.com/containers/registry">Oracle Cloud Infrastructure Registry (OCIR)</a>을 포함한 Docker Registry에 빌드한 이미지를 Push할 수 있습니다.</p>
+
+<h2 id="oracle-container-infrastructure-registry에-repository-생성하기">Oracle Container Infrastructure Registry에 Repository 생성하기</h2>
+<p>Docker Registry로 Oracle Cloud Infrastructure Registry(이하 OCIR)를 사용하기 위해서는 Oracle Cloud Infrastructure(이하 OCI) 콘솔로 로그인 하여 Registry를 생성하여야 합니다. OCIR 메뉴는 아래와 같이 접근 합니다.
+<img src="https://monosnap.com/image/QXRofQWho5YNEWtvedLmA4gh1oFnw0.png" alt="OCIR 메뉴" /></p>
+
+<p><strong>Create Repository</strong> 버튼을 클릭하여 새로운 Repository를 하나 생성합니다.
+<img src="https://monosnap.com/image/sT1IqQOYCSyQExMITE3jbO4BmjGPU2.png" alt="Create Repository" /></p>
+
+<p><img src="https://monosnap.com/image/UUfBflIWQss148sSMR6hH2I4C0uXvr.png" alt="Create Repository" /></p>
+
+<p>새로운 빈 Repository가 생성되었습니다. 이 Repository에 앞으로 Developer Cloud를 통해 빌드한 이미지를 Push할 것입니다.
+<img src="https://monosnap.com/image/MwxCiOYAJGHoKaXQzMDYayVLTfC4VB.png" alt="New Repository" /></p>
+
+<h2 id="oracle-container-infrastructure-registry-등록하기">Oracle Container Infrastructure Registry 등록하기</h2>
+<p>Developer Cloud에서 OCIR을 Docker Registry로 등록하기 위해서는 OCI의 사용자 Token이 필요합니다.
+OCI의 사용자 Token은 다음과정을 통해 얻을 수 있습니다. 우측의 사용자 아이콘을 클릭하여 <strong>User Settings</strong> 메뉴를 클릭합니다.</p>
+
+<p><img src="https://monosnap.com/image/V8NOylU0L7EV3R4IeK7uBtr1YSb4Rl.png" alt="User Settings" /></p>
+
+<p>좌측 메뉴의 <strong>Auth Token</strong> 메뉴를 클릭하고 <strong>Generate Token</strong> 버튼을 클릭하여 접속을 위한 Token을 새롭게 생성합니다.</p>
+
+<p><img src="https://monosnap.com/image/23SA9JiV6UXPcjw12TP66V2HSOUi8m.png" alt="Token" /></p>
+
+<p><strong>Generate Token</strong> 버튼 클릭 후 다음 창에 나오는 <strong>GENERATED TOKEN</strong>을 다음 사용을 위해 복사해 둡니다.
+<img src="https://monosnap.com/image/8BweeZdXIFjobBF9ItsFMXr5iPNR5F.png" alt="Token" /></p>
+
+<p>OCIR 등록을 위해 Developer Cloud 콘솔로 이동합니다.
+좌측 메뉴에서 <strong>Docker Registry</strong>를 선택하고 <strong>Link External Registry</strong> 버튼을 클릭하여 OCIR에서 새롭게 생성한 레지스트리를 등록합니다.
+<img src="https://monosnap.com/image/mATKELea0932uoMpKTsR73FEzNbskb.png" alt="Alt text" /></p>
+
+<p>Registry URL은 사용하는 데이터 센터 위치에 따라 다음 규칙에 맞게 입력합니다.</p>
+
+<ul>
+  <li><strong>&lt;region-code&gt;</strong>.ocir.io</li>
+  <li>Frankfurt : fra</li>
+  <li>Ashburn : iad</li>
+  <li>London : lhr</li>
+  <li>Phoenix : phx</li>
+</ul>
+
+<p><img src="https://monosnap.com/image/W1I5vephtZzF7WHW5Qsg4lVE0EbPYA.png" alt="Alt text" /></p>
+
+<p>Basic Authentication 옵션을 선택하고 ID는 <strong>tenancy_name/username</strong> 형태로 입력
+Password는 위 과정에서 생성해둔 <strong>Auth Token</strong>을 입력합니다.</p>
+
+<p>Registry가 등록되었고 OCIR에서 생성한 Registry가 보일 것입니다.
+<img src="https://monosnap.com/image/y4G8i1saiZxoVLcXYqXNlGXrvN31d4.png" alt="Alt text" /></p>
+
+<h2 id="vm-template-구성하기">VM Template 구성하기</h2>
+<p>Developer Cloud에서 Build를 구성할 때 각 Build 환경마다 서로 다른 Software Package들을 필요로 할 수 있기 때문에, 각자의 Build 내용에 따라 필요한 Software 군들을 가지는 VM Template을 생성해야 합니다.
+ 여기서는 Docker 빌드를 구성할 것이 때문에 Docker가 설치되어 있는 VM이 필요하게 됩니다. 이 빌드에 사용하는 VM을 구성하기 위해서 Developer Cloud의 <strong>Organization</strong> 메뉴로 이동합니다.
+ <strong>Username</strong> 아이콘을 클릭하면 다음과 같이 Organization으로 이동하는 메뉴가 보이게 됩니다.
+ <img src="https://monosnap.com/image/0PNv2sHfMyLzjsFZWIbFI59U1BiBLG.png" alt="Alt text" /></p>
+
+<p><strong>New Templates</strong> 버튼을 클릭하여 새로운 탬플릿을 생성합니다
+ <img src="https://monosnap.com/image/OeigMWNBzdqrKehaBu8uP8sU1Q5p2K.png" alt="Alt text" /></p>
+
+<p>원하는 이름과 원하는 OS 버전을 선택합니다.
+<img src="https://monosnap.com/image/pgyAAEKKSLfmKMWkhgrDQNe0JH0nj8.png" alt="Alt text" /></p>
+
+<p><strong>Configure Software</strong> 버튼을 클릭하여 원하는 Software들을 선택합니다.</p>
+
+<p><img src="https://monosnap.com/image/zZEaqReJ6csJEaYozKZwuT7MN7Lek0.png" alt="Alt text" /></p>
+
+<p>VM Template이 구성되었으면 그 Template을 사용하는 VM을 생성하여야 합니다.
+<strong>Virtual Machine</strong> 메뉴로 이동하여 <strong>New VM</strong> 버튼을 클릭하여 새로운 VM을 생성합니다.
+이 VM은 Build가 수행중일때만 구동되고 Build가 완료되면 자동으로 정지 됩니다.
+<img src="https://monosnap.com/image/K5M3k2GqUkGVxfqYRcOkNZpciflc9R.png" alt="Alt text" /></p>
+
+<p>빌드에 사용할 VM이 잘 생성된 것을 확인 합니다.
+<img src="https://monosnap.com/image/6qtnwUbcA1fdSssImnD1Jex7IiVHmS.png" alt="Alt text" /></p>
+
+<h2 id="build-구성하기">Build 구성하기</h2>
+<p>이 문서에서는 Developer Cloud 서비스 인스턴스 생성 및 Code Repository 설정에 대해서는 다루지 않습니다.
+Developer Cloud 인스턴스 생성 및 접속, 신규 프로젝트 생성 방법은 다음을 참고합니다.</p>
+
+<ul>
+  <li><a href="https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/accessing-oracle-developer-cloud-service.html#GUID-10C35594-34F6-4040-96AB-A2C8AA88C010">Developer Cloud 인스턴스 생성 및 접속</a></li>
+  <li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/developer/get_started_project/get_started_project.html">Develoer Cloud에 프로젝트 생성</a></li>
+</ul>
+
+<p>Code Repository에 Docker Build에 사용할 소스코드와 Dockerfile이 있어야 합니다.</p>
+
+<p><img src="https://monosnap.com/image/44fs5c4gwcg6LqLqREdJgCXNI7s7Qw.png" alt="Alt text" /></p>
+
+<p>이제 Build를 구성해 보겠습니다.
+<strong>Build</strong> 메뉴에서 <strong>New Job</strong> 버튼을 클릭하여 새로운 Build Job을 생성합니다.
+<img src="https://monosnap.com/image/tgIsDjvOMlu1RhxhuE0uk9g7iNt99M.png" alt="Alt text" /></p>
+
+<p>Build 구성에서 다른 항목들의 설명은 생략하고 Docker Build와 관련된 내용만 살펴보겠습니다. <a href="http://www.oracloud.kr/post/devcs000/">이전 문서</a>에서 Developer Cloud에 새롭게 추가된 Builder들에 대해서 소개했었습니다.
+이 Builder들 중 Docker Builder만 살펴보면 다음과 같습니다.
+<img src="https://monosnap.com/image/kVwBAGnBPiWQajvnv3azHjDh1Flyno.png" alt="Alt text" /></p>
+
+<p>이 Build Job에서는 Docker Image를 빌드하고 OCIR의 Registry에 빌드된 Image를 Push할 것이 때문에 Build Step을 다음과 같이 구성합니다.
+Docker Build Step에서 Image Name은 OCIR에서 생성한 Registry에 Push할 것이기 때문에 다음 규칙으로 적어 줍니다.</p>
+
+<ul>
+  <li>Image Name : <strong>tenancy-name/registry-name</strong></li>
+</ul>
+
+<p><img src="https://monosnap.com/image/rvzZX3FeJFpl2ND7qUllBfwCwODpeY.png" alt="Alt text" /></p>
+
+<p>OCIR에 로그인하기 위하여 <strong>Docker Login</strong> Step에 OCIR 접속 정보를 다음과 같이 적어 줍니다. Registry Host는 위에서 설명한 Region 별 접근 방법을 따릅니다.</p>
+
+<p><img src="https://monosnap.com/image/hmFbP5yvDght6slm426wAKE4EXGZzU.png" alt="Alt text" /></p>
+
+<p>빌드된 Docker Image를 OCIR Registry에 Push하기 위해 <strong>Docker Push</strong> Step을 추가합니다. Image Name은 위 Docker Build Step에서 사용한 Image Name을 참고하면 되고 이 이름에 따라 Full Image Name이 자동 완성됩니다.
+<img src="https://monosnap.com/image/PZKdFzHlpd4Rykk2zDlRqWHMvaiHUu.png" alt="Alt text" />
+빌드가 구성되었으면 구성을 저장하고 <strong>Build Now</strong>를 클릭하여 Build Job을 수행합니다. 
+빌드가 Queuing 되고 정상적으로 수행이 되고 나면 빌드된 Docker Image가 OCIR Registry에 Push되어 있을 것입니다.</p>
+
+<p><img src="https://monosnap.com/image/nLxwGMVa3pdeTexlweAgCP692a68c2.png" alt="Alt text" /></p>
+
+<p>빌드가 성공하였으므로 Developer Cloud 서비스의 Docker Registry에서 Push된 이미지 정보를 확인할 수 있습니다.</p>
+
+<p><img src="https://monosnap.com/image/VUfg3hwAXT3hrUoinMMxiTwiSfCc2C.png" alt="Alt text" /></p>
+
+<p>OCIR의 Registry 화면에서 확인하면 다음과 같습니다.
+<img src="https://monosnap.com/image/zgagO00JaWhOgR3395wQ71hU7OTXrB.png" alt="Alt text" /></p>
+
+<p>여기까지 Developer Cloud 사용하여 로컬의 개발자 환경에 별도의 Docker를 구성할 필요없이 Cloud 상에서 Docker Image를 빌드하고 바로 OCIR로 빌드된 이미지를 Push하는 방법에 대해 알아보았습니다.</p>
+
+<h2 id="참고-자료">참고 자료</h2>
+<ul>
+  <li><a href="https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/managing-project-jobs-and-builds.html#GUID-A29C7055-6E8F-424D-B212-E0EE7E236991">Oracle Developer Cloud - Adding a Docker Builder</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>[Oracle Cloud Infrastructure Registry (OCIR)](https://docs.cloud.oracle.com/iaas/Content/Registry/Concepts/registryoverview.htm?TocPath=Services</td>
+          <td>Registry</td>
+          <td>_____0)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

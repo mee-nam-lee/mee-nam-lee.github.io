@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>챗봇 Hands-on Lab (3) - 피자봇 만들기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="챗봇 Hands-on Lab (3) - 피자봇 만들기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="챗봇 Hands-on Lab (3) 피자봇 만들기" />
+<meta property="og:description" content="챗봇 Hands-on Lab (3) 피자봇 만들기" />
+<link rel="canonical" href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" />
+<meta property="og:url" content="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-01-24T02:50:00+09:00" />
+<script type="application/ld+json">
+{"description":"챗봇 Hands-on Lab (3) 피자봇 만들기","@type":"BlogPosting","url":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/","headline":"챗봇 Hands-on Lab (3) - 피자봇 만들기","dateModified":"2019-01-24T02:50:00+09:00","datePublished":"2019-01-24T02:50:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+        </div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="챗봇-hands-on-lab-3">챗봇 Hands-on Lab (3)</h1>
+<h1 id="피자봇-만들기">피자봇 만들기</h1>
+
+<h2 id="학습-내용">학습 내용</h2>
+
+<ul>
+  <li>Flow 구현</li>
+  <li>Intent / Dialog 테스트</li>
+</ul>
+
+<p>이 Lab에서는 피자봇을 직접 만들어 볼 것입니다. 구현에 들어가기 앞서서 피자봇이 어떤 기능을 가지고 있는지 먼저 살펴봅니다.
+제공되는 피자봇은 다음과 같이 4개의 <strong>Intent</strong>를 가지고 있습니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/01_pizza_intent.png" alt="" /></p>
+
+<p>Flow가 구현되어 있는 제공된 <strong>피자봇(PizzaBot)</strong> 으로 먼저 4개의 Intent가 어떻게 동작하는지 확인한 후에 각 기능을 구현해 보도록 하겠습니다.</p>
+
+<p>## Test UI로 피자봇 테스트 하기</p>
+<blockquote>
+
+  <p>공통으로 사용할 것이기 때문에 Flow나 Intent를 수정하지 않도록 조심하세요.</p>
+
+</blockquote>
+
+<p><strong>PizzaBot</strong> 타이틀을 클릭하여 PizzaBot으로 들어갑니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/02_pizzabot.png" alt="" /></p>
+
+<p>우측 상단의 <strong>▶</strong> 버튼을 클릭하여 Test UI를 엽니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/03_pizza_test_ui.png" alt="" /></p>
+
+<h3 id="피자-주문하기">피자 주문하기</h3>
+
+<p>다음 예시의 문장을 입력하여 테스트 합니다.</p>
+
+<ul>
+  <li>피자 주문해줘</li>
+  <li>피자 주문하고 싶어요</li>
+</ul>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/04_orderpizza_test1.png" alt="" /></p>
+
+<p><strong>피자 더 보기</strong>를 클릭하거나 이미지 왼쪽 / 오른쪽의 &lt; / &gt; 를 클릭하여 더 많은 피자를 볼 수 있습니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/04_orderpizza_test2.png" alt="" /></p>
+
+<p><strong>지금 주문</strong>을 클릭합니다. 사이즈를 묻는 질문에 원하는 크기를 선택합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/04_orderpizza_test3.png" alt="" /></p>
+
+<p><strong>Send Location</strong> 버튼을 클릭하면 사용자의 위치가 전송되고 주문이 완료됩니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/04_orderpizza_test4.png" alt="" /></p>
+
+<h3 id="파스타-주문하기--주문-취소하기--메뉴-보기">파스타 주문하기 / 주문 취소하기 / 메뉴 보기</h3>
+
+<p>Test UI 창 상단의 <strong>Reset</strong> 버튼을 클릭하고 다른 기능도 테스트 해봅니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/05_showmenu.png" alt="" /></p>
+
+<p><strong>파스타 주문</strong>과 <strong>주문 취소</strong> Intent가 잘 인지되고 있는 것을 볼 수 있습니다. 이 Lab에서는 해당 기능은 구현하지 않을 것이기 때문에 다음과 같이 구현되지 않았다고 대답합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/06_pasta.png" alt="" /></p>
+
+<h2 id="피자봇-구현해-보기">피자봇 구현해 보기</h2>
+<p>이제 본격적으로 피자봇의 기능을 구현해 보겠습니다.</p>
+
+<p>피자봇의 4개의 Intent와 Entity 그리고 약간의 기본 Flow를 담고 있는 초기 버전의 <strong>PizzaBot_Initial</strong>이 등록되어 있습니다. 이 Bot을 복제하여 구현을 시작하도록 하겠습니다.
+<strong>PizzaBot_Initial</strong>의 <strong>Clone</strong> 메뉴를 클릭하여 복제본을 만듭니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/10_PizzaBot_clone.png" alt="" /></p>
+
+<ul>
+  <li>Name 항목을 본인에게 부여된 SEQ를 suffix로 하여 <strong>PizzaBot_{SEQ}</strong> 형태가 되도록 입력합니다.</li>
+  <li>Description에 본인의 이름을 입력합니다.</li>
+</ul>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/11_pizzabot_clone_window.png" alt="" /></p>
+
+<p>복제가 잘 되었는지 확인합니다. Intent 아이콘과 Flow 아이콘을 클릭해 봅니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/12_PizzaBot_intent.png" alt="" /></p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/12_PizzaBot_Flow.png" alt="" /></p>
+
+<p>이제 Flow를 추가해 보도록 하겠습니다.</p>
+
+<h2 id="파스타-주문하기">파스타 주문하기</h2>
+<p>파스타 주문하기는 세부 Flow가 없이 바로 단답형으로 대답하는 가장 간단한 형태이므로 제일 먼저 추가해 보겠습니다.</p>
+
+<p><strong>OrderPasta</strong>에 매칭되는 <strong>Utterance</strong>가 들어오면 <strong>OrderPasta</strong> 단계를 호출할 수 있도록 <strong>Intent</strong> 단계의 Action에 <strong>OrderPaster</strong>를 부르도록 다음과 같이 추가 합니다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">Intent</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
+      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
+        <span class="c1"># OrderPasta 추가</span>
+        <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span>
+</code></pre></div></div>
+<p>호출되는 <strong>OrderPasta</strong> 단계를 <strong>”####### OrderPasta 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 복사해 주세요.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPasta 단계를 아래에 복사헤 주세요</span>
+  <span class="na">OrderPasta</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">죄송합니다.</span><span class="nv"> </span><span class="s">오늘은</span><span class="nv"> </span><span class="s">파스타가</span><span class="nv"> </span><span class="s">없네요."</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">pasta"</span>
+      <span class="na">processUserMessage</span><span class="pi">:</span> <span class="no">false</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span>
+</code></pre></div></div>
+<p>Flow가 완성되었으면 우측 상단의 <strong>Validate</strong>를 클릭하여 flow에 오류가 없는지 확인합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/07_OrderPasta_Flow.png" alt="" /></p>
+
+<p>오류가 없다면 Test UI를 열어서 해당 flow가 잘 동작하는지 확인합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/08_OrderPasta_Test.png" alt="" /></p>
+
+<h2 id="피자-주문하기-구현">피자 주문하기 구현</h2>
+<p>이제 여러 단계의 flow를 가지는 피자주문 (OrderPizza) 로직을 추가하도록 하겠습니다.</p>
+
+<p>피자 주문하기는 다음과 같은 Flow를 가집니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>순서</th>
+      <th>State 명</th>
+      <th>실행 내용</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>OrderPizza</td>
+      <td>Pizza 리스트 보여주기</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>AskPizzaSize</td>
+      <td>주문할 피자 크기 물어보기 (Small / Medium / Large)</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>AskLocation</td>
+      <td>배달할 위치 물어보기 (Send Location)</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Confirmation</td>
+      <td>주문 확인</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>OrderPizza</strong>에 매칭되는 <strong>Utterance</strong>가 들어오면 <strong>OrderPizza</strong> 단계를 호출할 수 있도록 <strong>Intent</strong> 단계의 Action에 <strong>OrderPizza</strong>를 부르도록 다음과 같이 추가 합니다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">Intent</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
+      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
+        <span class="c1"># OrderPasta 추가</span>
+        <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span>
+        <span class="c1"># OrderPizza 추가</span>
+        <span class="na">OrderPizza </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPizza"</span>        
+</code></pre></div></div>
+<p>불리어지는 <strong>OrderPizza</strong> 단계를 <strong>”####### OrderPizza 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 복사해 주세요.
+<strong>OrderPizza</strong> 단계는 여러개의 피자를 Card layout으로 이미지와 함께 보여주는 로직 입니다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPizza 단계를 아래에 복사헤 주세요</span>
+
+  <span class="na">OrderPizza</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">오늘의</span><span class="nv"> </span><span class="s">피자</span><span class="nv"> </span><span class="s">입니다."</span>
+          <span class="na">separateBubbles</span><span class="pi">:</span> <span class="no">true</span>
+          <span class="na">visible</span><span class="pi">:</span>
+            <span class="na">expression</span><span class="pi">:</span> <span class="s2">"</span><span class="s">&lt;#if</span><span class="nv"> </span><span class="s">cardsRangeStart?number</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">0&gt;true&lt;#else&gt;false&lt;/#if&gt;"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Our</span><span class="nv"> </span><span class="s">pizzas"</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">더</span><span class="nv"> </span><span class="s">많은</span><span class="nv"> </span><span class="s">피자들이</span><span class="nv"> </span><span class="s">있습니다."</span>
+          <span class="na">separateBubbles</span><span class="pi">:</span> <span class="no">true</span>
+          <span class="na">visible</span><span class="pi">:</span>
+            <span class="na">expression</span><span class="pi">:</span> <span class="s2">"</span><span class="s">&lt;#if</span><span class="nv"> </span><span class="s">cardsRangeStart?number</span><span class="nv"> </span><span class="s">!=</span><span class="nv"> </span><span class="s">0&gt;true&lt;#else&gt;false&lt;/#if&gt;"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">More</span><span class="nv"> </span><span class="s">pizzas"</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">cards"</span>
+          <span class="na">cardLayout</span><span class="pi">:</span> <span class="s2">"</span><span class="s">horizontal"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PizzaCards"</span>
+          <span class="na">actions</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">피자</span><span class="nv"> </span><span class="s">더</span><span class="nv"> </span><span class="s">보기"</span>
+            <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postback"</span>
+            <span class="na">visible</span><span class="pi">:</span>
+              <span class="na">expression</span><span class="pi">:</span> <span class="s2">"</span><span class="s">&lt;#if</span><span class="nv"> </span><span class="s">cardsRangeStart?number+4</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">pizzas.value?size&gt;true&lt;#else&gt;false&lt;/#if&gt;"</span>
+            <span class="na">payload</span><span class="pi">:</span>
+              <span class="na">action</span><span class="pi">:</span> <span class="s2">"</span><span class="s">more"</span>
+              <span class="na">variables</span><span class="pi">:</span>
+                <span class="na">cardsRangeStart</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${cardsRangeStart?number+4}"</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">More"</span>
+          <span class="na">cards</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${pizzas.name}"</span>
+            <span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${pizzas.description}"</span>
+            <span class="na">imageUrl</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${pizzas.image}"</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PizzaCard"</span>
+            <span class="na">iteratorVariable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">pizzas"</span>
+            <span class="na">rangeStart</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${cardsRangeStart}"</span>
+            <span class="na">rangeSize</span><span class="pi">:</span> <span class="s2">"</span><span class="s">4"</span>
+            <span class="na">actions</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">지금</span><span class="nv"> </span><span class="s">주문"</span>
+              <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postback"</span>
+              <span class="na">payload</span><span class="pi">:</span>
+                <span class="na">action</span><span class="pi">:</span> <span class="s2">"</span><span class="s">order"</span>
+                <span class="na">variables</span><span class="pi">:</span>
+                  <span class="na">orderedPizza</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${pizzas.name}"</span>
+                  <span class="na">orderedPizzaImage</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${pizzas.image}"</span>
+              <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Order"</span>
+          <span class="na">channelCustomProperties</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">channel</span><span class="pi">:</span> <span class="s2">"</span><span class="s">facebook"</span>
+            <span class="na">properties</span><span class="pi">:</span>
+              <span class="na">top_element_style</span><span class="pi">:</span> <span class="s2">"</span><span class="s">large"</span>
+      <span class="na">processUserMessage</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">order</span><span class="pi">:</span> <span class="s2">"</span><span class="s">AskPizzaSize"</span>
+        <span class="na">more</span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPizza"</span>
+        <span class="na">textReceived</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Intent"</span>
+</code></pre></div></div>
+<p><strong>OrderPizza</strong> 단계에서 <strong>지금 주문</strong>을 클릭하게 되면 피자 크기를 묻는 <strong>AskPizzaSize</strong> 단계로 이동하게 됩니다.</p>
+
+<p>불리어지는 <strong>AskPizzaSize</strong> 단계를 <strong>”####### AskPizzaSize 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 복사해 주세요.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### AskPizzaSize 단계를 아래에 복사헤 주세요</span>
+
+  <span class="na">AskPizzaSize</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">pizzaSize"</span>
+      <span class="na">nlpResultVariable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
+      <span class="na">maxPrompts</span><span class="pi">:</span> <span class="s">2</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">&lt;#if</span><span class="nv"> </span><span class="s">system.invalidUserInput</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">'true'&gt;크기</span><span class="nv"> </span><span class="s">선택이</span><span class="nv"> </span><span class="s">잘못되었습니다.</span><span class="nv"> </span><span class="s">다시</span><span class="nv"> </span><span class="s">선택해</span><span class="nv"> </span><span class="s">주세요.</span><span class="se">\
+</span>            <span class="se">\ </span><span class="s">&lt;/#if&gt;어떤</span><span class="nv"> </span><span class="s">크기의</span><span class="nv"> </span><span class="s">피자를</span><span class="nv"> </span><span class="s">원하십니까?"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">What</span><span class="nv"> </span><span class="s">size"</span>
+          <span class="na">separateBubbles</span><span class="pi">:</span> <span class="no">true</span>
+          <span class="na">actions</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${enumValue}"</span>
+            <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postback"</span>
+            <span class="na">payload</span><span class="pi">:</span>
+              <span class="na">action</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+              <span class="na">variables</span><span class="pi">:</span>
+                <span class="na">pizzaSize</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${enumValue}"</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">size"</span>
+            <span class="na">iteratorVariable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">pizzaSize.type.enumValues"</span>
+      <span class="na">processUserMessage</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">cancel</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Intent"</span>
+      <span class="na">next</span><span class="pi">:</span> <span class="s2">"</span><span class="s">AskLocation"</span>
+</code></pre></div></div>
+
+<p><strong>AskPizzaSize</strong> 단계 후에는 배달 위치를 묻게 되고 사용자가 자신의 Location 정보를 보내는 단계인 <strong>AskLocation</strong>를 수행하게 됩니다.</p>
+
+<p><strong>”####### AskLocation 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 다음을 추가해 주세요.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### AskLocation 단계를 아래에 복사헤 주세요</span>
+
+  <span class="na">AskLocation</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">location"</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">어디로</span><span class="nv"> </span><span class="s">배달해</span><span class="nv"> </span><span class="s">드릴까요?"</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">What</span><span class="nv"> </span><span class="s">location"</span>
+          <span class="na">separateBubbles</span><span class="pi">:</span> <span class="no">true</span>
+        <span class="na">globalActions</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Send</span><span class="nv"> </span><span class="s">Location"</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">location"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SendLocation"</span>
+      <span class="na">processUserMessage</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">cancel</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Intent"</span>
+      <span class="na">next</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Confirmation"</span>
+</code></pre></div></div>
+<p>마지막 단계로 <strong>주문 확인</strong>을 수행하는 <strong>Confirmation</strong> 단계를 추가해 줍니다.</p>
+
+<p><strong>”####### Confirmation 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 다음을 추가해 주세요.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### Confirmation 단계를 아래에 복사헤 주세요</span>
+
+  <span class="na">Confirmation</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">주문해</span><span class="nv"> </span><span class="s">주셔서</span><span class="nv"> </span><span class="s">감사합니다.</span><span class="nv"> </span><span class="s">주문하신</span><span class="nv"> </span><span class="s">${pizzaSize}</span><span class="nv"> </span><span class="s">${orderedPizza}</span><span class="nv"> </span><span class="s">피자가</span><span class="nv"> </span><span class="s">30분</span><span class="nv"> </span><span class="s">내로</span><span class="nv"> </span><span class="s">배달될</span><span class="nv"> </span><span class="s">예정입니다."</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">conf"</span>
+          <span class="na">separateBubbles</span><span class="pi">:</span> <span class="no">true</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">attachment"</span>
+          <span class="na">attachmentType</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+          <span class="na">attachmentUrl</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${orderedPizzaImage}"</span>
+      <span class="na">processUserMessage</span><span class="pi">:</span> <span class="no">false</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span>
+</code></pre></div></div>
+<p>피자 주문을 위한 flow가 모두 완료되었습니다. 우측 상단의 <strong>Validate</strong>를 클릭하여 flow에 오류가 없는지 확인합니다.</p>
+
+<blockquote>
+  <p>bot flow는 Yaml로 되어 있습니다. Yaml은 Indentation이 매우 중요합니다. 오류가 계속 발생한다면 들여쓰기가 잘 맞게 되어있는지 확인해보세요.</p>
+</blockquote>
+
+<ul>
+  <li><a href="https://github.com/mee-nam-lee/chatbot_lecture/blob/master/labfiles/PizzaBot/OrderPizzaFlow.md">완성된 OrderPizza flow 참고</a></li>
+</ul>
+
+<p>오류가 없다면 Test UI를 열어서 추가된 로직이 잘 동작하는지 확인 합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/09_OrderPizza_Test1.png" alt="" /></p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/09_OrderPizza_Test2.png" alt="" /></p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/09_OrderPizza_Test3.png" alt="" /></p>
+
+<p>피자봇 만들기 실습 과정이 완료되었습니다.</p>
+
+<h1 id="chatbot-workshop-lab">Chatbot-Workshop Lab</h1>
+<ul>
+  <li>Lab 개요 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_1/">챗봇 Hands-on Lab (1) - Lab 개요</a></li>
+  <li>Lab 100 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_2/">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</a></li>
+  <li>Lab 200 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_3/">챗봇 Hands-on Lab (3) - 피자봇 만들기 </a></li>
+  <li>Lab 300 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_4/">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</a></li>
+</ul>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

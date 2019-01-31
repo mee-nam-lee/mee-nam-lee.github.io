@@ -148,10 +148,10 @@ Test UI의 **Reset** 버튼을 클릭하여 창을 clear 합니다.
 과정을 완료하였습니다.
 
 # Chatbot-Workshop Lab 
-* Lab 개요 : [챗봇 Hands-on Lab (1) - Lab 개요](./챗봇-Hands-on-Lab_1.html)
-* Lab 100 : [챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기](./챗봇-Hands-on-Lab_2.html)
-* Lab 200 : [챗봇 Hands-on Lab (3) - 피자봇 만들기 ](./챗봇-Hands-on-Lab_3.html)
-* Lab 300 : [챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기](./챗봇-Hands-on-Lab_4.html)
+* Lab 개요 : [챗봇 Hands-on Lab (1) - Lab 개요](/chatbot/2019/챗봇-Hands-on-Lab_1/)
+* Lab 100 : [챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기](/chatbot/2019/챗봇-Hands-on-Lab_2/)
+* Lab 200 : [챗봇 Hands-on Lab (3) - 피자봇 만들기 ](/chatbot/2019/챗봇-Hands-on-Lab_3/)
+* Lab 300 : [챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기](/chatbot/2019/챗봇-Hands-on-Lab_4/)
 
 ## 참고 자료 
 

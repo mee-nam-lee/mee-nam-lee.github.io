@@ -1,18 +1,63 @@
-# Setup
-title:        MN Lee's IT Blog
-tagline:      MN Lee's IT Blog
-baseurl:      ""
-paginate:     1
-locale:       "en"
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 
-# About/contact
-author:
-  name:       MN Lee
-  url:        https://github.com/mee-nam-lee/ 
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: MN Lee's IT Blog
+email: 
+description: >- # this means to ignore newlines until "baseurl:"
+  이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: 
+github_username:  mee-nam-lee
 
-# Gems
-gems:
-  - jekyll-paginate
 
-#Others
+permalink: /:categories/:year/:title/
+# Build settings
+
+plugins:
+  - jekyll-feed
+  - jekyll-paginate-v2
+
+# Build settings
 markdown: kramdown
+theme: minima
+plugins_dir:
+  - jekyll-paginate-v2
+exclude:
+  - Gemfile
+  - Gemfile.lock
+
+  # Pagination Settings
+pagination:
+  enabled: true
+  per_page: 4
+  offset: 2
+  permalink: '/page/:num/'
+  title: ':title - :num / :max'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
