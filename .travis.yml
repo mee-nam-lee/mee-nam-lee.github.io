@@ -9,6 +9,7 @@ rvm:
 before_install:
   - gem update --system
   - gem install bundler
+  - gem install jekyll
 
 # set execution permission on our build script
 before_script:
@@ -18,3 +19,9 @@ before_script:
 script: ./script/cibuild
 exclude: [vendor]
 sudo: false
+
+
+addons:
+  apt:
+    packages:
+    - libcurl4-openssl-dev
