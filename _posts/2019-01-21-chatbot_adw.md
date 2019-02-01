@@ -128,6 +128,43 @@ module.exports = {
 
 };
 ```  
+### 소스 코드 잠깐 살펴 보기 
+실제 SQL을 수행하여 Database에서 정보를 조회하는 부분은 **chatbot_adw/bot-start/components/oracledb.js**에 들어있습니다.
+getADW 함수내의 SQL 문장을 원하는 SQL로 변경하여 수행하면 됩니다.
+
+```  
+async function getADW() {
+  return new Promise(async function(resolve, reject) {
+
+...생략
+
+// ADW Sample Sales History 조회 SQL
+      let sqlstring = 'SELECT channel_desc, TO_CHAR(SUM(amount_sold),\'9,999,999,999\') SALES$, \
+                              RANK() OVER (ORDER BY SUM(amount_sold)) AS default_rank, \
+                              RANK() OVER (ORDER BY SUM(amount_sold) DESC NULLS LAST) AS custom_rank \
+                       FROM sh.sales, sh.products, sh.customers, sh.times, sh.channels, sh.countries \
+                       WHERE sales.prod_id=products.prod_id AND sales.cust_id=customers.cust_id \
+                           AND customers.country_id = countries.country_id AND sales.time_id=times.time_id \
+                           AND sales.channel_id=channels.channel_id \
+                           AND times.calendar_month_desc IN (\'2000-09\', \'2000-10\') \
+                           AND country_iso_code=\'US\' \
+                       GROUP BY channel_desc';
+
+... 생략 
+
+}
+```  
+
+조회된 데이터를 챗봇에 보내줄때는 **conversation.reply()**라는 chatbot SDK의 함수를 사용합니다. 해당 예제에서는 Text 형태로만 리턴하였기 때문에 conversation.reply에 text 만 사용하였으나. 채널 유형에 따라 다양한 형태의 json 메시지를 보낼 수 있습니다. 관련된 상세 정보는 Oracle Bot SDK를 참조하면 됩니다. 
+
+```  
+    getADW()
+      .then(function(result){
+        for (var i=0 ; i < result.length ; i++) {
+            conversation.reply(`매출 현황을 조회하였습니다. 채널 : ${result[i][0]} 판매금액 : ${result[i][1]} Rank : ${result[i][3]}`);
+        }
+```  
+### 커스텀 컴포넌트 구동 
 
 다음 명령어를 수행하여 컴포넌트를 구동해 봅니다.
 ```

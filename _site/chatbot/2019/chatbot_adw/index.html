@@ -167,6 +167,40 @@ tns_name은 <strong>tnsnames.ora</strong>에서 참고하면 됩니다.</p>
 
 };
 </code></pre></div></div>
+<h3 id="소스-토드-잠깐-살펴-보기">소스 토드 잠깐 살펴 보기</h3>
+<p>실제 SQL을 수행하여 Database에서 정보를 조회하는 부분은 <strong>chatbot_adw/bot-start/components/oracledb.js</strong>에 들어있습니다.
+getADW 함수내의 SQL 문장을 원하는 SQL로 변경하여 수행하면 됩니다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">function</span> <span class="nf">getADW</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="k">async</span> <span class="k">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="o">...</span><span class="nx">생략</span>
+
+<span class="c1">// ADW Sample Sales History 조회 SQL</span>
+      <span class="nx">let</span> <span class="nx">sqlstring</span> <span class="o">=</span> <span class="err">'</span><span class="nx">SELECT</span> <span class="nx">channel_desc</span><span class="p">,</span> <span class="nx">TO_CHAR</span><span class="p">(</span><span class="nx">SUM</span><span class="p">(</span><span class="nx">amount_sold</span><span class="p">),</span><span class="err">\'</span><span class="mi">9</span><span class="p">,</span><span class="mi">999</span><span class="p">,</span><span class="mi">999</span><span class="p">,</span><span class="mi">999</span><span class="err">\'</span><span class="p">)</span> <span class="nx">SALES</span><span class="err">$</span><span class="p">,</span> <span class="err">\</span>
+                              <span class="nx">RANK</span><span class="p">()</span> <span class="nx">OVER</span> <span class="p">(</span><span class="nx">ORDER</span> <span class="nx">BY</span> <span class="nx">SUM</span><span class="p">(</span><span class="nx">amount_sold</span><span class="p">))</span> <span class="nx">AS</span> <span class="nx">default_rank</span><span class="p">,</span> <span class="err">\</span>
+                              <span class="nx">RANK</span><span class="p">()</span> <span class="nx">OVER</span> <span class="p">(</span><span class="nx">ORDER</span> <span class="nx">BY</span> <span class="nx">SUM</span><span class="p">(</span><span class="nx">amount_sold</span><span class="p">)</span> <span class="nx">DESC</span> <span class="nx">NULLS</span> <span class="nx">LAST</span><span class="p">)</span> <span class="nx">AS</span> <span class="nx">custom_rank</span> <span class="err">\</span>
+                       <span class="nx">FROM</span> <span class="nx">sh</span><span class="o">.</span><span class="nx">sales</span><span class="p">,</span> <span class="nx">sh</span><span class="o">.</span><span class="nx">products</span><span class="p">,</span> <span class="nx">sh</span><span class="o">.</span><span class="nx">customers</span><span class="p">,</span> <span class="nx">sh</span><span class="o">.</span><span class="nx">times</span><span class="p">,</span> <span class="nx">sh</span><span class="o">.</span><span class="nx">channels</span><span class="p">,</span> <span class="nx">sh</span><span class="o">.</span><span class="nx">countries</span> <span class="err">\</span>
+                       <span class="nx">WHERE</span> <span class="nx">sales</span><span class="o">.</span><span class="nx">prod_id</span><span class="o">=</span><span class="nx">products</span><span class="o">.</span><span class="nx">prod_id</span> <span class="nx">AND</span> <span class="nx">sales</span><span class="o">.</span><span class="nx">cust_id</span><span class="o">=</span><span class="nx">customers</span><span class="o">.</span><span class="nx">cust_id</span> <span class="err">\</span>
+                           <span class="nx">AND</span> <span class="nx">customers</span><span class="o">.</span><span class="nx">country_id</span> <span class="o">=</span> <span class="nx">countries</span><span class="o">.</span><span class="nx">country_id</span> <span class="nx">AND</span> <span class="nx">sales</span><span class="o">.</span><span class="nx">time_id</span><span class="o">=</span><span class="nx">times</span><span class="o">.</span><span class="nx">time_id</span> <span class="err">\</span>
+                           <span class="nx">AND</span> <span class="nx">sales</span><span class="o">.</span><span class="nx">channel_id</span><span class="o">=</span><span class="nx">channels</span><span class="o">.</span><span class="nx">channel_id</span> <span class="err">\</span>
+                           <span class="nx">AND</span> <span class="nx">times</span><span class="o">.</span><span class="nx">calendar_month_desc</span> <span class="nx">IN</span> <span class="p">(</span><span class="err">\'</span><span class="mi">2000</span><span class="o">-</span><span class="mi">09</span><span class="err">\'</span><span class="p">,</span> <span class="err">\'</span><span class="mi">2000</span><span class="o">-</span><span class="mi">10</span><span class="err">\'</span><span class="p">)</span> <span class="err">\</span>
+                           <span class="nx">AND</span> <span class="nx">country_iso_code</span><span class="o">=</span><span class="err">\'</span><span class="nx">US</span><span class="err">\'</span> <span class="err">\</span>
+                       <span class="nx">GROUP</span> <span class="nx">BY</span> <span class="nx">channel_desc</span><span class="err">'</span><span class="p">;</span>
+
+<span class="o">...</span> <span class="nx">생략</span> 
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>조회된 데이터를 챗봇에 보내줄때는 <strong>conversation.reply()</strong>라는 chatbot SDK의 함수를 사용합니다. 해당 예제에서는 Text 형태로만 리턴하였기 때문에 conversation.reply에 text 만 사용하였으나. 채널 유형에 따라 다양한 형태의 json 메시지를 보낼 수 있습니다. 관련된 상세 정보는 Oracle Bot SDK를 참조하면 됩니다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    getADW()
+      .then(function(result){
+        for (var i=0 ; i &lt; result.length ; i++) {
+            conversation.reply(`매출 현황을 조회하였습니다. 채널 : ${result[i][0]} 판매금액 : ${result[i][1]} Rank : ${result[i][3]}`);
+        }
+</code></pre></div></div>
 
 <p>다음 명령어를 수행하여 컴포넌트를 구동해 봅니다.</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; node index.js
