@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-02-01T15:41:27+09:00</updated><id>/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-02-01T15:48:11+09:00</updated><id>/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
 &lt;h1 id=&quot;채널-연결-web-chat-연결하기&quot;&gt;[채널 연결] Web Chat 연결하기&lt;/h1&gt;
 
 &lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
@@ -734,7 +734,7 @@ tns_name은 &lt;strong&gt;tnsnames.ora&lt;/strong&gt;에서 참고하면 됩니�
 
 };
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;소스-토드-잠깐-살펴-보기&quot;&gt;소스 토드 잠깐 살펴 보기&lt;/h3&gt;
+&lt;h3 id=&quot;소스-코드-잠깐-살펴-보기&quot;&gt;소스 코드 잠깐 살펴 보기&lt;/h3&gt;
 &lt;p&gt;실제 SQL을 수행하여 Database에서 정보를 조회하는 부분은 &lt;strong&gt;chatbot_adw/bot-start/components/oracledb.js&lt;/strong&gt;에 들어있습니다.
 getADW 함수내의 SQL 문장을 원하는 SQL로 변경하여 수행하면 됩니다.&lt;/p&gt;
 
@@ -768,6 +768,7 @@ getADW 함수내의 SQL 문장을 원하는 SQL로 변경하여 수행하면 됩
             conversation.reply(`매출 현황을 조회하였습니다. 채널 : ${result[i][0]} 판매금액 : ${result[i][1]} Rank : ${result[i][3]}`);
         }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;커스텀-컴포넌트-구동&quot;&gt;커스텀 컴포넌트 구동&lt;/h3&gt;
 
 &lt;p&gt;다음 명령어를 수행하여 컴포넌트를 구동해 봅니다.&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; node index.js

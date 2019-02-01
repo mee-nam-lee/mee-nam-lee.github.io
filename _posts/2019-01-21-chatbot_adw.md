@@ -211,7 +211,7 @@ Bot Flow에서 등록한 Custom Component는 다음과 같이 호출합니다.
 
 ![Alt text](/assets/images/ODA_ADW/13.bot_test.png)
 
-모두 완료되었습니다.
+모두 완료되었습니다. 
 
 ## 참고 자료 
 - [Autonomous Data Warehouse Toturial](https://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/adwc/OBE_Loading%20Your%20Data/loading_your_data.html)
