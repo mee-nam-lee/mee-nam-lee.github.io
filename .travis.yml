@@ -4,7 +4,11 @@ branches:
   only:
   - master
 rvm:
-- 2.2.5
+- 2.3
+
+before_install:
+  - gem update --system
+  - gem install bundler
 
 # set execution permission on our build script
 before_script:
