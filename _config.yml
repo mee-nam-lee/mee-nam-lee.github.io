@@ -28,7 +28,7 @@ permalink: /:categories/:year/:title/
 
 plugins:
   - jekyll-feed
-  - jekyll-paginate-v2
+  - jekyll-paginate
 
 # Build settings
 markdown: kramdown
@@ -39,16 +39,21 @@ exclude:
   - Gemfile
   - Gemfile.lock
 
-  # Pagination Settings
-pagination:
-  enabled: true
-  per_page: 4
-  offset: 2
-  permalink: '/page/:num/'
-  title: ':title - :num / :max'
-  limit: 0
-  sort_field: 'date'
-  sort_reverse: true
+# Pagination Settings v1
+paginate_path: "/blog/page:num/"
+paginate: 5
+
+  # Pagination Settings v2
+
+#pagination:
+#  enabled: true
+#  per_page: 4
+#  offset: 2
+#  permalink: '/page/:num/'
+#  title: ':title - :num / :max'
+#  limit: 0
+#  sort_field: 'date'
+#  sort_reverse: true
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
