@@ -198,7 +198,8 @@ Bot 화면으로 이동하여 다음과 같이 서비스 등록 화면에서 서
 
 ## Bot Flow에서 사용하기 
 Bot Flow에서 등록한 Custom Component는 다음과 같이 호출합니다. 
-```
+
+```yaml
  printcountry:
     component: "oracledb"
     properties:
