@@ -118,7 +118,8 @@ ADW에 연결하기 위한 Custom Component 작성을 위한 준비가 완료 �
 샘플 소스 코드에서 ADW 연결을 위한 정보를 수정해 줍니다.
 **chatbot_adw/bot-start/components/dbconfig.js** 파일을 열어서 **user**, **password**, **connectString** 부분을 수정합니다.
 tns_name은 **tnsnames.ora**에서 참고하면 됩니다.
-```
+
+```js
 module.exports = {
     user          : process.env.NODE_ORACLEDB_USER || "your_username",
     password      : process.env.NODE_ORACLEDB_PASSWORD || "your_userpassword",
@@ -132,7 +133,7 @@ module.exports = {
 실제 SQL을 수행하여 Database에서 정보를 조회하는 부분은 **chatbot_adw/bot-start/components/oracledb.js**에 들어있습니다.
 getADW 함수내의 SQL 문장을 원하는 SQL로 변경하여 수행하면 됩니다.
 
-```  
+```js  
 async function getADW() {
   return new Promise(async function(resolve, reject) {
 
@@ -157,7 +158,7 @@ async function getADW() {
 
 조회된 데이터를 챗봇에 보내줄때는 **conversation.reply()**라는 chatbot SDK의 함수를 사용합니다. 해당 예제에서는 Text 형태로만 리턴하였기 때문에 conversation.reply에 text 만 사용하였으나. 채널 유형에 따라 다양한 형태의 json 메시지를 보낼 수 있습니다. 관련된 상세 정보는 Oracle Bot SDK를 참조하면 됩니다. 
 
-```  
+```js  
     getADW()
       .then(function(result){
         for (var i=0 ; i < result.length ; i++) {
