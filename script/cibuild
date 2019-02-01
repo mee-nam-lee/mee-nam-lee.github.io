@@ -16,6 +16,10 @@ mkdir _site
 # clone remote repo to "_site"
 git clone https://${GH_TOKEN}@github.com/ayastreb/11route.git --branch gh-pages _site
 
+# bundler version 
+gem install bundler
+bundle install
+
 # build with Jekyll into "_site"
 bundle exec jekyll build
 
