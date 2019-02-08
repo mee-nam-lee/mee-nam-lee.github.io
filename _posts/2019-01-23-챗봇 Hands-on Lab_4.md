@@ -12,26 +12,31 @@ categories: chatbot
 
 
 ## 웹 채널 생성
-이전 Lab에서 생성한 각자의 피자봇 **PizzaBot_{SEQ}** (예 : PizzaBot_01)를 선택하고 들어갑니다.
-
-좌측의 **톱니바퀴** 모양의 설정 아이콘을 클릭하여 설정 페이지로 들어가서 **Channels** 탭을 선택합니다. 
-
-**System_Bot_Test**라는 Test UI에서 사용하는 채널이 기본적으로 등록되어 있습니다. 이 설정은 그대로 두고 **+ Channel** 버튼을 클릭하여 새로운 채널을 생성하도록 합니다. 
-
+좌측 메인 메뉴의 **Channels** 메뉴를 선택합니다.
 ![](/assets/images/chatbot_lecture/channel/01_channel_settings.png)
+
+ **+ Channel** 버튼을 클릭하여 새로운 채널을 생성하도록 합니다. 
 
 다음과 같이 입력하고 **Create** 버튼을 클릭합니다.
 
-* Name : web
-* Descrption : 웹 채널 용 
+* Name : PizzaBot_{SEQ}.web 
+> 본인이 생성한 PizzaBot과 동일 명으로 합니다 
+* Descrption : 학생이름 = [본인이름]
 * Channel Type : Web
-* Channel Enabled : Enabled
 
 ![](/assets/images/chatbot_lecture/channel/02_create_channel.png)
 
 다음과 같이 채널이 만들어 진 것을 확인 합니다.
 
 ![](/assets/images/chatbot_lecture/channel/03_Channel_created.png)
+
+만든 채널을 각자의 PizzaBot과 연결하기 위해 **Route To**를 클릭하여 본인의 Bot과 연결되게 합니다.
+
+![](/assets/images/chatbot_lecture/channel/03_Channel_route.png)
+
+아래와 같이 연결되었는지를 확인하고 **Channel Enabled**를 활성화 시킵니다.
+
+![](/assets/images/chatbot_lecture/channel/03_Channel_route_done.png)
 
 채널 생성은 완료되었습니다.
 
@@ -42,6 +47,14 @@ Oracle Digital Assistant는 웹채널을 태스트 하기 위한 chat-sample-web
 Text Box에 자신의 PizzaBot에서 만든 **Web** 채널의 **App Id**를 복사해서 입력해 줍니다. **Continue**를 누르면 해당 웹페이지의 채팅은 자신의 PizzaBot에 연결 될 것입니다.
 
 ![](/assets/images/chatbot_lecture/channel/04_web_app_id.png)
+
+> App Id 입력하는 Text Box가 첫 화면에서 보이지 않는다면 다음과 같이 설정 아이콘을 클릭하여 App ID를 입력해 줍니다.
+>
+> ![](/assets/images/chatbot_lecture/channel/04_web_app_id_setting.png)
+>
+> App Id를 자신의 채널 것으로 업데이트하고 Save 합니다.
+>
+> ![](/assets/images/chatbot_lecture/channel/04_web_app_id_setting_save.png)
 
 **Chat with your BOT** 버튼을 클릭하여 대화를 시작해 봅니다.
 

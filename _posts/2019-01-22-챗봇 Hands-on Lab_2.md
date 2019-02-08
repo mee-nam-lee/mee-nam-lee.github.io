@@ -22,7 +22,7 @@ categories: chatbot
 
 ![](/assets/images/chatbot_lecture/00_after_login.png)
 
-아래와 같이 왼편 메뉴에서 **Bots** 메뉴를 클릭합니다.
+아래와 같이 왼편 메뉴에서 **Skills** 메뉴를 클릭합니다.
 
 ![](/assets/images/chatbot_lecture/01_bot_first_page.png)
 
@@ -39,12 +39,16 @@ categories: chatbot
 ![](/assets/images/chatbot_lecture/03_masterbot_clone.png)
 
 다음과 같이 입력하고 Clone 합니다.
+* Display Name :  MasterBot_[제공된 SEQ]
 * Name :  MasterBot_[제공된 SEQ]
-* Description : 본인 이름 
+* Version : 1.0
+* Description : 학생이름 = [본인 이름]
+* open cloned skill bot afterwards : check 
 
 ![](/assets/images/chatbot_lecture/04_masterbot_clone_window.png)
 
 복제가 성공되면 다음과 같이 새로운 BOT이 생성된 걸 볼 수 있습니다.
+> 복제된 Skill 바로 열기(open cloned skill bot afterwards) 체크박스를 선택했다면, 아래 화면이 보이지 않고 Skill Edit 모드로 바로 들어갑니다.
 
  ![](/assets/images/chatbot_lecture/05_after_clone_master.png)
 
@@ -52,6 +56,8 @@ categories: chatbot
 =======
 
  방금 생성한 본인의 MasterBot의 이름을 클릭하거나 아래와 같이 **Edit** 메뉴를 클릭하여 Bot의 편집 화면으로 이동합니다.
+
+ > 복제된 Skill 바로 열기(open cloned skill bot afterwards) 체크박스를 선택했다면, 아래 화면이 보이지 않고 Skill Edit 모드로 바로 들어갑니다.
 
  ![](/assets/images/chatbot_lecture/06_Edit_MasterBot.png)
 
@@ -68,7 +74,7 @@ Train 팝업창 상단의 **X** 버튼을 클릭하여 Train 윈도우를 닫습
 
 ![](/assets/images/chatbot_lecture/09_after_train.png)
 
-이제 Intent 테스트를 위한 Test 창을 열기 위해 상단의 **▶** 버튼을 클릭합니다.
+이제 Intent 테스트를 위한 Test 창을 열기 위해 상단의 **Try It Out!** 링크를 클릭합니다.
 
 ![](/assets/images/chatbot_lecture/10_play_button.png)
 
@@ -97,7 +103,7 @@ Intent를 먼저 테스트 해볼 것이기 때문에 Test 창에서 **Intent** 
 * Send Money : 계좌 이체 
 
 위 두 Intent에 매칭이 될 수 있도록 **Utterance**를 입력하여 대화를 시도해 봅니다. 
-대화 테스트는 Test UI의 **Bot** 탭에서 할 수 있습니다.
+대화 테스트는 왼쪽 메뉴 하단의 **▶** 메뉴를 클릭하여 테스트 창을 열어 수행합니다.
 
 ![](/assets/images/chatbot_lecture/13_test_ui_dial.png)
 

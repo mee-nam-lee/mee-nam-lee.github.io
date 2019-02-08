@@ -29,7 +29,7 @@ categories: chatbot
 
 ![](/assets/images/chatbot_lecture/pizzalab/02_pizzabot.png)
 
-우측 상단의 **▶** 버튼을 클릭하여 Test UI를 엽니다.
+왼편 메뉴 하단의 **▶** 버튼을 클릭하여 Test UI를 엽니다.
 
 ![](/assets/images/chatbot_lecture/pizzalab/03_pizza_test_ui.png)
 
@@ -72,8 +72,11 @@ Test UI 창 상단의 **Reset** 버튼을 클릭하고 다른 기능도 테스�
 
 ![](/assets/images/chatbot_lecture/pizzalab/10_PizzaBot_clone.png)
 
- * Name 항목을 본인에게 부여된 SEQ를 suffix로 하여 **PizzaBot_{SEQ}** 형태가 되도록 입력합니다.
- * Description에 본인의 이름을 입력합니다.
+ * Display Name : 항목을 본인에게 부여된 SEQ를 suffix로 하여 **PizzaBot_{SEQ}** 
+ * Name : **PizzaBot_{SEQ}**
+ * Version : 1.0 
+ * Description : 학생이름 = [본인이름]
+ * Open cloned skill bot afterwards : check
 
 ![](/assets/images/chatbot_lecture/pizzalab/11_pizzabot_clone_window.png)
 
