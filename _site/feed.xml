@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-02-01T15:48:11+09:00</updated><id>/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-08T13:25:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
 &lt;h1 id=&quot;채널-연결-web-chat-연결하기&quot;&gt;[채널 연결] Web Chat 연결하기&lt;/h1&gt;
 
 &lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;웹-채널-생성&quot;&gt;웹 채널 생성&lt;/h2&gt;
-&lt;p&gt;이전 Lab에서 생성한 각자의 피자봇 &lt;strong&gt;PizzaBot_{SEQ}&lt;/strong&gt; (예 : PizzaBot_01)를 선택하고 들어갑니다.&lt;/p&gt;
+&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
+&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;좌측의 &lt;strong&gt;톱니바퀴&lt;/strong&gt; 모양의 설정 아이콘을 클릭하여 설정 페이지로 들어가서 &lt;strong&gt;Channels&lt;/strong&gt; 탭을 선택합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;System_Bot_Test&lt;/strong&gt;라는 Test UI에서 사용하는 채널이 기본적으로 등록되어 있습니다. 이 설정은 그대로 두고 &lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
 
 &lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Name : web&lt;/li&gt;
-  &lt;li&gt;Descrption : 웹 채널 용&lt;/li&gt;
+  &lt;li&gt;Name : PizzaBot_{SEQ}.web
+    &lt;blockquote&gt;
+      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
   &lt;li&gt;Channel Type : Web&lt;/li&gt;
-  &lt;li&gt;Channel Enabled : Enabled&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/02_create_channel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -26,6 +26,14 @@
 &lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route_done.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
 
@@ -36,6 +44,16 @@
 Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채널의 &lt;strong&gt;App Id&lt;/strong&gt;를 복사해서 입력해 줍니다. &lt;strong&gt;Continue&lt;/strong&gt;를 누르면 해당 웹페이지의 채팅은 자신의 PizzaBot에 연결 될 것입니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;App Id 입력하는 Text Box가 첫 화면에서 보이지 않는다면 다음과 같이 설정 아이콘을 클릭하여 App ID를 입력해 줍니다.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;App Id를 자신의 채널 것으로 업데이트하고 Save 합니다.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting_save.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;strong&gt;Chat with your BOT&lt;/strong&gt; 버튼을 클릭하여 대화를 시작해 봅니다.&lt;/p&gt;
 
@@ -56,7 +74,7 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (4) [채널 연결] Web Chat 연결하기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;h1 id=&quot;챗봇-hands-on-lab-3&quot;&gt;챗봇 Hands-on Lab (3)&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (4) [채널 연결] Web Chat 연결하기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;h1 id=&quot;챗봇-hands-on-lab-3&quot;&gt;챗봇 Hands-on Lab (3)&lt;/h1&gt;
 &lt;h1 id=&quot;피자봇-만들기&quot;&gt;피자봇 만들기&lt;/h1&gt;
 
 &lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
@@ -84,7 +102,7 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/pizzalab/02_pizzabot.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;우측 상단의 &lt;strong&gt;▶&lt;/strong&gt; 버튼을 클릭하여 Test UI를 엽니다.&lt;/p&gt;
+&lt;p&gt;왼편 메뉴 하단의 &lt;strong&gt;▶&lt;/strong&gt; 버튼을 클릭하여 Test UI를 엽니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/pizzalab/03_pizza_test_ui.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -130,8 +148,11 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/pizzalab/10_PizzaBot_clone.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Name 항목을 본인에게 부여된 SEQ를 suffix로 하여 &lt;strong&gt;PizzaBot_{SEQ}&lt;/strong&gt; 형태가 되도록 입력합니다.&lt;/li&gt;
-  &lt;li&gt;Description에 본인의 이름을 입력합니다.&lt;/li&gt;
+  &lt;li&gt;Display Name : 항목을 본인에게 부여된 SEQ를 suffix로 하여 &lt;strong&gt;PizzaBot_{SEQ}&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Name : &lt;strong&gt;PizzaBot_{SEQ}&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Version : 1.0&lt;/li&gt;
+  &lt;li&gt;Description : 학생이름 = [본인이름]&lt;/li&gt;
+  &lt;li&gt;Open cloned skill bot afterwards : check&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/pizzalab/11_pizzabot_clone_window.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -408,7 +429,7 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (3) 피자봇 만들기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (3) 피자봇 만들기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
 
 &lt;p&gt;Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.
 Training 과정을 통해 더욱 정교한 대화가 가능한 챗봇으로 진화시키는 과정을 체험하고, 비즈니스 처리를 위한 로직을 쉽게 작성하여 챗봇을 통해 서비스하게 하는 경험을 하시게 될 것입니다.&lt;/p&gt;
@@ -439,7 +460,7 @@ Oracle Cloud 계정을 이미 가지고 계시다면 Digital Assistant Cloud Ser
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (1) - Lab 개요</summary></entry><entry><title type="html">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</title><link href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_2</id><content type="html" xml:base="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/">&lt;h1 id=&quot;챗봇-hands-on-lab-2&quot;&gt;챗봇 Hands-on Lab (2)&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (1) - Lab 개요</summary></entry><entry><title type="html">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_2</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/">&lt;h1 id=&quot;챗봇-hands-on-lab-2&quot;&gt;챗봇 Hands-on Lab (2)&lt;/h1&gt;
 &lt;h1 id=&quot;금융봇을-이용하여-챗봇-기본-기능-익히기&quot;&gt;금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/h1&gt;
 
 &lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
@@ -457,7 +478,7 @@ Oracle Cloud 계정을 이미 가지고 계시다면 Digital Assistant Cloud Ser
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/00_after_login.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;아래와 같이 왼편 메뉴에서 &lt;strong&gt;Bots&lt;/strong&gt; 메뉴를 클릭합니다.&lt;/p&gt;
+&lt;p&gt;아래와 같이 왼편 메뉴에서 &lt;strong&gt;Skills&lt;/strong&gt; 메뉴를 클릭합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/01_bot_first_page.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -476,19 +497,29 @@ Oracle Cloud 계정을 이미 가지고 계시다면 Digital Assistant Cloud Ser
 
 &lt;p&gt;다음과 같이 입력하고 Clone 합니다.&lt;/p&gt;
 &lt;ul&gt;
+  &lt;li&gt;Display Name :  MasterBot_[제공된 SEQ]&lt;/li&gt;
   &lt;li&gt;Name :  MasterBot_[제공된 SEQ]&lt;/li&gt;
-  &lt;li&gt;Description : 본인 이름&lt;/li&gt;
+  &lt;li&gt;Version : 1.0&lt;/li&gt;
+  &lt;li&gt;Description : 학생이름 = [본인 이름]&lt;/li&gt;
+  &lt;li&gt;open cloned skill bot afterwards : check&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/04_masterbot_clone_window.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;복제가 성공되면 다음과 같이 새로운 BOT이 생성된 걸 볼 수 있습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;복제된 Skill 바로 열기(open cloned skill bot afterwards) 체크박스를 선택했다면, 아래 화면이 보이지 않고 Skill Edit 모드로 바로 들어갑니다.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/05_after_clone_master.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;복제된-masterbot에서-intent-사용자-의도-테스트-하기&quot;&gt;&lt;strong&gt;복제된 MasterBot에서 Intent (사용자 의도) 테스트 하기&lt;/strong&gt;&lt;/h1&gt;
 
 &lt;p&gt;방금 생성한 본인의 MasterBot의 이름을 클릭하거나 아래와 같이 &lt;strong&gt;Edit&lt;/strong&gt; 메뉴를 클릭하여 Bot의 편집 화면으로 이동합니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;복제된 Skill 바로 열기(open cloned skill bot afterwards) 체크박스를 선택했다면, 아래 화면이 보이지 않고 Skill Edit 모드로 바로 들어갑니다.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/06_Edit_MasterBot.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -505,7 +536,7 @@ Train 팝업창 상단의 &lt;strong&gt;X&lt;/strong&gt; 버튼을 클릭하여 
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/09_after_train.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;이제 Intent 테스트를 위한 Test 창을 열기 위해 상단의 &lt;strong&gt;▶&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+&lt;p&gt;이제 Intent 테스트를 위한 Test 창을 열기 위해 상단의 &lt;strong&gt;Try It Out!&lt;/strong&gt; 링크를 클릭합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/10_play_button.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -534,7 +565,7 @@ Intent를 먼저 테스트 해볼 것이기 때문에 Test 창에서 &lt;strong&
 &lt;/ul&gt;
 
 &lt;p&gt;위 두 Intent에 매칭이 될 수 있도록 &lt;strong&gt;Utterance&lt;/strong&gt;를 입력하여 대화를 시도해 봅니다. 
-대화 테스트는 Test UI의 &lt;strong&gt;Bot&lt;/strong&gt; 탭에서 할 수 있습니다.&lt;/p&gt;
+대화 테스트는 왼쪽 메뉴 하단의 &lt;strong&gt;▶&lt;/strong&gt; 메뉴를 클릭하여 테스트 창을 열어 수행합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/13_test_ui_dial.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -603,7 +634,7 @@ Intent를 먼저 테스트 해볼 것이기 때문에 Test 창에서 &lt;strong&
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/mee-nam-lee/chatbot_lecture/blob/master/labfiles/MasterBot_Korean/MasterBot_kor_wo_comp.zip&quot;&gt;MasterBot Import 파일&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (2) 금융봇을 이용하여 챗봇 기본 기능 익히기</summary></entry><entry><title type="html">Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기</title><link href="/chatbot/2019/chatbot_adw/" rel="alternate" type="text/html" title="Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기" /><published>2019-01-22T02:50:00+09:00</published><updated>2019-01-22T02:50:00+09:00</updated><id>/chatbot/2019/chatbot_adw</id><content type="html" xml:base="/chatbot/2019/chatbot_adw/">&lt;h1 id=&quot;digital-assistant챗봇과-autonomous-data-warehouseadw-연계하기&quot;&gt;Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (2) 금융봇을 이용하여 챗봇 기본 기능 익히기</summary></entry><entry><title type="html">Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기</title><link href="http://localhost:4000/chatbot/2019/chatbot_adw/" rel="alternate" type="text/html" title="Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기" /><published>2019-01-22T02:50:00+09:00</published><updated>2019-01-22T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/chatbot_adw</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/chatbot_adw/">&lt;h1 id=&quot;digital-assistant챗봇과-autonomous-data-warehouseadw-연계하기&quot;&gt;Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기&lt;/h1&gt;
 
 &lt;p&gt;오라클 챗봇인 &lt;strong&gt;Digital Assistant&lt;/strong&gt;에서는 커스텀 비즈니스 코드를 작성을 지원하기 위해 &lt;strong&gt;Custom Component&lt;/strong&gt;라는 기능을 제공하고 있습니다. Custom Component는 오라클 &lt;strong&gt;모바일 클라우드&lt;/strong&gt;에서 서비스되도록 작성되거나 &lt;strong&gt;Stand Alone&lt;/strong&gt;으로 동작되도록 작성될 수도 있고, Oracle Digital Assistant가 제공하는 Custom Component를 위한 &lt;strong&gt;임베디드 컨테이너&lt;/strong&gt;에서 구동되도록 작성될 수도 있습니다.&lt;/p&gt;
 
@@ -725,48 +756,49 @@ export TNS_ADMIN=/home/opc/instantclient_18_3/network/admin
 &lt;p&gt;샘플 소스 코드에서 ADW 연결을 위한 정보를 수정해 줍니다.
 &lt;strong&gt;chatbot_adw/bot-start/components/dbconfig.js&lt;/strong&gt; 파일을 열어서 &lt;strong&gt;user&lt;/strong&gt;, &lt;strong&gt;password&lt;/strong&gt;, &lt;strong&gt;connectString&lt;/strong&gt; 부분을 수정합니다.
 tns_name은 &lt;strong&gt;tnsnames.ora&lt;/strong&gt;에서 참고하면 됩니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;module.exports = {
-    user          : process.env.NODE_ORACLEDB_USER || &quot;your_username&quot;,
-    password      : process.env.NODE_ORACLEDB_PASSWORD || &quot;your_userpassword&quot;,
-    connectString : process.env.NODE_ORACLEDB_CONNECTIONSTRING || &quot;your_tns_name&quot;,
 
- ... 생략
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;          &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;NODE_ORACLEDB_USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;your_username&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;password&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;NODE_ORACLEDB_PASSWORD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;your_userpassword&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;connectString&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;NODE_ORACLEDB_CONNECTIONSTRING&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;your_tns_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
 
-};
+ &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;생략&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;h3 id=&quot;소스-코드-잠깐-살펴-보기&quot;&gt;소스 코드 잠깐 살펴 보기&lt;/h3&gt;
 &lt;p&gt;실제 SQL을 수행하여 Database에서 정보를 조회하는 부분은 &lt;strong&gt;chatbot_adw/bot-start/components/oracledb.js&lt;/strong&gt;에 들어있습니다.
 getADW 함수내의 SQL 문장을 원하는 SQL로 변경하여 수행하면 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getADW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getADW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;생략&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;생략&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;// ADW Sample Sales History 조회 SQL&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sqlstring&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;channel_desc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TO_CHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;SUM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount_sold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;SALES&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                              &lt;span class=&quot;nx&quot;&gt;RANK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;OVER&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;SUM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount_sold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;default_rank&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                              &lt;span class=&quot;nx&quot;&gt;RANK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;OVER&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;SUM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount_sold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;DESC&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;NULLS&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;LAST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;custom_rank&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                       &lt;span class=&quot;nx&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;products&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;customers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;channels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;countries&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                       &lt;span class=&quot;nx&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sales&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prod_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;products&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prod_id&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sales&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cust_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;customers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cust_id&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                           &lt;span class=&quot;nx&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;customers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;country_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;countries&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;country_id&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sales&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;time_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;time_id&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                           &lt;span class=&quot;nx&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sales&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;channel_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;channels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;channel_id&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                           &lt;span class=&quot;nx&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;calendar_month_desc&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;IN&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                           &lt;span class=&quot;nx&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;country_iso_code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;US&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\'&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;
-                       &lt;span class=&quot;nx&quot;&gt;GROUP&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;channel_desc&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sqlstring&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SELECT channel_desc, TO_CHAR(SUM(amount_sold),&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;9,999,999,999&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;) SALES$, &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                              RANK() OVER (ORDER BY SUM(amount_sold)) AS default_rank, &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                              RANK() OVER (ORDER BY SUM(amount_sold) DESC NULLS LAST) AS custom_rank &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                       FROM sh.sales, sh.products, sh.customers, sh.times, sh.channels, sh.countries &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                       WHERE sales.prod_id=products.prod_id AND sales.cust_id=customers.cust_id &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                           AND customers.country_id = countries.country_id AND sales.time_id=times.time_id &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                           AND sales.channel_id=channels.channel_id &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                           AND times.calendar_month_desc IN (&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;2000-09&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;2000-10&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;) &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                           AND country_iso_code=&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;US&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
+                       GROUP BY channel_desc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;생략&lt;/span&gt; 
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;생략&lt;/span&gt; 
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;조회된 데이터를 챗봇에 보내줄때는 &lt;strong&gt;conversation.reply()&lt;/strong&gt;라는 chatbot SDK의 함수를 사용합니다. 해당 예제에서는 Text 형태로만 리턴하였기 때문에 conversation.reply에 text 만 사용하였으나. 채널 유형에 따라 다양한 형태의 json 메시지를 보낼 수 있습니다. 관련된 상세 정보는 Oracle Bot SDK를 참조하면 됩니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    getADW()
-      .then(function(result){
-        for (var i=0 ; i &amp;lt; result.length ; i++) {
-            conversation.reply(`매출 현황을 조회하였습니다. 채널 : ${result[i][0]} 판매금액 : ${result[i][1]} Rank : ${result[i][3]}`);
-        }
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nx&quot;&gt;getADW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;conversation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`매출 현황을 조회하였습니다. 채널 : &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 판매금액 : &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; Rank : &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;h3 id=&quot;커스텀-컴포넌트-구동&quot;&gt;커스텀 컴포넌트 구동&lt;/h3&gt;
 
@@ -802,12 +834,13 @@ Bot 화면으로 이동하여 다음과 같이 서비스 등록 화면에서 서
 
 &lt;h2 id=&quot;bot-flow에서-사용하기&quot;&gt;Bot Flow에서 사용하기&lt;/h2&gt;
 &lt;p&gt;Bot Flow에서 등록한 Custom Component는 다음과 같이 호출합니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; printcountry:
-    component: &quot;oracledb&quot;
-    properties:
-      human: &quot;meenam&quot;
-    transitions:
-      return: &quot;done&quot;    
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;na&quot;&gt;printcountry&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;oracledb&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;human&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;meenam&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;    
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;h2 id=&quot;테스트&quot;&gt;테스트&lt;/h2&gt;
 &lt;p&gt;연결이 잘 되고 호출이 정상적으로 이루어지는지 Test UI를 통해 테스트를 싱행합니다. 
@@ -832,7 +865,7 @@ Bot 화면으로 이동하여 다음과 같이 서비스 등록 화면에서 서
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/node-oracledb&quot;&gt;Node.js Oracle Driver&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기</summary></entry><entry><title type="html">Node.js Fabric SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출</title><link href="/blockchain/2018/blockchain003/" rel="alternate" type="text/html" title="Node.js Fabric SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출" /><published>2018-11-01T02:50:00+09:00</published><updated>2018-11-01T02:50:00+09:00</updated><id>/blockchain/2018/blockchain003</id><content type="html" xml:base="/blockchain/2018/blockchain003/">&lt;h1 id=&quot;nodejs-fabric-client-sdk를-사용하여-오라클-블록체인-클라우드에-배포된-fabcar-체인코드-호출하기&quot;&gt;Node.js Fabric Client SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출하기&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기</summary></entry><entry><title type="html">Node.js Fabric SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출</title><link href="http://localhost:4000/blockchain/2018/blockchain003/" rel="alternate" type="text/html" title="Node.js Fabric SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출" /><published>2018-11-01T02:50:00+09:00</published><updated>2018-11-01T02:50:00+09:00</updated><id>http://localhost:4000/blockchain/2018/blockchain003</id><content type="html" xml:base="http://localhost:4000/blockchain/2018/blockchain003/">&lt;h1 id=&quot;nodejs-fabric-client-sdk를-사용하여-오라클-블록체인-클라우드에-배포된-fabcar-체인코드-호출하기&quot;&gt;Node.js Fabric Client SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출하기&lt;/h1&gt;
 
 &lt;p&gt;지난 기고에서 &lt;strong&gt;Oracle Autonomous Blockchain Cloud Service&lt;/strong&gt;에 Hyperledger의 샘플체인 코드인 fabcar의 GO 버전과 Node.js 버전을 배포하고 REST API를 통해 배포된 체인코드를 호출하여 테스트 하는 과정에 대해 설명하였습니다. &lt;br /&gt;
 이번 글에서는 이미 배포된 fabcar 체인코드를 &lt;strong&gt;node.js fabric client SDK&lt;/strong&gt;를 사용하여 호출하는 방법에 대해 설명하려고 합니다. 
@@ -1078,7 +1111,7 @@ registerUser.js를 이용하여 user1을 등록하였다면 이 부분은 수정
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html&quot;&gt;Oracle Blockchian Cloud&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/devapplicationtasks.html&quot;&gt;Oracle Blockchian Cloud - 애플리케이션 개발&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Node.js Fabric Client SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출하기</summary></entry><entry><title type="html">오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기</title><link href="/blockchain/2018/blockchain002/" rel="alternate" type="text/html" title="오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기" /><published>2018-10-30T02:50:00+09:00</published><updated>2018-10-30T02:50:00+09:00</updated><id>/blockchain/2018/blockchain002</id><content type="html" xml:base="/blockchain/2018/blockchain002/">&lt;h1 id=&quot;오라클-블록체인-클라우드에-hyperledger-fabric-샘플-체인코드-fabcar-배포하기&quot;&gt;오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Node.js Fabric Client SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출하기</summary></entry><entry><title type="html">오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기</title><link href="http://localhost:4000/blockchain/2018/blockchain002/" rel="alternate" type="text/html" title="오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기" /><published>2018-10-30T02:50:00+09:00</published><updated>2018-10-30T02:50:00+09:00</updated><id>http://localhost:4000/blockchain/2018/blockchain002</id><content type="html" xml:base="http://localhost:4000/blockchain/2018/blockchain002/">&lt;h1 id=&quot;오라클-블록체인-클라우드에-hyperledger-fabric-샘플-체인코드-fabcar-배포하기&quot;&gt;오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기&lt;/h1&gt;
 
 &lt;p&gt;지난 기고에서 &lt;strong&gt;Oracle Autonomous Blockchain Cloud Service&lt;/strong&gt;의 편리한 관리기능에 대해 살펴보았고, 이번 글에서는 체인코드 배포 방법과 테스트하는 과정에 대해 설명하려고 합니다. Oracle Blockchain Cloud는 오픈 소스인 Hyperleder Fabric을 기반으로 하고 있기 때문에 &lt;strong&gt;Hyperledger Fabric&lt;/strong&gt;에서 제공하는 샘플 코드들을 그대로 배포할 수 있습니다. 따라서 여기에서는 Hyperleder Fabric에서 샘플 체인코드로 많이 사용되고 있는 &lt;strong&gt;fabcar&lt;/strong&gt; 예제를 사용하여 배포하는 과정을 설명하려고 합니다.&lt;/p&gt;
 
@@ -1267,7 +1300,7 @@ node.js로 작성된 fabcar 체인코드 샘플이 있을 것입니다. &lt;br /
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html&quot;&gt;Oracle Blockchian Cloud&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/user/deploy-and-manage-chaincodes.html&quot;&gt;Oracle Blockchian Cloud - 체인코드 배포 및 관리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기</summary></entry><entry><title type="html">Oracle Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</title><link href="/blockchain/2018/blockchain001/" rel="alternate" type="text/html" title="Oracle Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기" /><published>2018-10-26T02:50:00+09:00</published><updated>2018-10-26T02:50:00+09:00</updated><id>/blockchain/2018/blockchain001</id><content type="html" xml:base="/blockchain/2018/blockchain001/">&lt;h1 id=&quot;oracle-autonomous-blockchain-cloud를-이용한-블록체인-네트워크-생성-및-편리한-관리-기능-살펴보기&quot;&gt;Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기</summary></entry><entry><title type="html">Oracle Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</title><link href="http://localhost:4000/blockchain/2018/blockchain001/" rel="alternate" type="text/html" title="Oracle Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기" /><published>2018-10-26T02:50:00+09:00</published><updated>2018-10-26T02:50:00+09:00</updated><id>http://localhost:4000/blockchain/2018/blockchain001</id><content type="html" xml:base="http://localhost:4000/blockchain/2018/blockchain001/">&lt;h1 id=&quot;oracle-autonomous-blockchain-cloud를-이용한-블록체인-네트워크-생성-및-편리한-관리-기능-살펴보기&quot;&gt;Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기&lt;/h1&gt;
 
 &lt;p&gt;&lt;strong&gt;Oracle Autonomous Blockchain Cloud Service&lt;/strong&gt;는 블록체인 네크워크 구성 및 관리의 편리성을 극대화한 클라우드 서비스 입니다. 복잡한 설치 및 구성 과정이 필요하지 않으며, 쉽고 편리하게 여러 참여자 조직들로 구성된 블록체인 네트워크를 쉽게 생성해 낼 수 있습니다. 솔루션에서 제공되는 편리한 관리 콘솔을 통해 네트워크의 가시성을 확보함과 동시에 네트워크를 구성하는 각 컴포넌트의 상태 및 블록의 상태까지 모니터링 할 수 있게 해 줌으로써 분산 네트워크라는 특정으로 인해 발생하는 관리의 어려움을 해소시켜 줄 수 있습니다.&lt;br /&gt;
 &lt;img src=&quot;https://monosnap.com/image/q339C1ZvLdPOLtI9chCGznCMhCckRE.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
@@ -1365,7 +1398,7 @@ Ledger는 채널 별로 저장되므로 Channel 하부 메뉴에서 Ledger 기�
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html&quot;&gt;Oracle Blockchian Cloud&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/admintasks.html&quot;&gt;Oracle Blockchian Cloud - 네트워크 관리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</summary></entry><entry><title type="html">Developer Cloud의 Build Pipeline 사용하기</title><link href="/devops/2018/devcs002/" rel="alternate" type="text/html" title="Developer Cloud의 Build Pipeline 사용하기" /><published>2018-10-02T02:50:00+09:00</published><updated>2018-10-02T02:50:00+09:00</updated><id>/devops/2018/devcs002</id><content type="html" xml:base="/devops/2018/devcs002/">&lt;h1 id=&quot;developer-cloud의-build-pipeline-사용하기&quot;&gt;Developer Cloud의 Build Pipeline 사용하기&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</summary></entry><entry><title type="html">Developer Cloud의 Build Pipeline 사용하기</title><link href="http://localhost:4000/devops/2018/devcs002/" rel="alternate" type="text/html" title="Developer Cloud의 Build Pipeline 사용하기" /><published>2018-10-02T02:50:00+09:00</published><updated>2018-10-02T02:50:00+09:00</updated><id>http://localhost:4000/devops/2018/devcs002</id><content type="html" xml:base="http://localhost:4000/devops/2018/devcs002/">&lt;h1 id=&quot;developer-cloud의-build-pipeline-사용하기&quot;&gt;Developer Cloud의 Build Pipeline 사용하기&lt;/h1&gt;
 
 &lt;p&gt;&lt;strong&gt;Oracle Developer Cloud Service&lt;/strong&gt;는 자동화된 &lt;strong&gt;CI/CD&lt;/strong&gt;를 위한 빌드 파이프라인 관리를 제공하는 클라우드 서비스입니다. &lt;br /&gt;
 이 문서에서는 지난번 신기능에서 소개해 드린 &lt;strong&gt;Pipleline&lt;/strong&gt; 사용법에 대해서 좀 더 상세히 알아보려고 합니다. 이전 버전의 Developer Cloud에서는 빌드를 위해서 하나의 단위 Build Job을 구성하고 해당 Job들은 서로 연관 관계를 가지지 않고 독립적으로 돌아가는 형태였습니다. &lt;br /&gt;여기서 소개하는 &lt;strong&gt;Pipeline&lt;/strong&gt; 기능은 기존 단위 Job들을 유기적으로 연결하여 Job들간의 연관성을 가지게 구성하는 것입니다.
@@ -1427,7 +1460,7 @@ Job5는 Job4가 완료된 후 트리거 됩니다.&lt;/p&gt;
 &lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/managing-project-jobs-and-builds.html#GUID-8A6787EF-2D7E-4322-A7C9-00509920FC1C&quot;&gt;Oracle Developer Cloud - Pipeline&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud의 Build Pipeline 사용하기</summary></entry><entry><title type="html">Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기</title><link href="/devops/2018/devcs001/" rel="alternate" type="text/html" title="Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기" /><published>2018-09-20T02:50:00+09:00</published><updated>2018-09-20T02:50:00+09:00</updated><id>/devops/2018/devcs001</id><content type="html" xml:base="/devops/2018/devcs001/">&lt;h1 id=&quot;developer-cloud를-사용한-docker-image-빌드-및-ociroracle-cloud-infrastructure-registry에-docker-image-push하기&quot;&gt;Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud의 Build Pipeline 사용하기</summary></entry><entry><title type="html">Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기</title><link href="http://localhost:4000/devops/2018/devcs001/" rel="alternate" type="text/html" title="Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기" /><published>2018-09-20T02:50:00+09:00</published><updated>2018-09-20T02:50:00+09:00</updated><id>http://localhost:4000/devops/2018/devcs001</id><content type="html" xml:base="http://localhost:4000/devops/2018/devcs001/">&lt;h1 id=&quot;developer-cloud를-사용한-docker-image-빌드-및-ociroracle-cloud-infrastructure-registry에-docker-image-push하기&quot;&gt;Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”&lt;/h1&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/uW0UJiWfZhsj6piiD3rMdVXqZYyNTE.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
