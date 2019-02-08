@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title:  챗봇 Hands-on Lab (1) - Lab 개요
 date:   2019-01-22 17:50:00
 categories: chatbot

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title:  Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기
 date:   2019-01-21 17:50:00
 categories: chatbot

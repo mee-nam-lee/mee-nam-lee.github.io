@@ -33,15 +33,14 @@ plugins:
 # Build settings
 markdown: kramdown
 theme: minima
-plugins_dir:
-  - jekyll-paginate-v2
+
 exclude:
   - Gemfile
   - Gemfile.lock
 
 # Pagination Settings v1
-paginate_path: "/blog/page:num/"
-paginate: 5
+paginate_path: "/page:num/"
+paginate: 10
 
   # Pagination Settings v2
 

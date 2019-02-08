@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title:  DevOps Workshop (CI/CD 실습) - (2) - Lab 01
 date:   2017-12-07 17:00:00
 categories: devops
