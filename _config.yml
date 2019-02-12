@@ -38,6 +38,11 @@ exclude:
   - Gemfile
   - Gemfile.lock
 
+
+tag_archive:
+  type: liquid
+  path: /tags/
+
 # Pagination Settings v1
 paginate_path: "/page:num/"
 paginate: 10

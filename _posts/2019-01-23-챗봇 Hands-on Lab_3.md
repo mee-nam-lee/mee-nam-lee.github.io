@@ -91,8 +91,9 @@ Test UI 창 상단의 **Reset** 버튼을 클릭하고 다른 기능도 테스�
 ## 파스타 주문하기 
 파스타 주문하기는 세부 Flow가 없이 바로 단답형으로 대답하는 가장 간단한 형태이므로 제일 먼저 추가해 보겠습니다.
 
-**OrderPasta**에 매칭되는 **Utterance**가 들어오면 **OrderPasta** 단계를 호출할 수 있도록 **Intent** 단계의 Action에 **OrderPaster**를 부르도록 다음과 같이 추가 합니다.
+**OrderPasta**에 매칭되는 **Utterance**가 들어오면 **OrderPasta** 단계를 호출할 수 있도록 **Intent** 단계의 Action에 **OrderPasta**를 부르도록 다음과 같이 추가 합니다.
 
+### 수정 전
 ```yaml
   Intent:
     component: "System.Intent"
@@ -103,10 +104,32 @@ Test UI 창 상단의 **Reset** 버튼을 클릭하고 다른 기능도 테스�
       actions:
         unresolvedIntent: "Unresolved"
         # OrderPasta 추가
+        # OrderPizza 추가
         OrderPasta : "OrderPasta"
 ```
+### 수정 후
+```yaml
+  Intent:
+    component: "System.Intent"
+    properties:
+      variable: "iresult"
+      confidenceThreshold : 0.8
+    transitions:
+      actions:
+        unresolvedIntent: "Unresolved"
+        # OrderPasta 추가 
+        OrderPasta : "OrderPasta" # 여기 한줄만 추가된 것임
+        # OrderPizza 추가
+```
+
 호출되는 **OrderPasta** 단계를 **"####### OrderPasta 단계를 아래에 복사헤 주세요"** 주석 아래에 복사해 주세요.
 
+### 수정 전
+```yaml
+####### OrderPasta 단계를 아래에 복사헤 주세요
+```
+
+### 수정 후
 ```yaml
 ####### OrderPasta 단계를 아래에 복사헤 주세요
   OrderPasta:
@@ -143,6 +166,22 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
 
 **OrderPizza**에 매칭되는 **Utterance**가 들어오면 **OrderPizza** 단계를 호출할 수 있도록 **Intent** 단계의 Action에 **OrderPizza**를 부르도록 다음과 같이 추가 합니다.
 
+### 수정 전 
+```yaml
+  Intent:
+    component: "System.Intent"
+    properties:
+      variable: "iresult"
+      confidenceThreshold : 0.8
+    transitions:
+      actions:
+        unresolvedIntent: "Unresolved"
+        # OrderPasta 추가
+        OrderPasta : "OrderPasta"
+        # OrderPizza 추가     
+```
+
+### 수정 후
 ```yaml
   Intent:
     component: "System.Intent"
@@ -155,10 +194,30 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
         # OrderPasta 추가
         OrderPasta : "OrderPasta"
         # OrderPizza 추가
-        OrderPizza : "OrderPizza"        
+        OrderPizza : "OrderPizza"  # 여기 한줄만 변경됨     
 ```
-불리어지는 **OrderPizza** 단계를 **"####### OrderPizza 단계를 아래에 복사헤 주세요"** 주석 아래에 복사해 주세요.
+
+불리어지는 **OrderPizza** 단계를 **"####### OrderPizza 단계를 아래에 복사헤 주세요"** 주석 아래에 있는 코드 부분을 전체 변경해 줍니다 (수정전 --> 수정후) 
 **OrderPizza** 단계는 여러개의 피자를 Card layout으로 이미지와 함께 보여주는 로직 입니다. 
+
+## 수정 전
+
+```yaml
+####### OrderPizza 단계를 아래에 복사헤 주세요
+
+  OrderPizza:
+    component: "System.CommonResponse"
+    properties:
+      metadata:
+        responseItems:
+        - type: "text"
+          text: "오늘의 피자 입니다."
+    transitions:
+    transitions:
+      return: "done"  
+```
+
+## 수정 후
 
 ```yaml
 ####### OrderPizza 단계를 아래에 복사헤 주세요
@@ -223,11 +282,25 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
 ```
 **OrderPizza** 단계에서 **지금 주문**을 클릭하게 되면 피자 크기를 묻는 **AskPizzaSize** 단계로 이동하게 됩니다. 
 
-불리어지는 **AskPizzaSize** 단계를 **"####### AskPizzaSize 단계를 아래에 복사헤 주세요"** 주석 아래에 복사해 주세요.
+불리어지는 **AskPizzaSize** 단계를 **"####### AskPizzaSize 단계를 아래에 복사헤 주세요"** 주석 아래의 코드를 변경해 주세요 (수정전 --> 수정후)
 
+### 수정 전
 ```yaml
 ####### AskPizzaSize 단계를 아래에 복사헤 주세요
+  AskPizzaSize:
+    component: "System.CommonResponse"
+    properties:
+      metadata:
+        responseItems:
+        - type: "text"
+          text: "AskPizzaSize 넣어야 할 곳이예요"
+    transitions:
+      return: "done" 
+``` 
 
+### 수정 후 
+```yaml
+####### AskPizzaSize 단계를 아래에 복사헤 주세요
   AskPizzaSize:
     component: "System.CommonResponse"
     properties:

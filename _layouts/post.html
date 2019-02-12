@@ -25,6 +25,10 @@ layout: default
     {%- include disqus_comments.html -%}
   {%- endif -%}
 
+  {%- if site.tag_archive.type and page.tags[0] -%}
+        {% include tag-list.html %}
+  {%- endif -%}
+
   <!-- POST NAVIGATION -->
 
   {%- include post_pagination.html -%}
