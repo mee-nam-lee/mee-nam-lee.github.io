@@ -147,10 +147,11 @@
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
     <span class="na">properties</span><span class="pi">:</span>
       <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
-      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+<span class="c1">#      confidenceThreshold : 0.8</span>
     <span class="na">transitions</span><span class="pi">:</span>
       <span class="na">actions</span><span class="pi">:</span>
         <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
+        <span class="na">CancelPizza </span><span class="pi">:</span> <span class="s2">"</span><span class="s">CancelPizza"</span>
         <span class="c1"># OrderPasta 추가</span>
         <span class="c1"># OrderPizza 추가</span>
         <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span>
@@ -160,10 +161,11 @@
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
     <span class="na">properties</span><span class="pi">:</span>
       <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
-      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+<span class="c1">#      confidenceThreshold : 0.8</span>
     <span class="na">transitions</span><span class="pi">:</span>
       <span class="na">actions</span><span class="pi">:</span>
         <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
+        <span class="na">CancelPizza </span><span class="pi">:</span> <span class="s2">"</span><span class="s">CancelPizza"</span>
         <span class="c1"># OrderPasta 추가 </span>
         <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span> <span class="c1"># 여기 한줄만 추가된 것임</span>
         <span class="c1"># OrderPizza 추가</span>
@@ -193,7 +195,10 @@
 
 <p><img src="/assets/images/chatbot_lecture/pizzalab/07_OrderPasta_Flow.png" alt="" /></p>
 
-<p>오류가 없다면 Test UI를 열어서 해당 flow가 잘 동작하는지 확인합니다.</p>
+<p>오류가 없다면 Test UI를 열어서 해당 flow가 잘 동작하는지 확인합니다.
+왼쪽 하단의 <strong>▶</strong> 버튼을 클릭하여 Test UI를 엽니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/pizzalab/08_OrderPasta_Test_1.png" alt="" /></p>
 
 <p><img src="/assets/images/chatbot_lecture/pizzalab/08_OrderPasta_Test.png" alt="" /></p>
 
@@ -241,7 +246,7 @@
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
     <span class="na">properties</span><span class="pi">:</span>
       <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
-      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+<span class="c1">#      confidenceThreshold : 0.8</span>
     <span class="na">transitions</span><span class="pi">:</span>
       <span class="na">actions</span><span class="pi">:</span>
         <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
@@ -255,7 +260,7 @@
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
     <span class="na">properties</span><span class="pi">:</span>
       <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
-      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+<span class="c1">#      confidenceThreshold : 0.8</span>
     <span class="na">transitions</span><span class="pi">:</span>
       <span class="na">actions</span><span class="pi">:</span>
         <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
@@ -265,13 +270,12 @@
         <span class="na">OrderPizza </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPizza"</span>  <span class="c1"># 여기 한줄만 변경됨     </span>
 </code></pre></div></div>
 
-<p>불리어지는 <strong>OrderPizza</strong> 단계를 <strong>”####### OrderPizza 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 있는 코드 부분을 전체 변경해 줍니다 (수정전 –&gt; 수정후) 
+<p>불리어지는 <strong>OrderPizza</strong> 단계를 <strong>”####### OrderPizza 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 있는 코드 부분을 <strong>전체 변경</strong>해 줍니다 (수정전 –&gt; 수정후) 
 <strong>OrderPizza</strong> 단계는 여러개의 피자를 Card layout으로 이미지와 함께 보여주는 로직 입니다.</p>
 
 <h2 id="수정-전-3">수정 전</h2>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPizza 단계를 아래에 복사헤 주세요</span>
-
   <span class="na">OrderPizza</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
     <span class="na">properties</span><span class="pi">:</span>
@@ -287,7 +291,6 @@
 <h2 id="수정-후-3">수정 후</h2>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPizza 단계를 아래에 복사헤 주세요</span>
-
   <span class="na">OrderPizza</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
     <span class="na">properties</span><span class="pi">:</span>
@@ -399,7 +402,6 @@
 <p><strong>”####### AskLocation 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 다음을 추가해 주세요.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### AskLocation 단계를 아래에 복사헤 주세요</span>
-
   <span class="na">AskLocation</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
     <span class="na">properties</span><span class="pi">:</span>
@@ -425,7 +427,6 @@
 <p><strong>”####### Confirmation 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 다음을 추가해 주세요.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### Confirmation 단계를 아래에 복사헤 주세요</span>
-
   <span class="na">Confirmation</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
     <span class="na">properties</span><span class="pi">:</span>
@@ -453,7 +454,13 @@
   <li><a href="https://github.com/mee-nam-lee/chatbot_lecture/blob/master/labfiles/PizzaBot/OrderPizzaFlow.md">완성된 OrderPizza flow 참고</a></li>
 </ul>
 
-<p>오류가 없다면 Test UI를 열어서 추가된 로직이 잘 동작하는지 확인 합니다.</p>
+<p>오류가 없다면 Test UI를 열어서 추가된 로직이 잘 동작하는지 확인 합니다.
+왼쪽 하단의 <strong>▶</strong> 버튼을 클릭하여 Test UI를 엽니다.</p>
+
+<blockquote>
+  <p>Test UI는 위에서 테스트 했던 것처럼 Flow화면 우측이 아닌 새로운 페이지로 나타날 것입니다.
+아래 이미지의 테스트 순서에 따라 테스트 하면 됩니다.</p>
+</blockquote>
 
 <p><img src="/assets/images/chatbot_lecture/pizzalab/09_OrderPizza_Test1.png" alt="" /></p>
 

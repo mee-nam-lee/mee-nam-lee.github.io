@@ -99,10 +99,11 @@ Test UI 창 상단의 **Reset** 버튼을 클릭하고 다른 기능도 테스�
     component: "System.Intent"
     properties:
       variable: "iresult"
-      confidenceThreshold : 0.8
+#      confidenceThreshold : 0.8
     transitions:
       actions:
         unresolvedIntent: "Unresolved"
+        CancelPizza : "CancelPizza"
         # OrderPasta 추가
         # OrderPizza 추가
         OrderPasta : "OrderPasta"
@@ -113,10 +114,11 @@ Test UI 창 상단의 **Reset** 버튼을 클릭하고 다른 기능도 테스�
     component: "System.Intent"
     properties:
       variable: "iresult"
-      confidenceThreshold : 0.8
+#      confidenceThreshold : 0.8
     transitions:
       actions:
         unresolvedIntent: "Unresolved"
+        CancelPizza : "CancelPizza"
         # OrderPasta 추가 
         OrderPasta : "OrderPasta" # 여기 한줄만 추가된 것임
         # OrderPizza 추가
@@ -149,6 +151,9 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
 ![](/assets/images/chatbot_lecture/pizzalab/07_OrderPasta_Flow.png)
 
 오류가 없다면 Test UI를 열어서 해당 flow가 잘 동작하는지 확인합니다.
+왼쪽 하단의 **▶** 버튼을 클릭하여 Test UI를 엽니다.
+
+![](/assets/images/chatbot_lecture/pizzalab/08_OrderPasta_Test_1.png)
 
 ![](/assets/images/chatbot_lecture/pizzalab/08_OrderPasta_Test.png)
 
@@ -172,7 +177,7 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
     component: "System.Intent"
     properties:
       variable: "iresult"
-      confidenceThreshold : 0.8
+#      confidenceThreshold : 0.8
     transitions:
       actions:
         unresolvedIntent: "Unresolved"
@@ -187,7 +192,7 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
     component: "System.Intent"
     properties:
       variable: "iresult"
-      confidenceThreshold : 0.8
+#      confidenceThreshold : 0.8
     transitions:
       actions:
         unresolvedIntent: "Unresolved"
@@ -197,14 +202,13 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
         OrderPizza : "OrderPizza"  # 여기 한줄만 변경됨     
 ```
 
-불리어지는 **OrderPizza** 단계를 **"####### OrderPizza 단계를 아래에 복사헤 주세요"** 주석 아래에 있는 코드 부분을 전체 변경해 줍니다 (수정전 --> 수정후) 
+불리어지는 **OrderPizza** 단계를 **"####### OrderPizza 단계를 아래에 복사헤 주세요"** 주석 아래에 있는 코드 부분을 **전체 변경**해 줍니다 (수정전 --> 수정후) 
 **OrderPizza** 단계는 여러개의 피자를 Card layout으로 이미지와 함께 보여주는 로직 입니다. 
 
 ## 수정 전
 
 ```yaml
 ####### OrderPizza 단계를 아래에 복사헤 주세요
-
   OrderPizza:
     component: "System.CommonResponse"
     properties:
@@ -221,7 +225,6 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
 
 ```yaml
 ####### OrderPizza 단계를 아래에 복사헤 주세요
-
   OrderPizza:
     component: "System.CommonResponse"
     properties:
@@ -336,7 +339,6 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
 
 ```yaml
 ####### AskLocation 단계를 아래에 복사헤 주세요
-
   AskLocation:
     component: "System.CommonResponse"
     properties:
@@ -363,7 +365,6 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
 
 ```yaml
 ####### Confirmation 단계를 아래에 복사헤 주세요
-
   Confirmation:
     component: "System.CommonResponse"
     properties:
@@ -388,6 +389,10 @@ Flow가 완성되었으면 우측 상단의 **Validate**를 클릭하여 flow에
 - [완성된 OrderPizza flow 참고](https://github.com/mee-nam-lee/chatbot_lecture/blob/master/labfiles/PizzaBot/OrderPizzaFlow.md)
 
 오류가 없다면 Test UI를 열어서 추가된 로직이 잘 동작하는지 확인 합니다.
+왼쪽 하단의 **▶** 버튼을 클릭하여 Test UI를 엽니다. 
+
+> Test UI는 위에서 테스트 했던 것처럼 Flow화면 우측이 아닌 새로운 페이지로 나타날 것입니다.
+> 아래 이미지의 테스트 순서에 따라 테스트 하면 됩니다.
 
 ![](/assets/images/chatbot_lecture/pizzalab/09_OrderPizza_Test1.png)
 
