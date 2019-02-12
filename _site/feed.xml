@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-11T18:03:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-12T10:47:36+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
 &lt;h1 id=&quot;채널-연결-web-chat-연결하기&quot;&gt;[채널 연결] Web Chat 연결하기&lt;/h1&gt;
 
 &lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
@@ -168,8 +168,9 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
 &lt;h2 id=&quot;파스타-주문하기&quot;&gt;파스타 주문하기&lt;/h2&gt;
 &lt;p&gt;파스타 주문하기는 세부 Flow가 없이 바로 단답형으로 대답하는 가장 간단한 형태이므로 제일 먼저 추가해 보겠습니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;OrderPasta&lt;/strong&gt;에 매칭되는 &lt;strong&gt;Utterance&lt;/strong&gt;가 들어오면 &lt;strong&gt;OrderPasta&lt;/strong&gt; 단계를 호출할 수 있도록 &lt;strong&gt;Intent&lt;/strong&gt; 단계의 Action에 &lt;strong&gt;OrderPaster&lt;/strong&gt;를 부르도록 다음과 같이 추가 합니다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;OrderPasta&lt;/strong&gt;에 매칭되는 &lt;strong&gt;Utterance&lt;/strong&gt;가 들어오면 &lt;strong&gt;OrderPasta&lt;/strong&gt; 단계를 호출할 수 있도록 &lt;strong&gt;Intent&lt;/strong&gt; 단계의 Action에 &lt;strong&gt;OrderPasta&lt;/strong&gt;를 부르도록 다음과 같이 추가 합니다.&lt;/p&gt;
 
+&lt;h3 id=&quot;수정-전&quot;&gt;수정 전&lt;/h3&gt;
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Intent&quot;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
@@ -179,10 +180,30 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
       &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;na&quot;&gt;unresolvedIntent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Unresolved&quot;&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;# OrderPasta 추가&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# OrderPizza 추가&lt;/span&gt;
         &lt;span class=&quot;na&quot;&gt;OrderPasta &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPasta&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;수정-후&quot;&gt;수정 후&lt;/h3&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Intent&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;variable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;iresult&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;confidenceThreshold &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;0.8&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;unresolvedIntent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Unresolved&quot;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# OrderPasta 추가 &lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;OrderPasta &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPasta&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 여기 한줄만 추가된 것임&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# OrderPizza 추가&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;호출되는 &lt;strong&gt;OrderPasta&lt;/strong&gt; 단계를 &lt;strong&gt;”####### OrderPasta 단계를 아래에 복사헤 주세요”&lt;/strong&gt; 주석 아래에 복사해 주세요.&lt;/p&gt;
 
+&lt;h3 id=&quot;수정-전-1&quot;&gt;수정 전&lt;/h3&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;####### OrderPasta 단계를 아래에 복사헤 주세요&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;수정-후-1&quot;&gt;수정 후&lt;/h3&gt;
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;####### OrderPasta 단계를 아래에 복사헤 주세요&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;OrderPasta&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
@@ -243,6 +264,21 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
 
 &lt;p&gt;&lt;strong&gt;OrderPizza&lt;/strong&gt;에 매칭되는 &lt;strong&gt;Utterance&lt;/strong&gt;가 들어오면 &lt;strong&gt;OrderPizza&lt;/strong&gt; 단계를 호출할 수 있도록 &lt;strong&gt;Intent&lt;/strong&gt; 단계의 Action에 &lt;strong&gt;OrderPizza&lt;/strong&gt;를 부르도록 다음과 같이 추가 합니다.&lt;/p&gt;
 
+&lt;h3 id=&quot;수정-전-2&quot;&gt;수정 전&lt;/h3&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Intent&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;variable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;iresult&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;confidenceThreshold &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;0.8&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;unresolvedIntent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Unresolved&quot;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# OrderPasta 추가&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;OrderPasta &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPasta&quot;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# OrderPizza 추가     &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;수정-후-2&quot;&gt;수정 후&lt;/h3&gt;
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Intent&quot;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
@@ -254,10 +290,29 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
         &lt;span class=&quot;c1&quot;&gt;# OrderPasta 추가&lt;/span&gt;
         &lt;span class=&quot;na&quot;&gt;OrderPasta &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPasta&quot;&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;# OrderPizza 추가&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;OrderPizza &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPizza&quot;&lt;/span&gt;        
+        &lt;span class=&quot;na&quot;&gt;OrderPizza &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPizza&quot;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 여기 한줄만 변경됨     &lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;불리어지는 &lt;strong&gt;OrderPizza&lt;/strong&gt; 단계를 &lt;strong&gt;”####### OrderPizza 단계를 아래에 복사헤 주세요”&lt;/strong&gt; 주석 아래에 복사해 주세요.
+
+&lt;p&gt;불리어지는 &lt;strong&gt;OrderPizza&lt;/strong&gt; 단계를 &lt;strong&gt;”####### OrderPizza 단계를 아래에 복사헤 주세요”&lt;/strong&gt; 주석 아래에 있는 코드 부분을 전체 변경해 줍니다 (수정전 –&amp;gt; 수정후) 
 &lt;strong&gt;OrderPizza&lt;/strong&gt; 단계는 여러개의 피자를 Card layout으로 이미지와 함께 보여주는 로직 입니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;수정-전-3&quot;&gt;수정 전&lt;/h2&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;####### OrderPizza 단계를 아래에 복사헤 주세요&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;OrderPizza&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;responseItems&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;text&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;오늘의&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;피자&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;입니다.&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;수정-후-3&quot;&gt;수정 후&lt;/h2&gt;
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;####### OrderPizza 단계를 아래에 복사헤 주세요&lt;/span&gt;
 
@@ -321,10 +376,23 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;OrderPizza&lt;/strong&gt; 단계에서 &lt;strong&gt;지금 주문&lt;/strong&gt;을 클릭하게 되면 피자 크기를 묻는 &lt;strong&gt;AskPizzaSize&lt;/strong&gt; 단계로 이동하게 됩니다.&lt;/p&gt;
 
-&lt;p&gt;불리어지는 &lt;strong&gt;AskPizzaSize&lt;/strong&gt; 단계를 &lt;strong&gt;”####### AskPizzaSize 단계를 아래에 복사헤 주세요”&lt;/strong&gt; 주석 아래에 복사해 주세요.&lt;/p&gt;
+&lt;p&gt;불리어지는 &lt;strong&gt;AskPizzaSize&lt;/strong&gt; 단계를 &lt;strong&gt;”####### AskPizzaSize 단계를 아래에 복사헤 주세요”&lt;/strong&gt; 주석 아래의 코드를 변경해 주세요 (수정전 –&amp;gt; 수정후)&lt;/p&gt;
 
+&lt;h3 id=&quot;수정-전-4&quot;&gt;수정 전&lt;/h3&gt;
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;####### AskPizzaSize 단계를 아래에 복사헤 주세요&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;AskPizzaSize&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;responseItems&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;text&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;AskPizzaSize&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;넣어야&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;할&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;곳이예요&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h3 id=&quot;수정-후-4&quot;&gt;수정 후&lt;/h3&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;####### AskPizzaSize 단계를 아래에 복사헤 주세요&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;AskPizzaSize&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;

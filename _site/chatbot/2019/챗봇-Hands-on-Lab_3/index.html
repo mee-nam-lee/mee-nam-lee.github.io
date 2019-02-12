@@ -140,8 +140,9 @@
 <h2 id="파스타-주문하기">파스타 주문하기</h2>
 <p>파스타 주문하기는 세부 Flow가 없이 바로 단답형으로 대답하는 가장 간단한 형태이므로 제일 먼저 추가해 보겠습니다.</p>
 
-<p><strong>OrderPasta</strong>에 매칭되는 <strong>Utterance</strong>가 들어오면 <strong>OrderPasta</strong> 단계를 호출할 수 있도록 <strong>Intent</strong> 단계의 Action에 <strong>OrderPaster</strong>를 부르도록 다음과 같이 추가 합니다.</p>
+<p><strong>OrderPasta</strong>에 매칭되는 <strong>Utterance</strong>가 들어오면 <strong>OrderPasta</strong> 단계를 호출할 수 있도록 <strong>Intent</strong> 단계의 Action에 <strong>OrderPasta</strong>를 부르도록 다음과 같이 추가 합니다.</p>
 
+<h3 id="수정-전">수정 전</h3>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">Intent</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
     <span class="na">properties</span><span class="pi">:</span>
@@ -151,10 +152,30 @@
       <span class="na">actions</span><span class="pi">:</span>
         <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
         <span class="c1"># OrderPasta 추가</span>
+        <span class="c1"># OrderPizza 추가</span>
         <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span>
 </code></pre></div></div>
+<h3 id="수정-후">수정 후</h3>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">Intent</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
+      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
+        <span class="c1"># OrderPasta 추가 </span>
+        <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span> <span class="c1"># 여기 한줄만 추가된 것임</span>
+        <span class="c1"># OrderPizza 추가</span>
+</code></pre></div></div>
+
 <p>호출되는 <strong>OrderPasta</strong> 단계를 <strong>”####### OrderPasta 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 복사해 주세요.</p>
 
+<h3 id="수정-전-1">수정 전</h3>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPasta 단계를 아래에 복사헤 주세요</span>
+</code></pre></div></div>
+
+<h3 id="수정-후-1">수정 후</h3>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPasta 단계를 아래에 복사헤 주세요</span>
   <span class="na">OrderPasta</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
@@ -215,6 +236,21 @@
 
 <p><strong>OrderPizza</strong>에 매칭되는 <strong>Utterance</strong>가 들어오면 <strong>OrderPizza</strong> 단계를 호출할 수 있도록 <strong>Intent</strong> 단계의 Action에 <strong>OrderPizza</strong>를 부르도록 다음과 같이 추가 합니다.</p>
 
+<h3 id="수정-전-2">수정 전</h3>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">Intent</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">iresult"</span>
+      <span class="na">confidenceThreshold </span><span class="pi">:</span> <span class="s">0.8</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">unresolvedIntent</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Unresolved"</span>
+        <span class="c1"># OrderPasta 추가</span>
+        <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span>
+        <span class="c1"># OrderPizza 추가     </span>
+</code></pre></div></div>
+
+<h3 id="수정-후-2">수정 후</h3>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">Intent</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Intent"</span>
     <span class="na">properties</span><span class="pi">:</span>
@@ -226,10 +262,29 @@
         <span class="c1"># OrderPasta 추가</span>
         <span class="na">OrderPasta </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPasta"</span>
         <span class="c1"># OrderPizza 추가</span>
-        <span class="na">OrderPizza </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPizza"</span>        
+        <span class="na">OrderPizza </span><span class="pi">:</span> <span class="s2">"</span><span class="s">OrderPizza"</span>  <span class="c1"># 여기 한줄만 변경됨     </span>
 </code></pre></div></div>
-<p>불리어지는 <strong>OrderPizza</strong> 단계를 <strong>”####### OrderPizza 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 복사해 주세요.
+
+<p>불리어지는 <strong>OrderPizza</strong> 단계를 <strong>”####### OrderPizza 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 있는 코드 부분을 전체 변경해 줍니다 (수정전 –&gt; 수정후) 
 <strong>OrderPizza</strong> 단계는 여러개의 피자를 Card layout으로 이미지와 함께 보여주는 로직 입니다.</p>
+
+<h2 id="수정-전-3">수정 전</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPizza 단계를 아래에 복사헤 주세요</span>
+
+  <span class="na">OrderPizza</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">오늘의</span><span class="nv"> </span><span class="s">피자</span><span class="nv"> </span><span class="s">입니다."</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span>  
+</code></pre></div></div>
+
+<h2 id="수정-후-3">수정 후</h2>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### OrderPizza 단계를 아래에 복사헤 주세요</span>
 
@@ -293,10 +348,23 @@
 </code></pre></div></div>
 <p><strong>OrderPizza</strong> 단계에서 <strong>지금 주문</strong>을 클릭하게 되면 피자 크기를 묻는 <strong>AskPizzaSize</strong> 단계로 이동하게 됩니다.</p>
 
-<p>불리어지는 <strong>AskPizzaSize</strong> 단계를 <strong>”####### AskPizzaSize 단계를 아래에 복사헤 주세요”</strong> 주석 아래에 복사해 주세요.</p>
+<p>불리어지는 <strong>AskPizzaSize</strong> 단계를 <strong>”####### AskPizzaSize 단계를 아래에 복사헤 주세요”</strong> 주석 아래의 코드를 변경해 주세요 (수정전 –&gt; 수정후)</p>
 
+<h3 id="수정-전-4">수정 전</h3>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### AskPizzaSize 단계를 아래에 복사헤 주세요</span>
+  <span class="na">AskPizzaSize</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">AskPizzaSize</span><span class="nv"> </span><span class="s">넣어야</span><span class="nv"> </span><span class="s">할</span><span class="nv"> </span><span class="s">곳이예요"</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span> 
+</code></pre></div></div>
 
+<h3 id="수정-후-4">수정 후</h3>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">####### AskPizzaSize 단계를 아래에 복사헤 주세요</span>
   <span class="na">AskPizzaSize</span><span class="pi">:</span>
     <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
     <span class="na">properties</span><span class="pi">:</span>
