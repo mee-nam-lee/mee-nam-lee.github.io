@@ -110,7 +110,7 @@ ADW에 연결하기 위한 Custom Component 작성을 위한 준비가 완료 �
 이제 Sample로 작성된 ADW 연결용 Custom Component를 다운 받습니다.
 
 ```
-> git clone https://github.com/mee-nam-lee/chatbot_adw.git
+> git clone https://github.com/mee-nam-lee/chatbot.git
 > cd chatbot_adw/bot-start
 > npm install
 ```

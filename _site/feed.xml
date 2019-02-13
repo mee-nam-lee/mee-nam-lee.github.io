@@ -1,80 +1,158 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-12T11:08:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
-&lt;h1 id=&quot;채널-연결-web-chat-연결하기&quot;&gt;[채널 연결] Web Chat 연결하기&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-13T14:25:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/" rel="alternate" type="text/html" title="다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)" /><published>2019-02-13T02:50:00+09:00</published><updated>2019-02-13T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Layout</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/">&lt;h1 id=&quot;flow의-yaml에서-다양한-레이아웃-사용하기&quot;&gt;Flow의 YAML에서 다양한 레이아웃 사용하기&lt;/h1&gt;
+&lt;p&gt;챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다.
+이를 위해서 오라클 챗봇은 &lt;strong&gt;System.Output&lt;/strong&gt; 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 &lt;strong&gt;System.CommonResponse&lt;/strong&gt;라는 빌트인 컴포넌트를 제공하고 있습니다. 이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다.&lt;/p&gt;
 
-&lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
+&lt;h2 id=&quot;text-메시지-systemoutput---text&quot;&gt;Text 메시지 (System.Output - Text)&lt;/h2&gt;
 
-&lt;h2 id=&quot;웹-채널-생성&quot;&gt;웹 채널 생성&lt;/h2&gt;
-&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
-&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_layout/text1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
+&lt;h3 id=&quot;flow-yaml-code-systemoutput---text&quot;&gt;FLOW YAML CODE (System.Output - Text)&lt;/h3&gt;
 
-&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;showText&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Output&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Output&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;컴포넌트를&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;사용한&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;이용예제&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;text-메시지-commmonresponse---text&quot;&gt;Text 메시지 (CommmonResponse - Text)&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_layout/text2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;flow-yaml-code-commmonresponse---text&quot;&gt;FLOW YAML CODE (CommmonResponse - Text)&lt;/h3&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;textResponse&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+        &lt;span class=&quot;na&quot;&gt;responseItems&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;         
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;text&quot;&lt;/span&gt;  
+          &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;CommonResponse&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;컴포넌트를&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;사용한&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;이용&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;예제&quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;list&quot;&gt;List&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_layout/list.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;flow-yaml-code-systemlist&quot;&gt;FLOW YAML CODE (System.List)&lt;/h3&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;showList&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.List&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;텍스트,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;이미지,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;리스트,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Card,위치&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;prompt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;보고&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;싶은&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;레이아웃을&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;선택하세요&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;variable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;greeting&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;텍스트&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;showText&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;image&quot;&gt;Image&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_layout/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;flow-yaml-code&quot;&gt;FLOW YAML CODE&lt;/h3&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;showImage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;responseItems&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;attachment&quot;&lt;/span&gt; 
+          &lt;span class=&quot;na&quot;&gt;attachmentType&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;image&quot;&lt;/span&gt; 
+          &lt;span class=&quot;na&quot;&gt;attachmentUrl&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://cdn.pixabay.com/photo/2017/09/03/10/35/pizza-2709845__340.jpg&quot;&lt;/span&gt; 
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;card-horizontal&quot;&gt;Card (horizontal)&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_layout/card1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;flow-yaml-code-1&quot;&gt;FLOW YAML CODE&lt;/h3&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;showCard&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;responseItems&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;cards&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;cardLayout&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;horizontal&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PizzaCards&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${pizzas.name}&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${pizzas.description}&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;imageUrl&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${pizzas.image}&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PizzaCard&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;iteratorVariable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;pizzas&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;rangeStart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;1&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;지금&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;주문&quot;&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;postback&quot;&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;order&quot;&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Order&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;processUserMessage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+       &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;custom-component-에서의-다양한-레이아웃-사용하기&quot;&gt;Custom Component 에서의 다양한 레이아웃 사용하기&lt;/h1&gt;
+&lt;p&gt;Flow Yaml에서  &lt;strong&gt;System.CommonResponse&lt;/strong&gt; 컴포넌트를 사용하여 응답을 생성할 수 있지만, DB 연동이나 커스텀 비즈니스 로직을 통해 생성되는 응답은 Flow Yaml을 통해서만 생성해 내기에는 무리가 있습니다. 
+따라서 이 경우에는 Custom Compomnent를 작성해야 하는데 여기에서도 다양한 응답 레이아웃으로 메시지를 생성해내야 할 필요가 있습니다. 
+아래 예에서는 Text와 Card 레이아웃을 Custom Component에서 &lt;strong&gt;Conversation Message Model&lt;/strong&gt;를 이용하여 생성하는 방법에 대해 설명합니다.&lt;/p&gt;
+
+&lt;p&gt;화면에서 보여지는 형태는 System.CommonResponse를 통해 만들어 진것과 동일 합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;code-snippet&quot;&gt;Code Snippet&lt;/h2&gt;
+
+&lt;h2 id=&quot;text-response&quot;&gt;Text Response&lt;/h2&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Common Message Model - Text 이용 예&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messageModel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conversation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MessageModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;textActions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;textResp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messageModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textConversationMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;텍스트 메시지 입니다.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textActions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;conversation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;textResp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;card-response&quot;&gt;Card Response&lt;/h2&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Common Message Model - Card 이용 예 &lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pbActions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;postback&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&quot;action&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;order&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pbAction1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;nx&quot;&gt;messageModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;postbackActionObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;지금 주문&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;postback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;pbActions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pbAction1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;card1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messageModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cardObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;치즈피자&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                                    &lt;span class=&quot;s2&quot;&gt;&quot;모짜렐라 치즈와 이탈리안 소스를 토핑한 클래식 피자&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                                    &lt;span class=&quot;s2&quot;&gt;&quot;https://cdn.pixabay.com/photo/2017/09/03/10/35/pizza-2709845__340.jpg&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pbActions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;card2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messageModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cardObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;페파로니피자&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                                    &lt;span class=&quot;s2&quot;&gt;&quot;모짜렐라 치즈와 이탈리안 소스를 토핑한 클래식 피자고전 스타일의 페파로니와 클래식 마리나라 소스를 토핑한 피자&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                                    &lt;span class=&quot;s2&quot;&gt;&quot;https://cdn.pixabay.com/photo/2017/08/02/12/38/pepperoni-2571392__340.jpg&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pbActions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;                                            
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cards&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;card1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;card2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cardResp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messageModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cardConversationMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;horizontal&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;conversation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cardResp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;전체-코드-참고&quot;&gt;전체 코드 참고&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/mee-nam-lee/chatbot/blob/master/bot-start/components/layout.js&quot;&gt;Conversation Message Model 예제&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
+
+&lt;p&gt;Oracle 챗봇 컴포넌트 작성을 위한 자세한 SDK 가이드는 다음을 참고하세요&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Name : PizzaBot_{SEQ}.web
-    &lt;blockquote&gt;
-      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
-  &lt;li&gt;Channel Type : Web&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/02_create_channel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route_done.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;웹-페이지에서-테스트-하기&quot;&gt;웹 페이지에서 테스트 하기&lt;/h2&gt;
-&lt;p&gt;Oracle Digital Assistant는 웹채널을 태스트 하기 위한 chat-sample-web 코드를 제공하고 있습니다.&lt;/p&gt;
-
-&lt;p&gt;이 코드가 구동되고 있는 환경 정보가 제공되었을 것입니다. 브라우저를 통해 제공된 URL에 접속합니다. 아래 화면의 왼쪽 브라우저와 같은 페이지가 보여질 것입니다.
-Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채널의 &lt;strong&gt;App Id&lt;/strong&gt;를 복사해서 입력해 줍니다. &lt;strong&gt;Continue&lt;/strong&gt;를 누르면 해당 웹페이지의 채팅은 자신의 PizzaBot에 연결 될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;App Id 입력하는 Text Box가 첫 화면에서 보이지 않는다면 다음과 같이 설정 아이콘을 클릭하여 App ID를 입력해 줍니다.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-  &lt;p&gt;App Id를 자신의 채널 것으로 업데이트하고 Save 합니다.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting_save.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;Chat with your BOT&lt;/strong&gt; 버튼을 클릭하여 대화를 시작해 봅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/05_chat_with_your_bot.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 채팅창이 열리게 됩니다. &lt;strong&gt;Type a message&lt;/strong&gt; 텍스트 박스에 대화를 입력합니다.
-피자봇에서 구현했던 4개의 Intent들을 차례로 테스트 해보면 됩니다.
-&lt;img src=&quot;/assets/images/chatbot_lecture/channel/06_chat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;사용환경-정리&quot;&gt;사용환경 정리&lt;/h2&gt;
-&lt;p&gt;생성한 PizzaBot_{SEQ}를 이전 lab에서 처럼 삭제합니다.&lt;/p&gt;
-
-&lt;p&gt;과정을 완료하였습니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="챗봇" /><category term="Oracle Digital Assistant" /><summary type="html">챗봇 Hands-on Lab (4) [채널 연결] Web Chat 연결하기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;h1 id=&quot;챗봇-hands-on-lab-3&quot;&gt;챗봇 Hands-on Lab (3)&lt;/h1&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/bots-node-sdk/&quot;&gt;Oracle Bots Node.js SDK&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="챗봇" /><category term="Oracle Digital Assistant" /><category term="CommonResponse" /><category term="Conversation Message Model" /><category term="CMM" /><summary type="html">Flow의 YAML에서 다양한 레이아웃 사용하기 챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다. 이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;h1 id=&quot;챗봇-hands-on-lab-3&quot;&gt;챗봇 Hands-on Lab (3)&lt;/h1&gt;
 &lt;h1 id=&quot;피자봇-만들기&quot;&gt;피자봇 만들기&lt;/h1&gt;
 
 &lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
@@ -504,7 +582,83 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (3) 피자봇 만들기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (3) 피자봇 만들기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;h1 id=&quot;챗봇-hands-on-lab-4&quot;&gt;챗봇 Hands-on Lab (4)&lt;/h1&gt;
+&lt;h1 id=&quot;채널-연결-web-chat-연결하기&quot;&gt;[채널 연결] Web Chat 연결하기&lt;/h1&gt;
+
+&lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;웹-채널-생성&quot;&gt;웹 채널 생성&lt;/h2&gt;
+&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
+&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Name : PizzaBot_{SEQ}.web
+    &lt;blockquote&gt;
+      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
+  &lt;li&gt;Channel Type : Web&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/02_create_channel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route_done.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;웹-페이지에서-테스트-하기&quot;&gt;웹 페이지에서 테스트 하기&lt;/h2&gt;
+&lt;p&gt;Oracle Digital Assistant는 웹채널을 태스트 하기 위한 chat-sample-web 코드를 제공하고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;이 코드가 구동되고 있는 환경 정보가 제공되었을 것입니다. 브라우저를 통해 제공된 URL에 접속합니다. 아래 화면의 왼쪽 브라우저와 같은 페이지가 보여질 것입니다.
+Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채널의 &lt;strong&gt;App Id&lt;/strong&gt;를 복사해서 입력해 줍니다. &lt;strong&gt;Continue&lt;/strong&gt;를 누르면 해당 웹페이지의 채팅은 자신의 PizzaBot에 연결 될 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;App Id 입력하는 Text Box가 첫 화면에서 보이지 않는다면 다음과 같이 설정 아이콘을 클릭하여 App ID를 입력해 줍니다.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;App Id를 자신의 채널 것으로 업데이트하고 Save 합니다.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting_save.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Chat with your BOT&lt;/strong&gt; 버튼을 클릭하여 대화를 시작해 봅니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/05_chat_with_your_bot.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 채팅창이 열리게 됩니다. &lt;strong&gt;Type a message&lt;/strong&gt; 텍스트 박스에 대화를 입력합니다.
+피자봇에서 구현했던 4개의 Intent들을 차례로 테스트 해보면 됩니다.
+&lt;img src=&quot;/assets/images/chatbot_lecture/channel/06_chat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;사용환경-정리&quot;&gt;사용환경 정리&lt;/h2&gt;
+&lt;p&gt;생성한 PizzaBot_{SEQ}를 이전 lab에서 처럼 삭제합니다.&lt;/p&gt;
+
+&lt;p&gt;과정을 완료하였습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="챗봇" /><category term="Oracle Digital Assistant" /><summary type="html">챗봇 Hands-on Lab (4) [채널 연결] Web Chat 연결하기</summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
 
 &lt;p&gt;Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.
 Training 과정을 통해 더욱 정교한 대화가 가능한 챗봇으로 진화시키는 과정을 체험하고, 비즈니스 처리를 위한 로직을 쉽게 작성하여 챗봇을 통해 서비스하게 하는 경험을 하시게 될 것입니다.&lt;/p&gt;
@@ -823,7 +977,7 @@ export TNS_ADMIN=/home/opc/instantclient_18_3/network/admin
 
 &lt;p&gt;이제 Sample로 작성된 ADW 연결용 Custom Component를 다운 받습니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; git clone https://github.com/mee-nam-lee/chatbot_adw.git
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; git clone https://github.com/mee-nam-lee/chatbot.git
 &amp;gt; cd chatbot_adw/bot-start
 &amp;gt; npm install
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -1535,146 +1689,4 @@ Job5는 Job4가 완료된 후 트리거 됩니다.&lt;/p&gt;
 &lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/managing-project-jobs-and-builds.html#GUID-8A6787EF-2D7E-4322-A7C9-00509920FC1C&quot;&gt;Oracle Developer Cloud - Pipeline&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud의 Build Pipeline 사용하기</summary></entry><entry><title type="html">Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기</title><link href="http://localhost:4000/devops/2018/devcs001/" rel="alternate" type="text/html" title="Developer Cloud를 사용한 Docker Image 빌드 및 OCIR에 Docker Image Push하기" /><published>2018-09-20T02:50:00+09:00</published><updated>2018-09-20T02:50:00+09:00</updated><id>http://localhost:4000/devops/2018/devcs001</id><content type="html" xml:base="http://localhost:4000/devops/2018/devcs001/">&lt;h1 id=&quot;developer-cloud를-사용한-docker-image-빌드-및-ociroracle-cloud-infrastructure-registry에-docker-image-push하기&quot;&gt;Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/uW0UJiWfZhsj6piiD3rMdVXqZYyNTE.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Oracle Developer Cloud Service는 자동화된 CI/CD를 위한 빌드 파이프라인 관리를 제공하는 클라우드 서비스입니다. &lt;br /&gt;
-이 문서에서는 지난번 신기능에서 소개해 드린 여려가지 Builder 중에서 Docker Builder에 대해 좀 더 상세히 알아보려고 합니다. Developer Cloud의 Docker Builder를 사용하면 로컬 환경에 Docker 환경을 구성할 필요 없이 Developer Cloud가 제공하는 환경 하에서 Docker Image를 빌드하고 &lt;a href=&quot;https://cloud.oracle.com/containers/registry&quot;&gt;Oracle Cloud Infrastructure Registry (OCIR)&lt;/a&gt;을 포함한 Docker Registry에 빌드한 이미지를 Push할 수 있습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;oracle-container-infrastructure-registry에-repository-생성하기&quot;&gt;Oracle Container Infrastructure Registry에 Repository 생성하기&lt;/h2&gt;
-&lt;p&gt;Docker Registry로 Oracle Cloud Infrastructure Registry(이하 OCIR)를 사용하기 위해서는 Oracle Cloud Infrastructure(이하 OCI) 콘솔로 로그인 하여 Registry를 생성하여야 합니다. OCIR 메뉴는 아래와 같이 접근 합니다.
-&lt;img src=&quot;https://monosnap.com/image/QXRofQWho5YNEWtvedLmA4gh1oFnw0.png&quot; alt=&quot;OCIR 메뉴&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Create Repository&lt;/strong&gt; 버튼을 클릭하여 새로운 Repository를 하나 생성합니다.
-&lt;img src=&quot;https://monosnap.com/image/sT1IqQOYCSyQExMITE3jbO4BmjGPU2.png&quot; alt=&quot;Create Repository&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/UUfBflIWQss148sSMR6hH2I4C0uXvr.png&quot; alt=&quot;Create Repository&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;새로운 빈 Repository가 생성되었습니다. 이 Repository에 앞으로 Developer Cloud를 통해 빌드한 이미지를 Push할 것입니다.
-&lt;img src=&quot;https://monosnap.com/image/MwxCiOYAJGHoKaXQzMDYayVLTfC4VB.png&quot; alt=&quot;New Repository&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;oracle-container-infrastructure-registry-등록하기&quot;&gt;Oracle Container Infrastructure Registry 등록하기&lt;/h2&gt;
-&lt;p&gt;Developer Cloud에서 OCIR을 Docker Registry로 등록하기 위해서는 OCI의 사용자 Token이 필요합니다.
-OCI의 사용자 Token은 다음과정을 통해 얻을 수 있습니다. 우측의 사용자 아이콘을 클릭하여 &lt;strong&gt;User Settings&lt;/strong&gt; 메뉴를 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/V8NOylU0L7EV3R4IeK7uBtr1YSb4Rl.png&quot; alt=&quot;User Settings&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;좌측 메뉴의 &lt;strong&gt;Auth Token&lt;/strong&gt; 메뉴를 클릭하고 &lt;strong&gt;Generate Token&lt;/strong&gt; 버튼을 클릭하여 접속을 위한 Token을 새롭게 생성합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/23SA9JiV6UXPcjw12TP66V2HSOUi8m.png&quot; alt=&quot;Token&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Generate Token&lt;/strong&gt; 버튼 클릭 후 다음 창에 나오는 &lt;strong&gt;GENERATED TOKEN&lt;/strong&gt;을 다음 사용을 위해 복사해 둡니다.
-&lt;img src=&quot;https://monosnap.com/image/8BweeZdXIFjobBF9ItsFMXr5iPNR5F.png&quot; alt=&quot;Token&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;OCIR 등록을 위해 Developer Cloud 콘솔로 이동합니다.
-좌측 메뉴에서 &lt;strong&gt;Docker Registry&lt;/strong&gt;를 선택하고 &lt;strong&gt;Link External Registry&lt;/strong&gt; 버튼을 클릭하여 OCIR에서 새롭게 생성한 레지스트리를 등록합니다.
-&lt;img src=&quot;https://monosnap.com/image/mATKELea0932uoMpKTsR73FEzNbskb.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Registry URL은 사용하는 데이터 센터 위치에 따라 다음 규칙에 맞게 입력합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;&amp;lt;region-code&amp;gt;&lt;/strong&gt;.ocir.io&lt;/li&gt;
-  &lt;li&gt;Frankfurt : fra&lt;/li&gt;
-  &lt;li&gt;Ashburn : iad&lt;/li&gt;
-  &lt;li&gt;London : lhr&lt;/li&gt;
-  &lt;li&gt;Phoenix : phx&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/W1I5vephtZzF7WHW5Qsg4lVE0EbPYA.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Basic Authentication 옵션을 선택하고 ID는 &lt;strong&gt;tenancy_name/username&lt;/strong&gt; 형태로 입력
-Password는 위 과정에서 생성해둔 &lt;strong&gt;Auth Token&lt;/strong&gt;을 입력합니다.&lt;/p&gt;
-
-&lt;p&gt;Registry가 등록되었고 OCIR에서 생성한 Registry가 보일 것입니다.
-&lt;img src=&quot;https://monosnap.com/image/y4G8i1saiZxoVLcXYqXNlGXrvN31d4.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;vm-template-구성하기&quot;&gt;VM Template 구성하기&lt;/h2&gt;
-&lt;p&gt;Developer Cloud에서 Build를 구성할 때 각 Build 환경마다 서로 다른 Software Package들을 필요로 할 수 있기 때문에, 각자의 Build 내용에 따라 필요한 Software 군들을 가지는 VM Template을 생성해야 합니다.
- 여기서는 Docker 빌드를 구성할 것이 때문에 Docker가 설치되어 있는 VM이 필요하게 됩니다. 이 빌드에 사용하는 VM을 구성하기 위해서 Developer Cloud의 &lt;strong&gt;Organization&lt;/strong&gt; 메뉴로 이동합니다.
- &lt;strong&gt;Username&lt;/strong&gt; 아이콘을 클릭하면 다음과 같이 Organization으로 이동하는 메뉴가 보이게 됩니다.
- &lt;img src=&quot;https://monosnap.com/image/0PNv2sHfMyLzjsFZWIbFI59U1BiBLG.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;New Templates&lt;/strong&gt; 버튼을 클릭하여 새로운 탬플릿을 생성합니다
- &lt;img src=&quot;https://monosnap.com/image/OeigMWNBzdqrKehaBu8uP8sU1Q5p2K.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;원하는 이름과 원하는 OS 버전을 선택합니다.
-&lt;img src=&quot;https://monosnap.com/image/pgyAAEKKSLfmKMWkhgrDQNe0JH0nj8.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Configure Software&lt;/strong&gt; 버튼을 클릭하여 원하는 Software들을 선택합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/zZEaqReJ6csJEaYozKZwuT7MN7Lek0.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;VM Template이 구성되었으면 그 Template을 사용하는 VM을 생성하여야 합니다.
-&lt;strong&gt;Virtual Machine&lt;/strong&gt; 메뉴로 이동하여 &lt;strong&gt;New VM&lt;/strong&gt; 버튼을 클릭하여 새로운 VM을 생성합니다.
-이 VM은 Build가 수행중일때만 구동되고 Build가 완료되면 자동으로 정지 됩니다.
-&lt;img src=&quot;https://monosnap.com/image/K5M3k2GqUkGVxfqYRcOkNZpciflc9R.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;빌드에 사용할 VM이 잘 생성된 것을 확인 합니다.
-&lt;img src=&quot;https://monosnap.com/image/6qtnwUbcA1fdSssImnD1Jex7IiVHmS.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;build-구성하기&quot;&gt;Build 구성하기&lt;/h2&gt;
-&lt;p&gt;이 문서에서는 Developer Cloud 서비스 인스턴스 생성 및 Code Repository 설정에 대해서는 다루지 않습니다.
-Developer Cloud 인스턴스 생성 및 접속, 신규 프로젝트 생성 방법은 다음을 참고합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/accessing-oracle-developer-cloud-service.html#GUID-10C35594-34F6-4040-96AB-A2C8AA88C010&quot;&gt;Developer Cloud 인스턴스 생성 및 접속&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/developer/get_started_project/get_started_project.html&quot;&gt;Develoer Cloud에 프로젝트 생성&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Code Repository에 Docker Build에 사용할 소스코드와 Dockerfile이 있어야 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/44fs5c4gwcg6LqLqREdJgCXNI7s7Qw.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 Build를 구성해 보겠습니다.
-&lt;strong&gt;Build&lt;/strong&gt; 메뉴에서 &lt;strong&gt;New Job&lt;/strong&gt; 버튼을 클릭하여 새로운 Build Job을 생성합니다.
-&lt;img src=&quot;https://monosnap.com/image/tgIsDjvOMlu1RhxhuE0uk9g7iNt99M.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Build 구성에서 다른 항목들의 설명은 생략하고 Docker Build와 관련된 내용만 살펴보겠습니다. &lt;a href=&quot;http://www.oracloud.kr/post/devcs000/&quot;&gt;이전 문서&lt;/a&gt;에서 Developer Cloud에 새롭게 추가된 Builder들에 대해서 소개했었습니다.
-이 Builder들 중 Docker Builder만 살펴보면 다음과 같습니다.
-&lt;img src=&quot;https://monosnap.com/image/kVwBAGnBPiWQajvnv3azHjDh1Flyno.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 Build Job에서는 Docker Image를 빌드하고 OCIR의 Registry에 빌드된 Image를 Push할 것이 때문에 Build Step을 다음과 같이 구성합니다.
-Docker Build Step에서 Image Name은 OCIR에서 생성한 Registry에 Push할 것이기 때문에 다음 규칙으로 적어 줍니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Image Name : &lt;strong&gt;tenancy-name/registry-name&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/rvzZX3FeJFpl2ND7qUllBfwCwODpeY.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;OCIR에 로그인하기 위하여 &lt;strong&gt;Docker Login&lt;/strong&gt; Step에 OCIR 접속 정보를 다음과 같이 적어 줍니다. Registry Host는 위에서 설명한 Region 별 접근 방법을 따릅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/hmFbP5yvDght6slm426wAKE4EXGZzU.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;빌드된 Docker Image를 OCIR Registry에 Push하기 위해 &lt;strong&gt;Docker Push&lt;/strong&gt; Step을 추가합니다. Image Name은 위 Docker Build Step에서 사용한 Image Name을 참고하면 되고 이 이름에 따라 Full Image Name이 자동 완성됩니다.
-&lt;img src=&quot;https://monosnap.com/image/PZKdFzHlpd4Rykk2zDlRqWHMvaiHUu.png&quot; alt=&quot;Alt text&quot; /&gt;
-빌드가 구성되었으면 구성을 저장하고 &lt;strong&gt;Build Now&lt;/strong&gt;를 클릭하여 Build Job을 수행합니다. 
-빌드가 Queuing 되고 정상적으로 수행이 되고 나면 빌드된 Docker Image가 OCIR Registry에 Push되어 있을 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/nLxwGMVa3pdeTexlweAgCP692a68c2.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;빌드가 성공하였으므로 Developer Cloud 서비스의 Docker Registry에서 Push된 이미지 정보를 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/VUfg3hwAXT3hrUoinMMxiTwiSfCc2C.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;OCIR의 Registry 화면에서 확인하면 다음과 같습니다.
-&lt;img src=&quot;https://monosnap.com/image/zgagO00JaWhOgR3395wQ71hU7OTXrB.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;여기까지 Developer Cloud 사용하여 로컬의 개발자 환경에 별도의 Docker를 구성할 필요없이 Cloud 상에서 Docker Image를 빌드하고 바로 OCIR로 빌드된 이미지를 Push하는 방법에 대해 알아보았습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/managing-project-jobs-and-builds.html#GUID-A29C7055-6E8F-424D-B212-E0EE7E236991&quot;&gt;Oracle Developer Cloud - Adding a Docker Builder&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;[Oracle Cloud Infrastructure Registry (OCIR)](https://docs.cloud.oracle.com/iaas/Content/Registry/Concepts/registryoverview.htm?TocPath=Services&lt;/td&gt;
-          &lt;td&gt;Registry&lt;/td&gt;
-          &lt;td&gt;_____0)&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud를 사용한 Docker Image 빌드 및 OCIR(Oracle Cloud Infrastructure Registry)에 Docker Image Push하기”</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud의 Build Pipeline 사용하기</summary></entry></feed>
