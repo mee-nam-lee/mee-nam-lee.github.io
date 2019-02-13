@@ -5,15 +5,18 @@ date:   2019-01-22 17:50:00
 categories: chatbot
 ---
 
-# 챗봇 Hands-on Lab (2) 
-# 금융봇을 이용하여 챗봇 기본 기능 익히기
-
 ## 학습 내용 
 
 * 챗봇 둘러보기
 * Intent / Dialog 테스트
 
 이 랩에서는 MasterBot이라는 이름의 금융 업무를 수행하는 챗봇을 살펴볼 것입니다. 
+
+## 사전 준비 사항 
+
+**이 실습 과정은 Chrome 브라우저를 이용하여 진행할 것입니다. Chrome이 설치되어있지 않다면 다음에서 다운로드 받아서 설치 후 진행하시기 바랍니다.**
+
+* [크롬 다운로드](https://www.google.com/intl/ko_ALL/chrome/)
 
 **Bot console로 들어가기**
 =======

@@ -5,9 +5,6 @@ date:   2019-01-23 17:50:00
 categories: chatbot
 ---
 
-# 챗봇 Hands-on Lab (3) 
-# 피자봇 만들기 
-
 ## 학습 내용 
 
 * Flow 구현

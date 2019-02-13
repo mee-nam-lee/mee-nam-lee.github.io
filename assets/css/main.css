@@ -191,7 +191,6 @@ blockquote> :last-child {
   margin-bottom: 0;
 }
 
-
 /**
  * Wrapper
  */
@@ -491,6 +490,10 @@ table td {
   margin-bottom: 30px;
 }
 
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+  color: darkgreen;
+}
+
 .post-content h1 {
   font-size: 32px;
 }
@@ -529,7 +532,7 @@ table td {
  * Code formatting
  */
 
- pre, code {
+pre, code {
   font-size: 15px;
   border: 1px solid #e8e8e8;
   border-radius: 3px;
@@ -557,13 +560,14 @@ pre>code {
 
 /* Syntax Highlight Original */
 
-
 .highlight {
-  background: #fff;   /* #fff */
+  background: #fff;
+  /* #fff */
 }
 
 .highlighter-rouge .highlight {
-  background: #eef; /* #263238 */
+  background: #eef;
+  /* #263238 */
 }
 
 .highlight .c {

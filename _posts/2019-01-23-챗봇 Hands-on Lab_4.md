@@ -9,9 +9,6 @@ tags:
   - Oracle Digital Assistant
 ---
 
-# 챗봇 Hands-on Lab (4) 
-# [채널 연결] Web Chat 연결하기
-
 이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.
 
 
