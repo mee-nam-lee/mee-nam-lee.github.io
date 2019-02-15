@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-15T13:53:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/" rel="alternate" type="text/html" title="다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)" /><published>2019-02-13T02:50:00+09:00</published><updated>2019-02-13T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Layout</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/">&lt;h1 id=&quot;flow의-yaml에서-다양한-레이아웃-사용하기&quot;&gt;Flow의 YAML에서 다양한 레이아웃 사용하기&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-15T15:48:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Embedded Container에 Custom Component 올리기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/" rel="alternate" type="text/html" title="챗봇 Embedded Container에 Custom Component 올리기" /><published>2019-02-15T00:00:00+09:00</published><updated>2019-02-15T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Embedded%20Container</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/">&lt;p&gt;챗봇을 구현하다 보면 Dialogue Flow 만을 이용해서는 다양한 비즈니스 로직을 구현하기에 한계가 있을 수 있습니다. 이를 위해 Oracle Digital Assistant에서는 Custom Component를 개발하여 연동할 수 있게 되어있는데, 이 개발된 Custom Component는 다음 3가지 형태로 서비스될 수 있습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Embedded Container&lt;/li&gt;
+  &lt;li&gt;Oracle Mobile Cloud&lt;/li&gt;
+  &lt;li&gt;External&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Oracle Mobile Cloud와 External 옵션은 구축된 Custom Component가 Oracle Digital Assistant 외부에서 서비스되는 것을 연동하는 방식이고 Embedded Container는 Digital Assistant 내에 Container를 구동하게 하여 Custom Component 구현체가 서비스 될 수 있도록 해주는 옵션입니다.&lt;/p&gt;
+
+&lt;p&gt;Custom Component의 작성 방법과 SDK 사용법은 이전 글들에서 소개가 되었으므로, 이 글에서는 이미 만들어진 Custom Component를 Embedded Container에 올리기 위해 Packaging 하는 방법만 다룰 것 입니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;packaging&quot;&gt;Packaging&lt;/h2&gt;
+&lt;p&gt;Custom Component 디렉토리로 이동하여 &lt;strong&gt;npm pack&lt;/strong&gt; 명령어를 수행합니다. my-custom-component-1.0.0.tgz 파일이 생성될 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/npm_pack.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;digital-assistant에서-service-등록하기&quot;&gt;Digital Assistant에서 Service 등록하기&lt;/h2&gt;
+&lt;p&gt;Digital Assistant 콘솔로 이동하여 Service를 등록합니다.&lt;br /&gt;
+서비스 생성 옵션에서 &lt;strong&gt;Embedded Container&lt;/strong&gt; 옵션을 선택하고 이전 단계에서 생성한 .tgz 파일을 업로드 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/create_service.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;업로드가 되고 나면 다음 처럼 보이게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/upload_package.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;서비스 생성을 클릭하고 나면 새로운 서비스가 등록되어있을 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/service_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 서비스를 사용하는 방법은 이전 글에서 설명한 방법과 동일 합니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
+
+&lt;p&gt;Oracle 챗봇 컴포넌트 작성을 위한 자세한 SDK 가이드는 다음을 참고하세요&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/bots-node-sdk/&quot;&gt;Oracle Bots Node.js SDK&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="챗봇" /><category term="Oracle Digital Assistant" /><category term="Custom Component" /><category term="Embedded Container" /><summary type="html">챗봇을 구현하다 보면 Dialogue Flow 만을 이용해서는 다양한 비즈니스 로직을 구현하기에 한계가 있을 수 있습니다. 이를 위해 Oracle Digital Assistant에서는 Custom Component를 개발하여 연동할 수 있게 되어있는데, 이 개발된 Custom Component는 다음 3가지 형태로 서비스될 수 있습니다.</summary></entry><entry><title type="html">다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/" rel="alternate" type="text/html" title="다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)" /><published>2019-02-13T02:50:00+09:00</published><updated>2019-02-13T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Layout</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/">&lt;h1 id=&quot;flow의-yaml에서-다양한-레이아웃-사용하기&quot;&gt;Flow의 YAML에서 다양한 레이아웃 사용하기&lt;/h1&gt;
 &lt;p&gt;챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다.
 이를 위해서 오라클 챗봇은 &lt;strong&gt;System.Output&lt;/strong&gt; 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 &lt;strong&gt;System.CommonResponse&lt;/strong&gt;라는 빌트인 컴포넌트를 제공하고 있습니다. 이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다.&lt;/p&gt;
 
@@ -688,38 +727,7 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="챗봇" /><category term="Oracle Digital Assistant" /><summary type="html">이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
-
-&lt;p&gt;Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.
-Training 과정을 통해 더욱 정교한 대화가 가능한 챗봇으로 진화시키는 과정을 체험하고, 비즈니스 처리를 위한 로직을 쉽게 작성하여 챗봇을 통해 서비스하게 하는 경험을 하시게 될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/mobile_overviw.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 실습에서는 다음과 같은 두 개의 봇을 만들어 보게 될 것 입니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;금융봇 (MasterBot)&lt;/strong&gt; : 잔액 조회, 계좌이체, 지출 이력 조회 업무를 수행하는 봇&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;피자봇 (PizzaBot)&lt;/strong&gt; : 피자 주문, 주문 취소등의 업무를 수행하는 봇&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;prerequisite&quot;&gt;Prerequisite&lt;/h1&gt;
-&lt;p&gt;이 핸즈온을 완료하려면 Oracle Digital Assistant 서비스에 접속해야 합니다. 
-Oracle Cloud 계정을 이미 가지고 계시다면 Digital Assistant Cloud Service 인스턴스를 생성한 후 이 과정을 수행하시면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;Oracle Cloud 계정이 없다면 무료로 제공되는 Trial 계정을 신청하세요&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.oracloud.kr/post/oracle_cloud_trial_universal/&quot;&gt;Trial 계정 신청하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;본 과정에서는 Oracle Digital Assitant의 접속 정보가 제공될 것입니다. 제공되는 정보를 이용하여 Digital Assitant Cloud에 연결하세요.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (1) - Lab 개요</summary></entry><entry><title type="html">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_2</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/">&lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="챗봇" /><category term="Oracle Digital Assistant" /><summary type="html">이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_2</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/">&lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;챗봇 둘러보기&lt;/li&gt;
@@ -898,7 +906,38 @@ Intent를 먼저 테스트 해볼 것이기 때문에 Test 창에서 &lt;strong&
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/mee-nam-lee/chatbot_lecture/blob/master/labfiles/MasterBot_Korean/MasterBot_kor_wo_comp.zip&quot;&gt;MasterBot Import 파일&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">학습 내용</summary></entry><entry><title type="html">Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기</title><link href="http://localhost:4000/chatbot/2019/chatbot_adw/" rel="alternate" type="text/html" title="Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기" /><published>2019-01-22T02:50:00+09:00</published><updated>2019-01-22T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/chatbot_adw</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/chatbot_adw/">&lt;h1 id=&quot;digital-assistant챗봇과-autonomous-data-warehouseadw-연계하기&quot;&gt;Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">학습 내용</summary></entry><entry><title type="html">챗봇 Hands-on Lab (1) - Lab 개요</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (1) - Lab 개요" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_1</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_1/">&lt;h1 id=&quot;챗봇-hands-on-lab-1---lab-개요&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/h1&gt;
+
+&lt;p&gt;Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.
+Training 과정을 통해 더욱 정교한 대화가 가능한 챗봇으로 진화시키는 과정을 체험하고, 비즈니스 처리를 위한 로직을 쉽게 작성하여 챗봇을 통해 서비스하게 하는 경험을 하시게 될 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/mobile_overviw.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 실습에서는 다음과 같은 두 개의 봇을 만들어 보게 될 것 입니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;금융봇 (MasterBot)&lt;/strong&gt; : 잔액 조회, 계좌이체, 지출 이력 조회 업무를 수행하는 봇&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;피자봇 (PizzaBot)&lt;/strong&gt; : 피자 주문, 주문 취소등의 업무를 수행하는 봇&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;prerequisite&quot;&gt;Prerequisite&lt;/h1&gt;
+&lt;p&gt;이 핸즈온을 완료하려면 Oracle Digital Assistant 서비스에 접속해야 합니다. 
+Oracle Cloud 계정을 이미 가지고 계시다면 Digital Assistant Cloud Service 인스턴스를 생성한 후 이 과정을 수행하시면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;Oracle Cloud 계정이 없다면 무료로 제공되는 Trial 계정을 신청하세요&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.oracloud.kr/post/oracle_cloud_trial_universal/&quot;&gt;Trial 계정 신청하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;본 과정에서는 Oracle Digital Assitant의 접속 정보가 제공될 것입니다. 제공되는 정보를 이용하여 Digital Assitant Cloud에 연결하세요.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">챗봇 Hands-on Lab (1) - Lab 개요</summary></entry><entry><title type="html">Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기</title><link href="http://localhost:4000/chatbot/2019/chatbot_adw/" rel="alternate" type="text/html" title="Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기" /><published>2019-01-22T02:50:00+09:00</published><updated>2019-01-22T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/chatbot_adw</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/chatbot_adw/">&lt;h1 id=&quot;digital-assistant챗봇과-autonomous-data-warehouseadw-연계하기&quot;&gt;Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기&lt;/h1&gt;
 
 &lt;p&gt;오라클 챗봇인 &lt;strong&gt;Digital Assistant&lt;/strong&gt;에서는 커스텀 비즈니스 코드를 작성을 지원하기 위해 &lt;strong&gt;Custom Component&lt;/strong&gt;라는 기능을 제공하고 있습니다. Custom Component는 오라클 &lt;strong&gt;모바일 클라우드&lt;/strong&gt;에서 서비스되도록 작성되거나 &lt;strong&gt;Stand Alone&lt;/strong&gt;으로 동작되도록 작성될 수도 있고, Oracle Digital Assistant가 제공하는 Custom Component를 위한 &lt;strong&gt;임베디드 컨테이너&lt;/strong&gt;에서 구동되도록 작성될 수도 있습니다.&lt;/p&gt;
 
@@ -1662,66 +1701,4 @@ Ledger는 채널 별로 저장되므로 Channel 하부 메뉴에서 Ledger 기�
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html&quot;&gt;Oracle Blockchian Cloud&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/admintasks.html&quot;&gt;Oracle Blockchian Cloud - 네트워크 관리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</summary></entry><entry><title type="html">Developer Cloud의 Build Pipeline 사용하기</title><link href="http://localhost:4000/devops/2018/devcs002/" rel="alternate" type="text/html" title="Developer Cloud의 Build Pipeline 사용하기" /><published>2018-10-02T02:50:00+09:00</published><updated>2018-10-02T02:50:00+09:00</updated><id>http://localhost:4000/devops/2018/devcs002</id><content type="html" xml:base="http://localhost:4000/devops/2018/devcs002/">&lt;h1 id=&quot;developer-cloud의-build-pipeline-사용하기&quot;&gt;Developer Cloud의 Build Pipeline 사용하기&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;Oracle Developer Cloud Service&lt;/strong&gt;는 자동화된 &lt;strong&gt;CI/CD&lt;/strong&gt;를 위한 빌드 파이프라인 관리를 제공하는 클라우드 서비스입니다. &lt;br /&gt;
-이 문서에서는 지난번 신기능에서 소개해 드린 &lt;strong&gt;Pipleline&lt;/strong&gt; 사용법에 대해서 좀 더 상세히 알아보려고 합니다. 이전 버전의 Developer Cloud에서는 빌드를 위해서 하나의 단위 Build Job을 구성하고 해당 Job들은 서로 연관 관계를 가지지 않고 독립적으로 돌아가는 형태였습니다. &lt;br /&gt;여기서 소개하는 &lt;strong&gt;Pipeline&lt;/strong&gt; 기능은 기존 단위 Job들을 유기적으로 연결하여 Job들간의 연관성을 가지게 구성하는 것입니다.
-Pipeline으로 구성된 Job들은 이전 Job의 성공 또는 실패 결과가 이후 Job의 시작 유무에 영향을 미치게 됩니다.
-예를 들어 다음과 같은 Pipeline을 구성할 수 있을 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/1mIljkwte2V2RxHKyk6NnyurEMCRbf.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 예시는 이전 Job들의 결과에 따라 후속 Job들의 실행이 결정되는 순차적인 관계를 가집니다. 각 Job들이 모두 정상적으로 수행되고 성공한다면 일련의 Job들로 연결된 Pipeline 빌드가 성공하고 빌드 작업이 종료되는 구조 입니다.&lt;/p&gt;
-
-&lt;p&gt;Pipeline은 기존에 생성된 단위 빌드들을 연결하는 과정입니다. 각 단위 빌드 구성에 대해서는 이전 문서를 참고하세요. 이 문서에는 이미 생성되어 있는 Build Job을 기반으로 한 Pipeline 구성에 대해서만 다룰 것 입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;pipeline-생성하기&quot;&gt;Pipeline 생성하기&lt;/h2&gt;
-&lt;p&gt;Pipeline을 생성하기 위해서 Job 탭 우측의 &lt;strong&gt;Pipelines&lt;/strong&gt; 탭을 클릭하여 이동합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/HdsW0kIxTH4sLaxe9z6ry3tpN7Zqrb.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;New Pipeline&lt;/strong&gt; 버튼을 클릭하여 위 예시에서 보았던 것과 유사한 순차형 Pipeline을 생성해 보도록 하겠습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/P8xtVZiHdfT989ZdDIeYfH3Q9iX2Zh.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Pipeline 이름을 다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt;를 클릭합니다. 나머지 설정은 기본값으로 둡니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/N7gjKmrBVZR5MfpD9qsOkaDwBXSccZ.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;왼편의 &lt;strong&gt;Jobs&lt;/strong&gt; 리스트에서 이미 구성되어있는 Job을 선택하여 오른쪽 캔버스에 드래그 합니다. Job들 간의 순서를 화살표를 드래그 앤 드롭 하여 연결합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/4U0OjFhvVIhZ2qHqfcukLUlQqF0FoO.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;pipeline이 구성되었고 바로 빌드를 수행하려면 우측의 &lt;strong&gt;Run&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/n4lTI2mKxCbVB2MbPbFO38tYthgSGM.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Pipeline의 각 빌드 Job들이 순서대로 Queuing 되면서 실행되는 것을 볼 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/pTZOikxhnVZu6sXfAEw5iK3390VDZb.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;pipeline의 빌드가 모두 완료되면 빌드된 instance들의 상태 및 내용을 볼 수 있습니다. 각 Job들의 빌드 #number를 클릭하면 각 빌드별 로그도 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/73g5YVMhP9Ncn5yDPR58jtVTSleDqr.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음의 예시와 같은 병렬 처리 흐름을 가지는 Pipeline도 작성할 수 있습니다.
-아래의 Pipeline에서는 Job1이 완료된 후 Job2, Job3, Job4의 빌드가 트리거 되고 Build Queue에 쌓이는 순서에 따라 처리됩니다. Job2, Job3, Job4가 서로 다른 빌드 VM을 사용한다면 동시에 수행될 수도 있습니다. 동일한 빌드 VM을 사용하여 빌드가 수행된다면, Queue에 먼저 쌓이는 순서대로 처리 됩니다.
-Job5는 Job4가 완료된 후 트리거 됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/4aAYBnHZlmuaWz8qaxhS0hymLqyEwg.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 Pipeline을 실행해 보면 다음과 같이 Job1 종료 후  Job2, Job3, Job4가 Queuing 된 것을 볼 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/syp4FDT5YSDCGOcPQUqGZ5RxH16oIK.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위에서 설명한 Pipeline은 이전 Job 성공했을 때 후속 Job으로 넘어가는 것 만 예시하였으나, 이전 Job이 실패 하였을 경우에 처리하는 Job을 두고 싶을 경우에는 연결된 화살표를 더블클릭하여 조건을 &lt;strong&gt;Failed&lt;/strong&gt;로 변경해 주면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/sLIv4H9JaHywNvbbSEMXW0FETPHbzZ.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;여기까지 Developer Cloud 사용하여 여러 빌드들을 조합하여 일련의 빌드 순서를 만드는 Pipeline이라는 기능에 대해 알아보았습니다.
-더 자세한 사항은 아래 제품 자료를 참고하세요&lt;/p&gt;
-
-&lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/developer-cloud/csdcs/managing-project-jobs-and-builds.html#GUID-8A6787EF-2D7E-4322-A7C9-00509920FC1C&quot;&gt;Oracle Developer Cloud - Pipeline&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">Developer Cloud의 Build Pipeline 사용하기</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기</summary></entry></feed>
