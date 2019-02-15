@@ -144,6 +144,42 @@
     <span class="na">transitions</span><span class="pi">:</span>
        <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span>   
 </code></pre></div></div>
+<h2 id="quick-reply-포맷">Quick Reply 포맷</h2>
+<p>Facebook Messager의 Quick Reply 같은 형태의 메시지</p>
+
+<p><img src="/assets/images/chatbot_layout/quick_reply.png" alt="" /></p>
+
+<h3 id="flow-yaml-code-2">FLOW YAML CODE</h3>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">showQuick</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">processUserMessage</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+        <span class="na">globalActions</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">label </span><span class="pi">:</span> <span class="s2">"</span><span class="s">지금</span><span class="nv"> </span><span class="s">바로</span><span class="nv"> </span><span class="s">주문해</span><span class="nv"> </span><span class="s">보세요"</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postback"</span>
+          <span class="na">keyword</span><span class="pi">:</span> <span class="s2">"</span><span class="s">quick1"</span>
+          <span class="na">payload</span><span class="pi">:</span>
+             <span class="na">variables</span><span class="pi">:</span>
+                <span class="na">pizzas </span><span class="pi">:</span> <span class="s2">"</span><span class="s">quick1"</span>
+        <span class="pi">-</span> <span class="na">label </span><span class="pi">:</span> <span class="s2">"</span><span class="s">지금</span><span class="nv"> </span><span class="s">바로</span><span class="nv"> </span><span class="s">클릭해</span><span class="nv"> </span><span class="s">보세요"</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postback"</span>
+          <span class="na">keyword</span><span class="pi">:</span> <span class="s2">"</span><span class="s">quick2"</span>
+          <span class="na">payload</span><span class="pi">:</span>
+             <span class="na">variables</span><span class="pi">:</span>
+                <span class="na">pizzas </span><span class="pi">:</span> <span class="s2">"</span><span class="s">quick1"</span>
+        <span class="pi">-</span> <span class="na">label </span><span class="pi">:</span> <span class="s2">"</span><span class="s">Quick</span><span class="nv"> </span><span class="s">Reply</span><span class="nv"> </span><span class="s">예제</span><span class="nv"> </span><span class="s">입니다."</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">postback"</span>
+          <span class="na">keyword</span><span class="pi">:</span> <span class="s2">"</span><span class="s">quick3"</span>
+          <span class="na">payload</span><span class="pi">:</span>
+             <span class="na">variables</span><span class="pi">:</span>
+                <span class="na">pizzas </span><span class="pi">:</span> <span class="s2">"</span><span class="s">quick1"</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+       <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span>
+</code></pre></div></div>
 
 <h1 id="custom-component-에서의-다양한-레이아웃-사용하기">Custom Component 에서의 다양한 레이아웃 사용하기</h1>
 <p>Flow Yaml에서  <strong>System.CommonResponse</strong> 컴포넌트를 사용하여 응답을 생성할 수 있지만, DB 연동이나 커스텀 비즈니스 로직을 통해 생성되는 응답은 Flow Yaml을 통해서만 생성해 내기에는 무리가 있습니다. 
