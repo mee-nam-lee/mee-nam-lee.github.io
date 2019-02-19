@@ -3,10 +3,7 @@ layout: post
 title:  챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기
 date:   2019-01-23 17:50:00
 categories: chatbot
-tags:
-  - chatbot
-  - 챗봇
-  - Oracle Digital Assistant
+tags: [chatbot, 오라클 챗봇, Hands-on-Lab, Channel]
 ---
 
 이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.

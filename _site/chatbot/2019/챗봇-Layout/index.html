@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v3.8.5" />
 <meta property="og:title" content="다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Flow의 YAML에서 다양한 레이아웃 사용하기 챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다. 이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다." />
-<meta property="og:description" content="Flow의 YAML에서 다양한 레이아웃 사용하기 챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다. 이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다." />
+<meta name="description" content="챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다." />
+<meta property="og:description" content="챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다." />
 <link rel="canonical" href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/" />
 <meta property="og:url" content="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/" />
 <meta property="og:site_name" content="MN Lee’s IT Blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-02-13T02:50:00+09:00" />
 <script type="application/ld+json">
-{"description":"Flow의 YAML에서 다양한 레이아웃 사용하기 챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다. 이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다.","@type":"BlogPosting","url":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/","headline":"다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)","dateModified":"2019-02-13T02:50:00+09:00","datePublished":"2019-02-13T02:50:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/"},"@context":"http://schema.org"}</script>
+{"description":"챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다.","@type":"BlogPosting","url":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/","headline":"다양한 챗봇 Layout 사용하기 (Built-in / Custom Component)","dateModified":"2019-02-13T02:50:00+09:00","datePublished":"2019-02-13T02:50:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /></head>
 <body><header class="site-header" role="banner">
@@ -46,9 +46,10 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <h1 id="flow의-yaml에서-다양한-레이아웃-사용하기">Flow의 YAML에서 다양한 레이아웃 사용하기</h1>
-<p>챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다.
-이를 위해서 오라클 챗봇은 <strong>System.Output</strong> 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 <strong>System.CommonResponse</strong>라는 빌트인 컴포넌트를 제공하고 있습니다. 이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다.</p>
+    <p>챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다.
+이를 위해서 오라클 챗봇은 <strong>System.Output</strong> 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 <strong>System.CommonResponse</strong>라는 빌트인 컴포넌트를 제공하고 있습니다.</p>
+
+<p>이 컴포넌트를 사용하여 아래 예에서 보는 것 처럼 다양한 응답을 만들어 낼 수 있습니다.</p>
 
 <h2 id="text-메시지-systemoutput---text">Text 메시지 (System.Output - Text)</h2>
 
@@ -240,12 +241,16 @@
 
 
 
-  </div><p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
-    <span itemprop="keywords"><a href="#" class="page__taxonomy-item" rel="tag">chatbot</a><span class="sep">, </span><a href="#" class="page__taxonomy-item" rel="tag">CMM</a><span class="sep">, </span><a href="#" class="page__taxonomy-item" rel="tag">CommonResponse</a><span class="sep">, </span><a href="#" class="page__taxonomy-item" rel="tag">Conversation Message Model</a><span class="sep">, </span><a href="#" class="page__taxonomy-item" rel="tag">Oracle Digital Assistant</a><span class="sep">, </span><a href="#" class="page__taxonomy-item" rel="tag">챗봇</a></span>
-  </p><!-- POST NAVIGATION --><nav class="pagination"><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" class="previous" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기
-">Previous </a><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/" class="next" title="챗봇 Embedded Container에 Custom Component 올리기
-"> Next</a></nav><a class="u-url" href="/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/" hidden></a>
+  </div><div class="keywords">
+  <p>
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i>Tags: </strong><a href="#" class="keywords" rel="tag">chatbot</a><span class="sep">&nbsp&nbsp</span><a href="#" class="keywords" rel="tag">Custom Component</a><span class="sep">&nbsp&nbsp</span><a href="#" class="keywords" rel="tag">Layout</a><span class="sep">&nbsp&nbsp</span><a href="#" class="keywords" rel="tag">오라클 챗봇</a></p>
+</div><!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/" class="pagination-highlight" title="챗봇 Embedded Container에 Custom Component 올리기
+"> Next</a></nav>
+</div>
+</div><a class="u-url" href="/chatbot/2019/%EC%B1%97%EB%B4%87-Layout/" hidden></a>
 </article>
 
       </div>
@@ -262,7 +267,7 @@
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">MN Lee&#39;s IT Blog</li></ul>
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com">mnlee30@gmail.com</a></li></ul>
       </div>
 
       <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li></ul>

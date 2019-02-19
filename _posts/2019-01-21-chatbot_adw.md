@@ -3,11 +3,12 @@ layout: post
 title:  Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기
 date:   2019-01-21 17:50:00
 categories: chatbot
+tags: [chatbot, 오라클 챗봇, ADW, Autonomous Data Warehouse]
 ---
 
-# Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기
+오라클 챗봇인 **Digital Assistant**에서는 커스텀 비즈니스 코드를 작성을 지원하기 위해 **Custom Component**라는 기능을 제공하고 있습니다. 
 
-오라클 챗봇인 **Digital Assistant**에서는 커스텀 비즈니스 코드를 작성을 지원하기 위해 **Custom Component**라는 기능을 제공하고 있습니다. Custom Component는 오라클 **모바일 클라우드**에서 서비스되도록 작성되거나 **Stand Alone**으로 동작되도록 작성될 수도 있고, Oracle Digital Assistant가 제공하는 Custom Component를 위한 **임베디드 컨테이너**에서 구동되도록 작성될 수도 있습니다.
+Custom Component는 오라클 **모바일 클라우드**에서 서비스되도록 작성되거나 **Stand Alone**으로 동작되도록 작성될 수도 있고, Oracle Digital Assistant가 제공하는 Custom Component를 위한 **임베디드 컨테이너**에서 구동되도록 작성될 수도 있습니다.
 
 이 문서에서는 **Oracle Autonomous Data Warehouse**와 연계하는 방법을 Stand Alone Custom Component를 구현을 통해서 설명할 예정입니다.
 

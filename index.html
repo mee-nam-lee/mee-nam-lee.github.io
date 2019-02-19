@@ -24,8 +24,9 @@ layout: myhome
             {{ post.title | escape }}
           </a>
         </h3>
+
         {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
+          <span style="font-size:0.9rem;color: #828282;">{{ post.excerpt }}</span>
         {%- endif -%}
       </li>
       {%- endfor -%}

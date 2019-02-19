@@ -3,11 +3,10 @@ layout: post
 title:  챗봇 Hands-on Lab (1) - Lab 개요
 date:   2019-01-22 17:50:00
 categories: chatbot
+tags: [chatbot, 오라클 챗봇, Hands-on-Lab]
 ---
-
-# 챗봇 Hands-on Lab (1) - Lab 개요
-
 Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.
+
 Training 과정을 통해 더욱 정교한 대화가 가능한 챗봇으로 진화시키는 과정을 체험하고, 비즈니스 처리를 위한 로직을 쉽게 작성하여 챗봇을 통해 서비스하게 하는 경험을 하시게 될 것입니다.
 
 ![](/assets/images/chatbot_lecture/mobile_overviw.jpg)

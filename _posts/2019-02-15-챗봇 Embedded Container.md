@@ -2,12 +2,7 @@
 layout: post
 title:  챗봇 Embedded Container에 Custom Component 올리기
 categories: chatbot
-tags:
-  - chatbot
-  - 챗봇
-  - Oracle Digital Assistant
-  - Custom Component
-  - Embedded Container
+tags: [chatbot, 오라클 챗봇, Custom Component, Container]
 ---
 
 챗봇을 구현하다 보면 Dialogue Flow 만을 이용해서는 다양한 비즈니스 로직을 구현하기에 한계가 있을 수 있습니다. 이를 위해 Oracle Digital Assistant에서는 Custom Component를 개발하여 연동할 수 있게 되어있는데, 이 개발된 Custom Component는 다음 3가지 형태로 서비스될 수 있습니다.

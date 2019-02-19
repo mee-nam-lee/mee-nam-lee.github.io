@@ -3,14 +3,17 @@ layout: post
 title:  챗봇 Hands-on Lab (3) - 피자봇 만들기 
 date:   2019-01-23 17:50:00
 categories: chatbot
+tags: [chatbot, 오라클 챗봇, Hands-on-Lab]
 ---
+
+이 Lab에서는 피자봇을 직접 만들어 볼 것입니다. 
 
 ## 학습 내용 
 
 * Flow 구현
 * Intent / Dialog 테스트
 
-이 Lab에서는 피자봇을 직접 만들어 볼 것입니다. 구현에 들어가기 앞서서 피자봇이 어떤 기능을 가지고 있는지 먼저 살펴봅니다.
+구현에 들어가기 앞서서 피자봇이 어떤 기능을 가지고 있는지 먼저 살펴봅니다. 
 제공되는 피자봇은 다음과 같이 4개의 **Intent**를 가지고 있습니다.
 
  ![](/assets/images/chatbot_lecture/pizzalab/01_pizza_intent.png)

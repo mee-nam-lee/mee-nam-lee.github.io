@@ -3,9 +3,8 @@ layout: post
 title:  DevOps Workshop (CI/CD 실습) - (5) - Git Client 설치
 date:   2017-12-07 17:00:00
 categories: devops
+tags: [Developer Cloud, DevOps, Git, Hands-on-lab]
 ---
-
-## Git 클라이언트 설치 ##
 
 Git은 파일 버전 관리 제어를 위한 시스템입니다. 소프트웨어 개발의 소스 코드 관리에 주로 사용되고 있습니다. 여기에서는 Git Repository에 공개된 소스를 로컬 컴퓨터로 가져오기 위햐여 Git Client를 사용할 것입니다. 
 

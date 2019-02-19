@@ -3,10 +3,8 @@ layout: post
 title:  DevOps Workshop (CI/CD 실습) - (3) - Lab 02
 date:   2017-12-07 17:00:00
 categories: devops
+tags: [Developer Cloud, DevOps, CI/CD, Hands-on-lab]
 ---
-
-## Lab 02 소개
-
 
 이 Lab은 **Oracle Developer Cloud**와 Container기반의 **Application Container Cloud Service**를 사용하여 DevOps 자동화 과정의 핵심 부분인 **CI(Continuous Integration) / CD (Continuous Delivery)** 실습을 위한 Lab입니다. 
 

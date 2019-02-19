@@ -3,10 +3,8 @@ layout: post
 title:  DevOps Workshop (CI/CD 실습) - (1)
 date:   2017-12-07 17:00:00
 categories: devops
+tags: [Developer Cloud, DevOps, CI/CD, Hands-on-lab]
 ---
-
-# DevOps Workshop (CI/CD 실습)
-
 
 이 Workshop에서는 Microserivces 환경을 준비하고 Oracle Application Container Cloud Service를 사용하여 Mircoserivces를 개발하는 방법을 보여줍니다. 
 

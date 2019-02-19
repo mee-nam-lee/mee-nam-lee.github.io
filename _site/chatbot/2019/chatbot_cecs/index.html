@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v3.8.5" />
 <meta property="og:title" content="Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다. 챗봇을 통해서 CECS에 저장되어 있는 컨텐츠를 검색하고 검색된 결과 문서나 폴더의 Public Link를 통해서 바로 해당 컨텐츠를 확인할 수 있는 예제를 설명할 것입니다." />
-<meta property="og:description" content="이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다. 챗봇을 통해서 CECS에 저장되어 있는 컨텐츠를 검색하고 검색된 결과 문서나 폴더의 Public Link를 통해서 바로 해당 컨텐츠를 확인할 수 있는 예제를 설명할 것입니다." />
+<meta name="description" content="이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다." />
+<meta property="og:description" content="이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다." />
 <link rel="canonical" href="http://localhost:4000/chatbot/2019/chatbot_cecs/" />
 <meta property="og:url" content="http://localhost:4000/chatbot/2019/chatbot_cecs/" />
 <meta property="og:site_name" content="MN Lee’s IT Blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-02-19T00:00:00+09:00" />
 <script type="application/ld+json">
-{"description":"이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다. 챗봇을 통해서 CECS에 저장되어 있는 컨텐츠를 검색하고 검색된 결과 문서나 폴더의 Public Link를 통해서 바로 해당 컨텐츠를 확인할 수 있는 예제를 설명할 것입니다.","@type":"BlogPosting","url":"http://localhost:4000/chatbot/2019/chatbot_cecs/","headline":"Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기","dateModified":"2019-02-19T00:00:00+09:00","datePublished":"2019-02-19T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/chatbot/2019/chatbot_cecs/"},"@context":"http://schema.org"}</script>
+{"description":"이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다.","@type":"BlogPosting","url":"http://localhost:4000/chatbot/2019/chatbot_cecs/","headline":"Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기","dateModified":"2019-02-19T00:00:00+09:00","datePublished":"2019-02-19T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/chatbot/2019/chatbot_cecs/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /></head>
 <body><header class="site-header" role="banner">
@@ -46,8 +46,9 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>이 포스트에서는 오라클 챗봇인 <strong>Digital Assistant</strong>와 <strong>Content and Experience Cloud (이후 CECS)</strong>라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다.
-챗봇을 통해서 CECS에 저장되어 있는 컨텐츠를 검색하고 검색된 결과 문서나 폴더의 <strong>Public Link</strong>를 통해서 바로 해당 컨텐츠를 확인할 수 있는 예제를 설명할 것입니다.</p>
+    <p>이 포스트에서는 오라클 챗봇인 <strong>Digital Assistant</strong>와 <strong>Content and Experience Cloud (이후 CECS)</strong>라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다.</p>
+
+<p>챗봇을 통해서 CECS에 저장되어 있는 컨텐츠를 검색하고 검색된 결과 문서나 폴더의 <strong>Public Link</strong>를 통해서 바로 해당 컨텐츠를 확인할 수 있는 예제를 설명할 것입니다.</p>
 
 <p>이를 위해서는 Chatbot의 커스텀 컴포넌트 작성이 필요한데, 커스텀 컴포넌트 작성과 관련하여서는 이전 기고에서 몇 차례 다루었기 때문에 여기에서는 CECS 연계 코드 부분만 설명하도록 하겠습니다.</p>
 
@@ -159,11 +160,15 @@
 
 
 
-  </div><p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
-    <span itemprop="keywords"><a href="#" class="page__taxonomy-item" rel="tag">CECS</a><span class="sep">, </span><a href="#" class="page__taxonomy-item" rel="tag">chatbot</a><span class="sep">, </span><a href="#" class="page__taxonomy-item" rel="tag">오라클 챗봇</a></span>
-  </p><!-- POST NAVIGATION --><nav class="pagination"><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/" class="previous" title="챗봇 Embedded Container에 Custom Component 올리기
-">Previous </a><a href="#" class="previous">Next</a></nav><a class="u-url" href="/chatbot/2019/chatbot_cecs/" hidden></a>
+  </div><div class="keywords">
+  <p>
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i>Tags: </strong><a href="#" class="keywords" rel="tag">CECS</a><span class="sep">&nbsp&nbsp</span><a href="#" class="keywords" rel="tag">chatbot</a><span class="sep">&nbsp&nbsp</span><a href="#" class="keywords" rel="tag">오라클 챗봇</a></p>
+</div><!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/" title="챗봇 Embedded Container에 Custom Component 올리기
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">Next</a></nav>
+</div>
+</div><a class="u-url" href="/chatbot/2019/chatbot_cecs/" hidden></a>
 </article>
 
       </div>
@@ -180,7 +185,7 @@
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">MN Lee&#39;s IT Blog</li></ul>
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com">mnlee30@gmail.com</a></li></ul>
       </div>
 
       <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li></ul>

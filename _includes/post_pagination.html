@@ -1,14 +1,19 @@
 {%- if page.previous or page.next -%}
-  <nav class="pagination">
+<div class="center">
+<div class="pagination">
+  <nav>
     {%- if page.previous -%}
-      <a href="{{ page.previous.url | relative_url }}" class="previous" title="{{ page.previous.title | markdownify | strip_html }}">Previous </a>
+      <a href="{{ page.previous.url | relative_url }}" title="{{ page.previous.title | markdownify | strip_html }}">Previous </a>
     {%- else -%}
-      <a href="#" class="previous">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+      <a href="#">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
     {%- endif -%}
+    <span class="sep">&nbsp&nbsp</span>
     {%- if page.next -%}
-      <a href="{{ page.next.url | relative_url }}" class="next" title="{{ page.next.title | markdownify | strip_html }}"> Next</a>
+      <a href="{{ page.next.url | relative_url }}" class="pagination-highlight" title="{{ page.next.title | markdownify | strip_html }}"> Next</a>
     {%- else -%}
-      <a href="#" class="previous">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      <a href="#">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
     {%- endif -%}
   </nav>
+</div>
+</div>
 {%- endif -%}
