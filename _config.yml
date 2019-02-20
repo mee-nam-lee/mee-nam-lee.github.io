@@ -31,15 +31,22 @@ permalink: /:categories/:year/:title/
 plugins:
   - jekyll-feed
   - jekyll-paginate
+  - jekyll-sitemap
 
 # Build settings
 markdown: kramdown
 theme: minima
 
+include:
+  - _pages
+
 exclude:
   - Gemfile
   - Gemfile.lock
 
+category_archive:
+  type: liquid
+  path: /categories/
 
 tag_archive:
   type: liquid
