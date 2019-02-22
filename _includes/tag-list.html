@@ -13,13 +13,13 @@
   {%-  capture page_tags  -%}{%-  for tag in page.tags  -%}{{ tag | downcase }}#{{ tag }}{%-  unless forloop.last  -%},{%-  endunless  -%}{%-  endfor  -%}{%-  endcapture  -%}
   {%-  assign tag_hashes = page_tags | split: ',' | sort  -%}
 
- <div class="keywords">
+ <div>
   <p>
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i>Tags: </strong>
+    <strong>Tags: </strong>
     {%-  for hash in tag_hashes  -%}
       {%-  assign keyValue = hash | split: '#'  -%}
       {%-  capture tag_word  -%}{{ keyValue[1] | strip_newlines }}{%-  endcapture  -%}
-      <a href="#" class="keywords" rel="tag">{{ tag_word }}</a>{%-  unless forloop.last  -%}<span class="sep">&nbsp&nbsp</span>{%-  endunless  -%}
+      <a href="#" class="keywords" rel="tag">{{ tag_word }}</a>{%-  unless forloop.last  -%} &nbsp&nbsp {%-  endunless  -%}
     {%-  endfor  -%}
   </p>
 </div>

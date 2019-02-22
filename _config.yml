@@ -23,6 +23,7 @@ twitter_username:
 github_username:  mee-nam-lee
 
 show_excerpts: true
+rss: Feed
 # excerpt_separator: <!--more-->
 
 permalink: /:categories/:year/:title/

@@ -2,7 +2,7 @@
 layout: post
 title:  Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기
 categories: chatbot
-tags: [chatbot, 오라클 챗봇, CECS]
+tags: [chatbot, 오라클 챗봇, CECS] 
 ---
 
 이 포스트에서는 오라클 챗봇인 **Digital Assistant**와 **Content and Experience Cloud (이후 CECS)**라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다. 
