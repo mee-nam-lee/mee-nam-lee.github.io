@@ -18,7 +18,7 @@ email: mnlee30@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://mee-nam-lee.github.io"
 twitter_username: 
 github_username:  mee-nam-lee
 
