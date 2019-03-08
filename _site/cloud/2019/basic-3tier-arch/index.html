@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 문서에서는 다음과 같은 가장 일반적인 3-Tier 아키텍처 기반의 웹 시스템을 Oracle Cloud Infrastructure(IaaS)와 Java Cloud Service(PaaS)를 이용하여 구축하는 방법에 대해서 기술합니다." />
+<meta property="og:description" content="이 문서에서는 다음과 같은 가장 일반적인 3-Tier 아키텍처 기반의 웹 시스템을 Oracle Cloud Infrastructure(IaaS)와 Java Cloud Service(PaaS)를 이용하여 구축하는 방법에 대해서 기술합니다." />
+<link rel="canonical" href="http://localhost:4000/cloud/2019/basic-3tier-arch/" />
+<meta property="og:url" content="http://localhost:4000/cloud/2019/basic-3tier-arch/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-05T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"이 문서에서는 다음과 같은 가장 일반적인 3-Tier 아키텍처 기반의 웹 시스템을 Oracle Cloud Infrastructure(IaaS)와 Java Cloud Service(PaaS)를 이용하여 구축하는 방법에 대해서 기술합니다.","@type":"BlogPosting","url":"http://localhost:4000/cloud/2019/basic-3tier-arch/","headline":"Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기","dateModified":"2019-03-05T00:00:00+09:00","datePublished":"2019-03-05T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cloud/2019/basic-3tier-arch/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">카테고리</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-03-05T00:00:00+09:00" itemprop="datePublished">Mar 5, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>이 문서에서는 다음과 같은 가장 일반적인 3-Tier 아키텍처 기반의 웹 시스템을 <strong>Oracle Cloud Infrastructure(IaaS)</strong>와 <strong>Java Cloud Service(PaaS)</strong>를 이용하여 구축하는 방법에 대해서 기술합니다.</p>
+
+<p>구축 아키텍처는 다음 그림에서 보여지는 것과 같습니다.</p>
+
+<p><img src="/assets/images/3tier/image1.png" alt="" /></p>
+
+<h2 id="필요-서비스-및-소프트웨어">필요 서비스 및 소프트웨어</h2>
+<ul>
+  <li>Oracle Cloud Infrastructure
+    <ul>
+      <li>Compute Service</li>
+      <li>Network Service</li>
+      <li>Object Storage Service</li>
+      <li>Database System</li>
+    </ul>
+  </li>
+  <li>Java Cloud Service</li>
+  <li>필요 소프트웨어
+    <ul>
+      <li>Apache (Open Source)</li>
+      <li>Oracle Coherence</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="아키텍처-특징">아키텍처 특징</h2>
+
+<ul>
+  <li><strong>Virtual Cloud Network(VCN)</strong>을 이용하여 가상 네트워크를 구성</li>
+  <li>두 개의 <strong>Availability Domain(AD)</strong>를 이용하여 <strong>HA</strong>가 되도록 구성</li>
+  <li>Java Cloud Service(JCS)와 Database는 <strong>Private Subnet</strong>에 구성</li>
+  <li>서로 다른 AD에 각기 구성된 JCS 도메인의 <strong>세션 공유는 Coherence Cluster</strong>를 이용하여 구성</li>
+  <li>웹서버에서는 해당 AD 내의 JCS만 로드 발란싱이 이루어 지도록 구성</li>
+</ul>
+
+<h2 id="비고">비고</h2>
+
+<ul>
+  <li>여기서 설명하는 기본 아키텍처에서는 Database 이중화 부분은 고려하지 않음</li>
+  <li>DB 이중화를 위해서는 추가 작업이 필요함</li>
+</ul>
+
+<h1 id="network-생성--구성">Network 생성 / 구성</h1>
+
+<p>위 아키텍처 구성을 위해 다음과 같은 Virtual Cloud Network(VCN) 구성이 필요합니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>구분</strong></th>
+      <th><strong>이름</strong></th>
+      <th><strong>Route Table</strong></th>
+      <th><strong>Security List</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>VCN</strong></td>
+      <td>VCN_3Tier</td>
+      <td>Default</td>
+      <td>Default</td>
+    </tr>
+    <tr>
+      <td><strong>Subnet</strong></td>
+      <td>VCN_3Tier_Sub_Web_AD1</td>
+      <td>PublicRT</td>
+      <td>PublicSL</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>VCN_3Tier_Sub_Web_AD2</td>
+      <td>PublicRT</td>
+      <td>PublicSL</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>VCN_3Tier_Sub_WAS_AD1</td>
+      <td>PrivateRT</td>
+      <td>PrivateSL</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>VCN_3Tier_Sub_WAS_AD2</td>
+      <td>PrivateRT</td>
+      <td>PrivateSL</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>VCN_3Tier_Sub_DB_AD1</td>
+      <td>PrivateRT</td>
+      <td>DBSL</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="vcn-생성">VCN 생성</h2>
+
+<p>VCN을 다음과 같이 생성합니다. Subnet은 두개만 필요하기 때문에 “<strong>Create Virtual Cloud Network Only</strong>” 옵션을 선택하고 Subnet을 나중에 추가하도록 합니다.</p>
+
+<p><img src="/assets/images/3tier/image2.png" alt="" /></p>
+
+<h2 id="service-gateway-생성">Service Gateway 생성</h2>
+<p>Private Subnet에서 Public에 존재하는 Oracle Service에 Internet 망을 거치지 않고 Oracle Cloud 내부 네트워크를 통해 접속하게 하기 위해서는 Service Gateway가 필요합니다. 이 Service Gateway를 통해 Object Storage에 연결할 것입니다.</p>
+
+<p><img src="/assets/images/3tier/image3.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image4.png" alt="" /></p>
+
+<h2 id="internet-gateway-생성">Internet Gateway 생성</h2>
+
+<p>Public Subnet에서 인터넷 접속을 위해 사용할 Internet Gateway를 생성합니다.</p>
+
+<p><img src="/assets/images/3tier/image5.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image6.png" alt="" /></p>
+
+<h2 id="security-list-생성--구성">Security List 생성 / 구성</h2>
+
+<p>Subnet을 개별적으로 구성하고 각 Public Subnet / Private Subnet 별로 Route Table과 Security List를 달리 구성해야 하기 때문에 
+Subnet 생성 전에 Security List와 Route Table을 미리 구성해 두고 Subnet 생성 시에 미리 만들어진 것들을 이용해야 합니다.</p>
+
+<p>생성된 VCN의 Security Lists 메뉴로 이동하여 필요한 Security List를 생성합니다.</p>
+
+<p><img src="/assets/images/3tier/image7.png" alt="" /></p>
+
+<p>아래와 같이 Security List를 생성하고 Ingress/Egress Rule을 추가해 줍니다.</p>
+
+<h3 id="public-security-list--publicsl">Public Security List : PublicSL</h3>
+
+<p><img src="/assets/images/3tier/image8.png" alt="" /></p>
+
+<ul>
+  <li>Ingress Rules</li>
+</ul>
+
+<p><img src="/assets/images/3tier/image9.png" alt="" /></p>
+
+<ul>
+  <li>Egress Rules</li>
+</ul>
+
+<p><img src="/assets/images/3tier/image10.png" alt="" /></p>
+
+<h3 id="private-security-list--privatesl">Private Security List : PrivateSL</h3>
+
+<ul>
+  <li>Ingress Rules</li>
+</ul>
+
+<blockquote>
+  <p>Public Subnet (10.0.1.0/24, 10.0.2.0/24)으로 부터 들어오는 포트는 22, 80, 8001, 7001이 사용될 것이므로 이 포트를 각각 지정해 줘도 되지만 여기서는 두 Subnet에서부터 들어오는 port는 모두 허용하는 것으로 설정하였습니다.</p>
+</blockquote>
+
+<p><img src="/assets/images/3tier/image11.png" alt="" /></p>
+
+<ul>
+  <li>Egress Rules</li>
+</ul>
+
+<p><img src="/assets/images/3tier/image12.png" alt="" /></p>
+
+<h3 id="private-security-list--dbsl">Private Security List : DBSL</h3>
+
+<ul>
+  <li>Ingress Rules</li>
+</ul>
+
+<p><img src="/assets/images/3tier/image13.png" alt="" /></p>
+
+<ul>
+  <li>Egress Rules</li>
+</ul>
+
+<p><img src="/assets/images/3tier/image14.png" alt="" /></p>
+
+<h2 id="route-table-생성--구성">Route Table 생성 / 구성</h2>
+
+<p>Route Table 메뉴에서 Route Table을 생성합니다.</p>
+
+<p><img src="/assets/images/3tier/image15.png" alt="" /></p>
+
+<h3 id="public-route-table--publicrt">Public Route Table : PublicRT</h3>
+<p>Public Route Table에서는 Internet Gateway로 가는 Route를 설정해 줍니다.</p>
+
+<p><img src="/assets/images/3tier/image16.png" alt="" /></p>
+
+<h3 id="private-route-table--privatert">Private Route Table : PrivateRT</h3>
+<p>Private Route Table에서는 Object Storage로 가기 위한 Service Gateway로의 Route를 추가해 줍니다.</p>
+
+<p><img src="/assets/images/3tier/image18.png" alt="" /></p>
+
+<h2 id="subnet-생성--구성">Subnet 생성 / 구성</h2>
+
+<p>만들어진 VCN에 들어가서 <strong>Create Subnet</strong>을 클릭합니다.</p>
+
+<p><img src="/assets/images/3tier/image19.png" alt="" /></p>
+
+<h3 id="public-subnet-1--vcn_3tier_sub_web_ad1">Public Subnet 1 : VCN_3Tier_Sub_Web_AD1</h3>
+
+<p>Public Subnet을 다음과 같이 생성합니다.</p>
+
+<p><img src="/assets/images/3tier/image20.png" alt="" /></p>
+
+<p>나머지 Subnet들도 다음 표를 참고하여 생성합니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Name</strong></th>
+      <th><strong>Subnet Type</strong></th>
+      <th><strong>AD</strong>   <strong>CIDR</strong></th>
+      <th><strong>Route Table</strong></th>
+      <th><strong>Subnet Access</strong></th>
+      <th><strong>Security List</strong></th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>VCN_3Tier_Sub_Web_AD1</strong></td>
+      <td>AVAILABILITY DOMAIN-SPECIFIC</td>
+      <td>AD1</td>
+      <td>10.0.1.0/24</td>
+      <td>PublicRT</td>
+      <td>Public</td>
+      <td>PublicSL</td>
+    </tr>
+    <tr>
+      <td><strong>VCN_3Tier_Sub_Web_AD2</strong></td>
+      <td>AVAILABILITY DOMAIN-SPECIFIC</td>
+      <td>AD2</td>
+      <td>10.0.2.0/24</td>
+      <td>PublicRT</td>
+      <td>Public</td>
+      <td>PublicSL</td>
+    </tr>
+    <tr>
+      <td><strong>VCN_3Tier_Sub_WAS_AD1</strong></td>
+      <td>AVAILABILITY DOMAIN-SPECIFIC</td>
+      <td>AD1</td>
+      <td>10.0.3.0/24</td>
+      <td>PrivateRT</td>
+      <td>Private</td>
+      <td>PrivateSL</td>
+    </tr>
+    <tr>
+      <td><strong>VCN_3Tier_Sub_WAS_AD2</strong></td>
+      <td>AVAILABILITY DOMAIN-SPECIFIC</td>
+      <td>AD2</td>
+      <td>10.0.4.0/24</td>
+      <td>PrivateRT</td>
+      <td>Private</td>
+      <td>PrivateSL</td>
+    </tr>
+    <tr>
+      <td><strong>VCN_3Tier_Sub_DB_AD1</strong></td>
+      <td>AVAILABILITY DOMAIN-SPECIFIC</td>
+      <td>AD1</td>
+      <td>10.0.5.0/24</td>
+      <td>PrivateRT</td>
+      <td>Private</td>
+      <td>DBSL</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="bucket-생성">BUCKET 생성</h1>
+
+<p>Java Cloud Service(JCS)와 Database System 생성 시에 백업을 위한 Object Storage Bucket이 필요하기 때문에 다른 준비에 앞서서 미리 만들어 두도록 합니다. 특히 JCS에서의 Bucket 사용 관련하여서는 다음과 같은 전제 조건이 있기 때문에 Bucket 생성 시에는 OCI의 IAM 계정을 등록하고 이 계정을 이용하여 Bucket을 생성하도록 합니다.</p>
+
+<blockquote>
+
+  <p>Bucket 생성은 IDCS Federated User가 아닌 IAM에 등록된 User로 만들어야 하고, 이 계정 정보를 JCS 생성시 Backup Storage Container Credential로 사용한다.</p>
+
+  <p>The user creating the buckets must be a user in Oracle Cloud Infrastructure Identity and Access Management (IAM), not a federated user.</p>
+
+</blockquote>
+
+<p>JCS에서 사용할 Bucket을 하나 생성합니다.</p>
+
+<p><img src="/assets/images/3tier/image21.png" alt="" /></p>
+
+<p>Database에서 사용할 Bucket을 하나 생성 합니다.</p>
+
+<p><img src="/assets/images/3tier/image22.png" alt="" /></p>
+
+<h1 id="db-생성">DB 생성</h1>
+
+<p>OCI 콘솔의 <strong>Bare Metal, VM, and Exadata</strong> 메뉴로 들어가서 해당하는 Compartment를 선택 후 <strong>Launch DB System</strong>을 클릭하여 DB를 생성 합니다.</p>
+
+<p><img src="/assets/images/3tier/image23.png" alt="" /></p>
+
+<p>Virtual Machine 옵션을 선택 합니다.</p>
+
+<p><img src="/assets/images/3tier/image24.png" alt="" /></p>
+
+<p>미리 생성해 둔 DB용 Subnet을 선택 합니다.</p>
+
+<p><img src="/assets/images/3tier/image25.png" alt="" /></p>
+
+<p>백업 선택은 옵션이니 사용할 경우에는 위에서 생성해 둔 BUCKET 정보를 이용합니다.</p>
+
+<p><img src="/assets/images/3tier/image26.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image27.png" alt="" /></p>
+
+<p>DB가 잘 생성되었는지 확인합니다.</p>
+
+<p><img src="/assets/images/3tier/image28.png" alt="" /></p>
+
+<h1 id="jcs-생성">JCS 생성</h1>
+
+<p>이 단계에서는 WebLogic 기반의 PaaS 서비스인 Java Cloud Service를 생성하도록 하겠습니다.</p>
+
+<h3 id="사전-준비-사항">사전 준비 사항</h3>
+
+<ul>
+  <li>JCS 용 버킷 생성 : 이전 단계에서 생성함</li>
+  <li>PSM(PaaS Service Manager)가 OCI의 리소스를 사용하기 위한 Policy들이 사전 정의 되어야 함 : 아래 Policy를 참고하여 속해 있는 그룹의 Policy에 추가해 줍니다.</li>
+</ul>
+
+<blockquote>
+  <p><img src="/assets/images/3tier/image29.png" alt="" /></p>
+</blockquote>
+
+<p>Private Subnet을 사용하는 Java Cloud Service(JCS)는JCS 서비스 콘솔을 통해서 생성할 수가 없습니다. 현재까지는 JCS 콘솔에서는 Public Subnet 만 선택할 수 있게 되어 있습니다.</p>
+
+<blockquote>
+
+  <p><strong><em>참고 문서 :</em></strong> <a href="https://docs.oracle.com/en/cloud/paas/java-cloud/jscug/create-instance-attached-private-subnet-oci.html#GUID-36EB6099-C792-4017-A4C7-06F796926AF6">Create an Oracle Java Cloud Service Instance Attached to a Private Subnet on Oracle Cloud Infrastructure</a></p>
+
+</blockquote>
+
+<p>따라서 Private Subnet을 이용하는 JCS를 생성하고자 할 경우에는 제공되는 REST API를 이용하거나 PSM(PaaS Service Manager) CLI를 이용해야 하는데. 이 가이드에서는 REST API를 이용하는 방법으로 설명합니다.</p>
+
+<p>또한 참고문서(매뉴얼)에서 설명하는 방법으로 생성하게 되면 Database System on Oracle Cloud Infrastucture가 아닌 Database Cloud Service (DBCS on OCI-C)가 생성되기 때문에 <strong>Database System on OCI를 이용한 JCS를 생성하고자 한다면 아래 설명을 따라 수행해야 합니다.</strong></p>
+
+<p>JCS 서비스를 생성하는 REST API는 다음과 같습니다.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">curl -X POST https://jaas.oraclecloud.com/paas/api/v1.1/instancemgmt/[IdentityServiceID]/services/jaas/instances \
+-u [User Name]:[Password] \
+-H 'X-ID-TENANT-NAME: [IdentityServiceID]' \
+-H 'Content-Type: application/json' \
+-d @requestBodyFile.json
+</span></code></pre></div></div>
+
+<p>여기서 입력 값으로 사용하는 <strong>requestBodyFile.json</strong>이라는 json의 내용이 복잡하고 많은데, 이는 JCS의 콘솔을 통해서 얻을 수 있습니다.</p>
+
+<p>JSON을 얻기 위해 먼저 JCS 콘솔로 이동하여 <strong>Create Instance</strong>를 선택하여 Provision을 위한 정보 들을 입력합니다. Subnet List Box에서는 위에서 언급한 것처럼 Public Subnet만 보일 것이기 때문에 보이는 것 중 어느 것이나 선택해도 무방합니다. <strong>향후 JSON을 얻고 나서 Private Subnet을 사용하는 것으로 수정해 줄 것 입니다.</strong></p>
+
+<p><img src="/assets/images/3tier/image30.png" alt="" /></p>
+
+<p><strong>Advanced</strong> 옵션을 선택하고 다음과 같이 선택해 줍니다.</p>
+
+<ul>
+  <li>Enable Access to Administration Consoles: true</li>
+  <li>Load Balancer: None</li>
+  <li>Oracle Cloud Infrastructure Database : check</li>
+  <li>Compartment Name : 해당 Compartment</li>
+  <li>Database Instance Name : 앞 단계에서 생성해 둔 DB 선택</li>
+  <li>Object Storage Container : JCS 용으로 생성해 둔 Bucket 정보를 입력합니다.
+    <ul>
+      <li>https://swiftobjectstorage.us-ashburn-1.oraclecloud.com/v1/[TENANT-ID]/[BUCKET-명]</li>
+      <li><a href="https://docs.cloud.oracle.com/iaas/Content/API/Concepts/apiref.htm">Region 별 REST API Endpoint 참고</a></li>
+      <li>예: https://swiftobjectstorage.us-ashburn-1.oraclecloud.com/v1/apackrsct01/jcs_bucket</li>
+    </ul>
+  </li>
+  <li>Object Storage Password : IAM 계정의 <strong>Auth Token</strong>을 입력해 줍니다.</li>
+</ul>
+
+<p><strong>Next</strong>를 클릭합니다.</p>
+
+<p><img src="/assets/images/3tier/image31.png" alt="" /></p>
+
+<p>Confirm 화면에서 화살표로 표시된 Input Parameter들이 담긴 <strong>JSON 다운받기</strong>를 클릭합니다. 이 서비스를 콘솔에서 생성할 것이 아니므로 여기서는 <strong>Cancel</strong>을 클릭합니다.</p>
+
+<p><img src="/assets/images/3tier/image32.png" alt="" /></p>
+
+<p><strong>service_payload_jcs서비스명.json</strong> 파일이 생성되었을 것 입니다. 이 파일을 앞서 설명한 REST API의 Input Json으로 사용할 것입니다. 이 파일을 열어서 다음에 설명하는 항목들을 변경해 줍니다.</p>
+
+<p>빨간 박스로 체크해 둔 항목을 수정해 줍니다. Subnet 부분 변경이 핵심이므로 JCS에서 사용할 <strong>Private Subnet의 OCID</strong>로 변경해 줍니다.</p>
+
+<p><img src="/assets/images/3tier/image33.png" alt="" /></p>
+
+<p>파일 수정이 완료되었으면 위에서 설명한 Create Instance REST API를 수행해 줍니다.</p>
+
+<p>스크립트로 만들어서 다음과 같이 수행해도 됩니다. API가 수행되면 JOB ID가 다음과 같이 리턴되고, 리턴된 JOB ID로 JOB의 상태를 확인해 볼 수 있습니다.</p>
+
+<p><img src="/assets/images/3tier/image34.png" alt="" /></p>
+
+<ul>
+  <li>checkJCSJob.sh 스크립트 내용</li>
+</ul>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">curl https://jaas.oraclecloud.com/paas/api/v1.1/activitylog/[identityServiceID]/job/[JOBID] \                                            
+-u [usename]:[password] \                                                                            
+-H 'X-ID-TENANT-NAME: [identityServiceID]'                                           
+</span></code></pre></div></div>
+
+<p>JOB이 실행되고 있는 사항은 JCS 콘솔에서도 확인 할 수 있습니다.</p>
+
+<p><img src="/assets/images/3tier/image35.png" alt="" /></p>
+
+<p>위와 같은 방법으로 AD1, AD2를 사용하는 WAS 용 Subnet에 각각 한 개씩 JCS 서비스를 생성 합니다.</p>
+
+<p>다 완성된 모습은 다음과 같습니다.</p>
+
+<p><img src="/assets/images/3tier/image36.png" alt="" /></p>
+
+<h1 id="web-서버-생성-및-설정">Web 서버 생성 및 설정</h1>
+
+<p>JCS 서버의 서비스 앞 단에 WEB 서버 인스턴스를 두고 로드 발란싱을 하도록 구성할 것입니다. 웹서비는 어떤 것을 사용하여도 무방합니다.
+여기에서는 Apache를 사용하는 것으로 설명합니다.</p>
+
+<h2 id="compute-인스턴스-생성">Compute 인스턴스 생성</h2>
+
+<p>웹서버는 IaaS Compute 인스턴스에 구성할 것입니다. 따라서 먼저 Compute Instance를 생성합니다.</p>
+
+<p>AD1과 AD2 에 각각 한개 씩 구성할 예정이므로 먼저 AD1 의 Public Subnet에 인스턴스를 다음과 같이 생성합니다.</p>
+
+<p><img src="/assets/images/3tier/image37.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image38.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image39.png" alt="" /></p>
+
+<p>생성되었습니다. SSH로 접속할 Public IP를 기억해 두세요.</p>
+
+<p><img src="/assets/images/3tier/image40.png" alt="" /></p>
+
+<p>두 번째 인스턴스는 첫번 째 인스턴스 구성을 다 완료한 후에 Custom Compute Image로 만들어서 생성할 것입니다.</p>
+
+<p>그러므로 먼저 첫번째 인스턴스 구성을 먼저 완료하도록 하겠습니다.</p>
+
+<p>생성된 인스턴스의 Public IP를 이용하여 SSH로 접속합니다.</p>
+
+<h2 id="apache-설치">Apache 설치</h2>
+
+<p>웹서버로 사용할 Apache를 설치하여야 합니다. Yum으로 설치하는 httpd는 shared module이 enabled 된 버전이 아니기 때문에 Apache 소스를 받아서 컴파일하여 설치하는 방법으로 Apache를 설치 해 줍니다.</p>
+
+<ul>
+  <li><a href="https://httpd.apache.org/docs/2.4/install.html">Apache 설치 참고 문서</a></li>
+</ul>
+
+<p>참고로 저는 다음 옵션을 사용하여 컴파일 하였습니다.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo ./configure --prefix=/usr/local/apache --enable-module=so --with-pcre=/usr/local/pcre/bin/pcre-config -enable-rewrite --with-mpm=worker --enable-ssl  
+</span></code></pre></div></div>
+
+<h2 id="weblogic-plugin-설치">WebLogic Plugin 설치</h2>
+
+<p>Plugin 소프트웨어를 다음에서 다운 받습니다.</p>
+
+<ul>
+  <li><a href="https://www.oracle.com/technetwork/middleware/webtier/downloads/index-jsp-156711.html">웹로직 플러그인 다운 받기</a></li>
+</ul>
+
+<p><img src="/assets/images/3tier/image41.png" alt="" /></p>
+
+<p>다운 받은 zip 파일을 안에는 여러 웹서버 및 OS용 Plugin들이 모두 들어 있습니다. 이 중에서 Linux용 Apache 플러그인 만 웹서버용 Compute 인스턴스로 복사해 줍니다.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">scp -i privateKey ~/Downloads/fmw_12.2.1.3.0_wlsplugins_Disk1_1of1/WLSPlugins12c-12.2.1.3.0/WLSPlugin12.2.1.3.0-Apache2.2-Apache2.4-Linux_x86_64-12.2.1.3.0.zip opc@[웹서버 Public IP]:/home/opc/wlplugin/
+</span></code></pre></div></div>
+
+<p>복사된 플러그인 zip 파일의 압축을 풉니다. 아래 라이브러리들 중 mod_wl.so 파일을 사용할 것입니다.</p>
+
+<p><img src="/assets/images/3tier/image42.png" alt="" /></p>
+
+<h2 id="apache-구성">Apache 구성</h2>
+
+<p>WebLogic Plugin 구성 상세는 다음을 참고하세요</p>
+
+<ul>
+  <li><a href="https://docs.oracle.com/middleware/12213/webtier/develop-plugin/apache.htm#PLGWL395">Configuring the Plug-In for Apache HTTP Server</a></li>
+</ul>
+
+<p>이 가이드에서는 <strong>/usr/local/apache</strong> 경로에 Apache가 설치되어 있습니다. conf 디렉토리로 이동하여 httpd.conf 파일을 수정해 줍니다.</p>
+
+<ul>
+  <li>
+    <p><strong>WebLogicHost</strong>는 JCS 서비스의 Private IP를 참고하여 변경합니다.</p>
+  </li>
+  <li>
+    <p>애플리케이션은 아직 배포되지 않았으나 미리 설정해 둡니다.</p>
+  </li>
+  <li>
+    <p>JCS가 Private Subnet에 구성되었기 때문에 현재로서는 웹로직 콘솔을 Internet을 통해서 접속할 수가 없습니다. 따라서 웹서버에서 포워딩하는 형태로 웹로직 콘솔에 접속하기 위하여 <strong>/console 설정도 해 줍니다. 여기서의 WebLogicHost는 웹로직 Admin Server의 Host</strong>여야 합니다.</p>
+  </li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="s">... 생략</span>                                                          
+                                                                   
+<span class="c1"># Weblogic Module 추가                                           </span>
+<span class="s">LoadModule weblogic_module /home/opc/wlplugin/lib/mod_wl_24.so</span> 
+
+<span class="nn">...</span> <span class="s">생략</span>  
+
+<span class="s">&lt;Location /console&gt;</span>
+ <span class="s">WLSRequest On</span>   
+ <span class="s">WebLogicHost 10.0.3.2</span>  
+ <span class="s">WebLogicPort 7001</span> 
+<span class="s">&lt;/Location&gt;</span> 
+
+<span class="s">&lt;Location /cohweb&gt;</span>   
+ <span class="s">WLSRequest On</span>   
+ <span class="s">WebLogicHost 10.0.3.2</span> 
+ <span class="s">WebLogicPort 8001</span>  
+<span class="s">&lt;/Location&gt;</span> 
+
+<span class="s">&lt;IfModule mod_weblogic.c&gt;</span> 
+ <span class="s">WebLogicHost 10.0.3.2</span>   
+ <span class="s">WebLogicPort 8001</span>  
+ <span class="s">MatchExpression *.jsp</span>   
+ <span class="s">DebugConfigInfo ON</span>    
+<span class="s">&lt;/IfModule&gt;</span>  
+
+<span class="nn">...</span> <span class="s">생략</span>  
+</code></pre></div></div>
+
+<p>Apache를 구동 시킵니다. Apache가 default로 80 포트로 Listen하고 있는데 해당 Port가 Firewall을 통과할 수 있도록 다음 커맨드를 통해서 등록해 줍니다.</p>
+
+<p><img src="/assets/images/3tier/image43.png" alt="" /></p>
+
+<p>Apache 구성이 완료되었습니다.</p>
+
+<h2 id="커스텀-이미지-생성">커스텀 이미지 생성</h2>
+
+<p>AD2에서 사용할 Web 서버 인스턴스도 생성해야 합니다. 구성이 완료된 WEB 인스턴스를 Custom Image로 만들어서 Compute Instance를 생성하겠습니다.</p>
+
+<p><img src="/assets/images/3tier/image44.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image45.png" alt="" /></p>
+
+<p>이미지가 생성되고 나면 이 이미지를 사용하여 Compute Instance를 생성합니다.</p>
+
+<p><img src="/assets/images/3tier/image46.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image47.png" alt="" /></p>
+
+<p>AD2의 Subnet을 사용합니다.</p>
+
+<p><img src="/assets/images/3tier/image48.png" alt="" /></p>
+
+<p>Compute Instance가 다 생성되고 나면, SSH로 접속하여 Apache 설정만 변경해 주면 됩니다.</p>
+
+<p>AD2의 Apache는 AD2 내의 JCS 서비스를 바라보도록 httpd.conf의 WeblogicHost 정보만 바꿔주고 Apache를 기동시켜 줍니다.</p>
+
+<h1 id="coherence-설치-및-구성">Coherence 설치 및 구성</h1>
+
+<p>이제는 Coherence 구성을 진행하도록 하겠습니다. 
+두 AD 간의 두개의 JCS 서비스 간 HTTP Session 공유를 위하여 Coherence를 사용할 예정입니다. JCS 내에도 Managed Coherence 서버를 구성할 수 있지만 서로 다른 WebLogic Domain간의 세션 공유를 위해서 별도의 Coherence Cluster를 구성하도록 하겠습니다.</p>
+
+<p>Coherence 구성을 위해서 두개의 Compute Instance가 필요합니다.</p>
+
+<p>Coherence용 Compute Instance를 AD1에 먼저 구성한 후 구성이 완료된 후에 WEB의 경우와 마찬가지로 Custom Image를 생성하여 AD2에도 구성하도록 하겠습니다. Coherence는 Private Subnet에 만들어져야 합니다.</p>
+
+<p>Compute Instance를 만드는 과정을 생략하도록 하겠습니다. 생성되고 난 후의 모습은 다음과 같습니다.</p>
+
+<p><img src="/assets/images/3tier/image49.png" alt="" /></p>
+
+<p>인스턴스가 생성된 후 SSH로 Coherence 노드에 접속합니다. Private Subnet에 속해 있기 때문에 WEB 인스턴스를 통해서 Coherence 인스턴스에 접속합니다.</p>
+
+<p><img src="/assets/images/3tier/image50.png" alt="" /></p>
+
+<h2 id="coherence-설치">Coherence 설치</h2>
+
+<p>Stand alone으로 설치하는 Coherence는 JCS내의 Coherence 버전과 동일해야 합니다. JCS 콘솔에서 WebLogic 버전을 확인합니다.</p>
+
+<p><img src="/assets/images/3tier/image51.png" alt="" /></p>
+
+<p>동일 버전의 Coherence SW를 다운 받습니다.</p>
+
+<ul>
+  <li><a href="https://www.oracle.com/technetwork/middleware/coherence/overview/index.html">Coherenc Download</a></li>
+</ul>
+
+<p><img src="/assets/images/3tier/image52.png" alt="" /></p>
+
+<p>Coherence 설치 과정은 다음을 참고하시기 바랍니다. 여기에서는 설치 이후의 설정 과정만 설명하도록 하겠습니다.</p>
+
+<ul>
+  <li><a href="https://docs.oracle.com/middleware/1212/coherence/COHDG/gs_install.htm#COHDG5660">Installing Oracle Coherence for Java</a></li>
+</ul>
+
+<p>이 가이드에서는 coherence가 다음 위치에 설치 되었습니다.</p>
+
+<p><img src="/assets/images/3tier/image53.png" alt="" /></p>
+
+<p>Coherence 기동을 위한 스크립트를 작성합니다.</p>
+
+<ul>
+  <li>
+    <p><strong>Coherence*Web</strong>을 사용할 것이기 때문에 session cache 설정을 해 줍니다.</p>
+  </li>
+  <li>
+    <p>Cloud 환경에서 multicast가 지원되지 않기 때문에 <strong>unicast를 사용하는 WKA(Well Known Address)</strong>를 설정해 줍니다. WKA 상세 설명과 여러 개의 WKA를 설정하는 방법은 다음 문서를 참고 하세요.</p>
+
+    <ul>
+      <li><a href="https://docs.oracle.com/middleware/12213/coherence/COHDG/setting-cluster.htm#COHDG5454">Using Well Known Addresses</a></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">java -server -Xms512m -Xmx512m -cp /home/opc/fmw/coherence/lib/coherence.jar:/home/opc/fmw/coherence/lib/coherence-web.jar -Dcoherence.mode=prod -Dcoherence.management.remote=true -Dcoherence.session.localstorage=true -Dcoherence.enable.sessioncontext=true -Dcoherence.cacheconfig=default-session-cache-config.xml -Dcoherence.cluster=mycoh -Dcoherence.wka=10.0.3.3 com.tangosol.net.DefaultCacheServer
+</span></code></pre></div></div>
+
+<p>스크립트를 실행 시켜 Coherence를 기동 시킵니다. 아래와 유사한 로그가 보여질 것입니다.</p>
+
+<p><img src="/assets/images/3tier/image54.png" alt="" /></p>
+
+<p>coherence1 구성이 완료 되었으면 Custom Image를 생성해서 두번째 Instance를 생성합니다.</p>
+
+<p>생성하는 과정은 생략하도록 하겠습니다. 생성된 후의 모습은 다음과 같습니다.</p>
+
+<p><img src="/assets/images/3tier/image55.png" alt="" /></p>
+
+<p>Coherence 구성은 완료된 상황이기 때문에 Coherence 설치 디렉토리로 이동하여 Coherence 구동 스크립트를 실행 시켜 줍니다.</p>
+
+<h1 id="jcs에서-coherence-설정">JCS에서 Coherence 설정</h1>
+
+<p>이 단계에서는 JCS의 세션을 Coherence에 저장하도록 설정하는 과정을 수행합니다. 
+그렇게 하기 위해서는 WebLogic의 Managed Server들을 앞 단계에서 설정한 Coherence Cluster에 <strong>Join</strong> 되게 해 주어야 합니다.</p>
+
+<p>이 설정은 WebLogic Console을 통해 수행해야 하는데 JCS가 Private Subnet에 생성 되었기 때문에 JCS 메뉴에 있는 “WebLogic Console” 열기를 통해서는 콘솔에 접속할 수 없습니다.</p>
+
+<p>따라서 앞서 Web 설정에서 /console Location을 추가 해 두었기 때문에 웹서버(Apache)의 Public IP를 통해 웹로직 콘솔에 접속합니다.</p>
+
+<ul>
+  <li>http://[웹서버-Public-IP]/console</li>
+</ul>
+
+<p>JCS의 WebLogic Cluster들은 Cohernece Cluster의 기본 구성을 사용하도록 설정되어 있습니다. 여기에서는 Default로 구성되는 Coherence를 사용하지 않고 Stand Alone으로 구성된 Coherence에 Join할 것이 때문에 아래 화면에서 설명하는 방법을 따라 Coherence Cluster에서 WebLogic Cluster를 멤버에서 제거해 줍니다.</p>
+
+<p><img src="/assets/images/3tier/image56.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image57.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image58.png" alt="" /></p>
+
+<p>멤버에서 잘 제외 되었는지 확인합니다.</p>
+
+<p><img src="/assets/images/3tier/image59.png" alt="" /></p>
+
+<p>서버 메뉴로 이동하여서 각 WebLogic Managed Server가 구동할 때 Coherence Cluster의 멤버로 Join할 수 있도록 WebLogic Managed Server의 Start Script 부분을 수정해 줍니다.</p>
+
+<p><img src="/assets/images/3tier/image60.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image61.png" alt="" /></p>
+
+<p>기본적으로 설정되어 있는 Start Script의 Arguments를 확인합니다.</p>
+
+<p><img src="/assets/images/3tier/image62.png" alt="" /></p>
+
+<p>이 Argument를 다음과 같이 수정합니다.</p>
+
+<p><img src="/assets/images/3tier/image63.png" alt="" /></p>
+
+<p>Argument 전체 부분을 변경하면 안되고, 아래 빨간색으로 표시된 부분만 변경 될 수 있도록 합니다. <strong>기존 Argument에서 -Dtangosol.coherence.transport.reliable=tmb -Dtangosol.coherence.socketprovider=tcp 이 두 옵션은 제외해야 하니 주의 하세요.</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-Xms256m -Xmx8192m -XX:MaxMetaspaceSize=2048m -Djdk.tls.rejectClientInitiatedRenegotiation=true -Xloggc:/u01/data/domains/privJCS2_domainGC_privJCS2_server_1.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=4 -XX:GCLogFileSize=5m -Dweblogic.rjvm.enableprotocolswitch=true -Djava.net.preferIPv4Stack=true -Doracle.security.jps.db.connect.max.retry=720 -Doracle.security.jps.db.connect.retry.interval=10000 -Djps.auth.debug=false -DUSE_JAAS=false -Djps.combiner.optimize.lazyeval=true -Djps.combiner.optimize=true -Djps.authz=ACC -Djps.subject.cache.key=5 -Djps.subject.cache.ttl=600000 -Dweblogic.security.SSL.minimumProtocolVersion=TLSv1.2 -XX:+UnlockCommercialFeatures -XX:+FlightRecorder -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Dweblogic.data.canTransferAnyFile=true -Djava.security.egd=file:/dev/./urandom -XX:CompileThreshold=8000 -XX:ReservedCodeCacheSize=1024m -Doracle.jdbc.fanEnabled=false -Dcoherence.session.localstorage=false -Dcoherence.enable.sessioncontext=true -Dcoherence.cluster=mycoh -Dtangosol.coherence.cluster=mycoh -Dcoherence.wka=10.0.3.3
+</code></pre></div></div>
+
+<p>스크립트 변경이 완료되었으면 웹로직 서버를 재기동해야 합니다. 아래와 같이 <strong>Control</strong> 탭으로 이동하여 해당 서버만 재기동 합니다.</p>
+
+<p><img src="/assets/images/3tier/image64.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image65.png" alt="" /></p>
+
+<p>서버가 정상적으로 기동되고 나면 세션 테스트을 위핸 샘플 애플리케이션을 배포해야 합니다.</p>
+
+<h1 id="애플리케이션-배포">애플리케이션 배포</h1>
+
+<p>세션 테스트를 위햔 애플리케이션은 세션을 사용하는 어떤 애플리케이션을 이용하여도 무방합니다. 애플리케이션에서 Coherence*Web을 사용하게 하기 위해서는 <strong>weblogic.xml</strong> 에 다음과 같은 설정만 추가해 주면 됩니다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;wls:session-descriptor&gt;</span>
+  <span class="nt">&lt;wls:persistent-store-type&gt;</span>coherence-web<span class="nt">&lt;/wls:persistent-store-type&gt;</span>
+<span class="nt">&lt;/wls:session-descriptor&gt;</span>
+</code></pre></div></div>
+
+<p>여기에서는 간단한 샘플 애플리케이션(cohweb)을 이용할 것입니다.</p>
+
+<p>웹로직 콘솔의 <strong>Deployments</strong> 메뉴에서 애플리케이션을 배포합니다.</p>
+
+<p><img src="/assets/images/3tier/image66.png" alt="" /></p>
+
+<p>로컬 환경에서 JCS Cloud 환경으로 애플리케이션을 <strong>Upload</strong>해 줍니다.</p>
+
+<p><img src="/assets/images/3tier/image67.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image68.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image69.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image70.png" alt="" /></p>
+
+<p>애플리케이션을 Cluster에 배포합니다.</p>
+
+<p><img src="/assets/images/3tier/image71.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image72.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image73.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image74.png" alt="" /></p>
+
+<p>애플리케이션이 배포되고 나서는 애플리케이션을 시작 시켜야 서비스를 할 수 있습니다.</p>
+
+<p><img src="/assets/images/3tier/image75.png" alt="" /></p>
+
+<p>애플리케이션이 서비스 가능 상태가 되었습니다.</p>
+
+<p><img src="/assets/images/3tier/image76.png" alt="" /></p>
+
+<p>AD2의 JCS도 위와 마찬가지로 설정해 줍니다. 동일하게 애플리케이션도 배포해 줍니다.</p>
+
+<h1 id="load-balancer-생성">Load Balancer 생성</h1>
+
+<p>마지막으로 Load Balancer를 생성해 줍니다. 이 Load Balancer는 web1, web2를 Round Robin으로 발란싱하게 구성합니다.
+Load Balancer는 <strong>Sticky Session</strong>을 지원하도록 설정할 수도 있지만, HA 태스트를 위해서 web1, web2로 Round Robin으로 돌리며 테스트를 진행할 예정이기 때문에 Sticky Session으로 설정하지 않습니다.</p>
+
+<p><img src="/assets/images/3tier/image77.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/image78.png" alt="" /></p>
+
+<p>생성이 되고 나면 다음과 같이 보여집니다.</p>
+
+<p><img src="/assets/images/3tier/image79.png" alt="" /></p>
+
+<h1 id="test">Test</h1>
+
+<p>이제 구성된 Load Balancer를 통해서 Application을 테스트 해 보겠습니다. Load Balancer의 Public IP로 접속합니다.</p>
+
+<ul>
+  <li>http://[Load-Balancer-Public-IP]/cohweb</li>
+</ul>
+
+<p>다음과 같은 화면이 보일 것 입니다.</p>
+
+<p><img src="/assets/images/3tier/image80.png" alt="" /></p>
+
+<p>세션을 몇개 추가해 봅니다.</p>
+
+<p><img src="/assets/images/3tier/image81.png" alt="" /></p>
+
+<p>브라우저의 Refresh 버튼을 클릭하여 request를 계속 보내 봅니다. 다른 JCS Server 접속된 것을 확인할 수 있고, 세션이 유지되는 것을 확인 할 수 있습니다.</p>
+
+<p><img src="/assets/images/3tier/image82.png" alt="" /></p>
+
+<p>이상으로 모든 구성이 완료되었습니다. 각 Layer의 컴포넌트를 하나씩 내려 보면서 세션이 계속 유지되는지 테스트 해보시면 HA 아키텍처를 이해하는데 더욱 도움이 될 것입니다.</p>
+
+
+
+  </div><div>
+  <p>
+    <strong>Tags: </strong><a href="#" class="keywords" rel="tag">3 Tier Architecture</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">HA</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">IaaS</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Java Cloud Service</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Oracle Cloud</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Virtual Cloud Network</a></p>
+</div><div>
+  <p>
+    <strong>Share On: </strong>
+  
+    <a href="https://twitter.com/intent/tweet?text=Oracle+IaaS%EC%99%80+Java+Cloud+Service%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%A9%80%ED%8B%B0+AD%28Availability+Domain%29%EC%97%90+3+Tier+%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90+%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/chatbot/2019/chatbot_cecs/" title="Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">Next</a></nav>
+</div>
+</div><a class="u-url" href="/cloud/2019/basic-3tier-arch/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="/feed.xml"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#rss"></use></svg> <span>Feed</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>

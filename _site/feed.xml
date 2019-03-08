@@ -1,4 +1,752 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-22T15:27:48+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기</title><link href="http://localhost:4000/chatbot/2019/chatbot_cecs/" rel="alternate" type="text/html" title="Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기" /><published>2019-02-19T00:00:00+09:00</published><updated>2019-02-19T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/chatbot_cecs</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/chatbot_cecs/">&lt;p&gt;이 포스트에서는 오라클 챗봇인 &lt;strong&gt;Digital Assistant&lt;/strong&gt;와 &lt;strong&gt;Content and Experience Cloud (이후 CECS)&lt;/strong&gt;라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-03-08T16:59:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기" /><published>2019-03-05T00:00:00+09:00</published><updated>2019-03-05T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch/">&lt;p&gt;이 문서에서는 다음과 같은 가장 일반적인 3-Tier 아키텍처 기반의 웹 시스템을 &lt;strong&gt;Oracle Cloud Infrastructure(IaaS)&lt;/strong&gt;와 &lt;strong&gt;Java Cloud Service(PaaS)&lt;/strong&gt;를 이용하여 구축하는 방법에 대해서 기술합니다.&lt;/p&gt;
+
+&lt;p&gt;구축 아키텍처는 다음 그림에서 보여지는 것과 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;필요-서비스-및-소프트웨어&quot;&gt;필요 서비스 및 소프트웨어&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Oracle Cloud Infrastructure
+    &lt;ul&gt;
+      &lt;li&gt;Compute Service&lt;/li&gt;
+      &lt;li&gt;Network Service&lt;/li&gt;
+      &lt;li&gt;Object Storage Service&lt;/li&gt;
+      &lt;li&gt;Database System&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Java Cloud Service&lt;/li&gt;
+  &lt;li&gt;필요 소프트웨어
+    &lt;ul&gt;
+      &lt;li&gt;Apache (Open Source)&lt;/li&gt;
+      &lt;li&gt;Oracle Coherence&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;아키텍처-특징&quot;&gt;아키텍처 특징&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Virtual Cloud Network(VCN)&lt;/strong&gt;을 이용하여 가상 네트워크를 구성&lt;/li&gt;
+  &lt;li&gt;두 개의 &lt;strong&gt;Availability Domain(AD)&lt;/strong&gt;를 이용하여 &lt;strong&gt;HA&lt;/strong&gt;가 되도록 구성&lt;/li&gt;
+  &lt;li&gt;Java Cloud Service(JCS)와 Database는 &lt;strong&gt;Private Subnet&lt;/strong&gt;에 구성&lt;/li&gt;
+  &lt;li&gt;서로 다른 AD에 각기 구성된 JCS 도메인의 &lt;strong&gt;세션 공유는 Coherence Cluster&lt;/strong&gt;를 이용하여 구성&lt;/li&gt;
+  &lt;li&gt;웹서버에서는 해당 AD 내의 JCS만 로드 발란싱이 이루어 지도록 구성&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;비고&quot;&gt;비고&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;여기서 설명하는 기본 아키텍처에서는 Database 이중화 부분은 고려하지 않음&lt;/li&gt;
+  &lt;li&gt;DB 이중화를 위해서는 추가 작업이 필요함&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;network-생성--구성&quot;&gt;Network 생성 / 구성&lt;/h1&gt;
+
+&lt;p&gt;위 아키텍처 구성을 위해 다음과 같은 Virtual Cloud Network(VCN) 구성이 필요합니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;&lt;strong&gt;구분&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;이름&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Route Table&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Security List&lt;/strong&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;VCN&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;VCN_3Tier&lt;/td&gt;
+      &lt;td&gt;Default&lt;/td&gt;
+      &lt;td&gt;Default&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Subnet&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;VCN_3Tier_Sub_Web_AD1&lt;/td&gt;
+      &lt;td&gt;PublicRT&lt;/td&gt;
+      &lt;td&gt;PublicSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;VCN_3Tier_Sub_Web_AD2&lt;/td&gt;
+      &lt;td&gt;PublicRT&lt;/td&gt;
+      &lt;td&gt;PublicSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;VCN_3Tier_Sub_WAS_AD1&lt;/td&gt;
+      &lt;td&gt;PrivateRT&lt;/td&gt;
+      &lt;td&gt;PrivateSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;VCN_3Tier_Sub_WAS_AD2&lt;/td&gt;
+      &lt;td&gt;PrivateRT&lt;/td&gt;
+      &lt;td&gt;PrivateSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;VCN_3Tier_Sub_DB_AD1&lt;/td&gt;
+      &lt;td&gt;PrivateRT&lt;/td&gt;
+      &lt;td&gt;DBSL&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;vcn-생성&quot;&gt;VCN 생성&lt;/h2&gt;
+
+&lt;p&gt;VCN을 다음과 같이 생성합니다. Subnet은 두개만 필요하기 때문에 “&lt;strong&gt;Create Virtual Cloud Network Only&lt;/strong&gt;” 옵션을 선택하고 Subnet을 나중에 추가하도록 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;service-gateway-생성&quot;&gt;Service Gateway 생성&lt;/h2&gt;
+&lt;p&gt;Private Subnet에서 Public에 존재하는 Oracle Service에 Internet 망을 거치지 않고 Oracle Cloud 내부 네트워크를 통해 접속하게 하기 위해서는 Service Gateway가 필요합니다. 이 Service Gateway를 통해 Object Storage에 연결할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;internet-gateway-생성&quot;&gt;Internet Gateway 생성&lt;/h2&gt;
+
+&lt;p&gt;Public Subnet에서 인터넷 접속을 위해 사용할 Internet Gateway를 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;security-list-생성--구성&quot;&gt;Security List 생성 / 구성&lt;/h2&gt;
+
+&lt;p&gt;Subnet을 개별적으로 구성하고 각 Public Subnet / Private Subnet 별로 Route Table과 Security List를 달리 구성해야 하기 때문에 
+Subnet 생성 전에 Security List와 Route Table을 미리 구성해 두고 Subnet 생성 시에 미리 만들어진 것들을 이용해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;생성된 VCN의 Security Lists 메뉴로 이동하여 필요한 Security List를 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래와 같이 Security List를 생성하고 Ingress/Egress Rule을 추가해 줍니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;public-security-list--publicsl&quot;&gt;Public Security List : PublicSL&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ingress Rules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Egress Rules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image10.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;private-security-list--privatesl&quot;&gt;Private Security List : PrivateSL&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ingress Rules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Public Subnet (10.0.1.0/24, 10.0.2.0/24)으로 부터 들어오는 포트는 22, 80, 8001, 7001이 사용될 것이므로 이 포트를 각각 지정해 줘도 되지만 여기서는 두 Subnet에서부터 들어오는 port는 모두 허용하는 것으로 설정하였습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Egress Rules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;private-security-list--dbsl&quot;&gt;Private Security List : DBSL&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ingress Rules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image13.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Egress Rules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;route-table-생성--구성&quot;&gt;Route Table 생성 / 구성&lt;/h2&gt;
+
+&lt;p&gt;Route Table 메뉴에서 Route Table을 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image15.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;public-route-table--publicrt&quot;&gt;Public Route Table : PublicRT&lt;/h3&gt;
+&lt;p&gt;Public Route Table에서는 Internet Gateway로 가는 Route를 설정해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image16.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;private-route-table--privatert&quot;&gt;Private Route Table : PrivateRT&lt;/h3&gt;
+&lt;p&gt;Private Route Table에서는 Object Storage로 가기 위한 Service Gateway로의 Route를 추가해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image18.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;subnet-생성--구성&quot;&gt;Subnet 생성 / 구성&lt;/h2&gt;
+
+&lt;p&gt;만들어진 VCN에 들어가서 &lt;strong&gt;Create Subnet&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image19.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;public-subnet-1--vcn_3tier_sub_web_ad1&quot;&gt;Public Subnet 1 : VCN_3Tier_Sub_Web_AD1&lt;/h3&gt;
+
+&lt;p&gt;Public Subnet을 다음과 같이 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image20.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;나머지 Subnet들도 다음 표를 참고하여 생성합니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;&lt;strong&gt;Name&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Subnet Type&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;AD&lt;/strong&gt;   &lt;strong&gt;CIDR&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Route Table&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Subnet Access&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Security List&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;VCN_3Tier_Sub_Web_AD1&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;AVAILABILITY DOMAIN-SPECIFIC&lt;/td&gt;
+      &lt;td&gt;AD1&lt;/td&gt;
+      &lt;td&gt;10.0.1.0/24&lt;/td&gt;
+      &lt;td&gt;PublicRT&lt;/td&gt;
+      &lt;td&gt;Public&lt;/td&gt;
+      &lt;td&gt;PublicSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;VCN_3Tier_Sub_Web_AD2&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;AVAILABILITY DOMAIN-SPECIFIC&lt;/td&gt;
+      &lt;td&gt;AD2&lt;/td&gt;
+      &lt;td&gt;10.0.2.0/24&lt;/td&gt;
+      &lt;td&gt;PublicRT&lt;/td&gt;
+      &lt;td&gt;Public&lt;/td&gt;
+      &lt;td&gt;PublicSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;VCN_3Tier_Sub_WAS_AD1&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;AVAILABILITY DOMAIN-SPECIFIC&lt;/td&gt;
+      &lt;td&gt;AD1&lt;/td&gt;
+      &lt;td&gt;10.0.3.0/24&lt;/td&gt;
+      &lt;td&gt;PrivateRT&lt;/td&gt;
+      &lt;td&gt;Private&lt;/td&gt;
+      &lt;td&gt;PrivateSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;VCN_3Tier_Sub_WAS_AD2&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;AVAILABILITY DOMAIN-SPECIFIC&lt;/td&gt;
+      &lt;td&gt;AD2&lt;/td&gt;
+      &lt;td&gt;10.0.4.0/24&lt;/td&gt;
+      &lt;td&gt;PrivateRT&lt;/td&gt;
+      &lt;td&gt;Private&lt;/td&gt;
+      &lt;td&gt;PrivateSL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;VCN_3Tier_Sub_DB_AD1&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;AVAILABILITY DOMAIN-SPECIFIC&lt;/td&gt;
+      &lt;td&gt;AD1&lt;/td&gt;
+      &lt;td&gt;10.0.5.0/24&lt;/td&gt;
+      &lt;td&gt;PrivateRT&lt;/td&gt;
+      &lt;td&gt;Private&lt;/td&gt;
+      &lt;td&gt;DBSL&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;bucket-생성&quot;&gt;BUCKET 생성&lt;/h1&gt;
+
+&lt;p&gt;Java Cloud Service(JCS)와 Database System 생성 시에 백업을 위한 Object Storage Bucket이 필요하기 때문에 다른 준비에 앞서서 미리 만들어 두도록 합니다. 특히 JCS에서의 Bucket 사용 관련하여서는 다음과 같은 전제 조건이 있기 때문에 Bucket 생성 시에는 OCI의 IAM 계정을 등록하고 이 계정을 이용하여 Bucket을 생성하도록 합니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+  &lt;p&gt;Bucket 생성은 IDCS Federated User가 아닌 IAM에 등록된 User로 만들어야 하고, 이 계정 정보를 JCS 생성시 Backup Storage Container Credential로 사용한다.&lt;/p&gt;
+
+  &lt;p&gt;The user creating the buckets must be a user in Oracle Cloud Infrastructure Identity and Access Management (IAM), not a federated user.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;JCS에서 사용할 Bucket을 하나 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image21.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Database에서 사용할 Bucket을 하나 생성 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image22.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;db-생성&quot;&gt;DB 생성&lt;/h1&gt;
+
+&lt;p&gt;OCI 콘솔의 &lt;strong&gt;Bare Metal, VM, and Exadata&lt;/strong&gt; 메뉴로 들어가서 해당하는 Compartment를 선택 후 &lt;strong&gt;Launch DB System&lt;/strong&gt;을 클릭하여 DB를 생성 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image23.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Virtual Machine 옵션을 선택 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image24.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;미리 생성해 둔 DB용 Subnet을 선택 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image25.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;백업 선택은 옵션이니 사용할 경우에는 위에서 생성해 둔 BUCKET 정보를 이용합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image26.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image27.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DB가 잘 생성되었는지 확인합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image28.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;jcs-생성&quot;&gt;JCS 생성&lt;/h1&gt;
+
+&lt;p&gt;이 단계에서는 WebLogic 기반의 PaaS 서비스인 Java Cloud Service를 생성하도록 하겠습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;사전-준비-사항&quot;&gt;사전 준비 사항&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;JCS 용 버킷 생성 : 이전 단계에서 생성함&lt;/li&gt;
+  &lt;li&gt;PSM(PaaS Service Manager)가 OCI의 리소스를 사용하기 위한 Policy들이 사전 정의 되어야 함 : 아래 Policy를 참고하여 속해 있는 그룹의 Policy에 추가해 줍니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image29.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Private Subnet을 사용하는 Java Cloud Service(JCS)는JCS 서비스 콘솔을 통해서 생성할 수가 없습니다. 현재까지는 JCS 콘솔에서는 Public Subnet 만 선택할 수 있게 되어 있습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+  &lt;p&gt;&lt;strong&gt;&lt;em&gt;참고 문서 :&lt;/em&gt;&lt;/strong&gt; &lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/java-cloud/jscug/create-instance-attached-private-subnet-oci.html#GUID-36EB6099-C792-4017-A4C7-06F796926AF6&quot;&gt;Create an Oracle Java Cloud Service Instance Attached to a Private Subnet on Oracle Cloud Infrastructure&lt;/a&gt;&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;따라서 Private Subnet을 이용하는 JCS를 생성하고자 할 경우에는 제공되는 REST API를 이용하거나 PSM(PaaS Service Manager) CLI를 이용해야 하는데. 이 가이드에서는 REST API를 이용하는 방법으로 설명합니다.&lt;/p&gt;
+
+&lt;p&gt;또한 참고문서(매뉴얼)에서 설명하는 방법으로 생성하게 되면 Database System on Oracle Cloud Infrastucture가 아닌 Database Cloud Service (DBCS on OCI-C)가 생성되기 때문에 &lt;strong&gt;Database System on OCI를 이용한 JCS를 생성하고자 한다면 아래 설명을 따라 수행해야 합니다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;JCS 서비스를 생성하는 REST API는 다음과 같습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;curl -X POST https://jaas.oraclecloud.com/paas/api/v1.1/instancemgmt/[IdentityServiceID]/services/jaas/instances \
+-u [User Name]:[Password] \
+-H 'X-ID-TENANT-NAME: [IdentityServiceID]' \
+-H 'Content-Type: application/json' \
+-d @requestBodyFile.json
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;여기서 입력 값으로 사용하는 &lt;strong&gt;requestBodyFile.json&lt;/strong&gt;이라는 json의 내용이 복잡하고 많은데, 이는 JCS의 콘솔을 통해서 얻을 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;JSON을 얻기 위해 먼저 JCS 콘솔로 이동하여 &lt;strong&gt;Create Instance&lt;/strong&gt;를 선택하여 Provision을 위한 정보 들을 입력합니다. Subnet List Box에서는 위에서 언급한 것처럼 Public Subnet만 보일 것이기 때문에 보이는 것 중 어느 것이나 선택해도 무방합니다. &lt;strong&gt;향후 JSON을 얻고 나서 Private Subnet을 사용하는 것으로 수정해 줄 것 입니다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image30.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Advanced&lt;/strong&gt; 옵션을 선택하고 다음과 같이 선택해 줍니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enable Access to Administration Consoles: true&lt;/li&gt;
+  &lt;li&gt;Load Balancer: None&lt;/li&gt;
+  &lt;li&gt;Oracle Cloud Infrastructure Database : check&lt;/li&gt;
+  &lt;li&gt;Compartment Name : 해당 Compartment&lt;/li&gt;
+  &lt;li&gt;Database Instance Name : 앞 단계에서 생성해 둔 DB 선택&lt;/li&gt;
+  &lt;li&gt;Object Storage Container : JCS 용으로 생성해 둔 Bucket 정보를 입력합니다.
+    &lt;ul&gt;
+      &lt;li&gt;https://swiftobjectstorage.us-ashburn-1.oraclecloud.com/v1/[TENANT-ID]/[BUCKET-명]&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://docs.cloud.oracle.com/iaas/Content/API/Concepts/apiref.htm&quot;&gt;Region 별 REST API Endpoint 참고&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;예: https://swiftobjectstorage.us-ashburn-1.oraclecloud.com/v1/apackrsct01/jcs_bucket&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Object Storage Password : IAM 계정의 &lt;strong&gt;Auth Token&lt;/strong&gt;을 입력해 줍니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Next&lt;/strong&gt;를 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image31.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Confirm 화면에서 화살표로 표시된 Input Parameter들이 담긴 &lt;strong&gt;JSON 다운받기&lt;/strong&gt;를 클릭합니다. 이 서비스를 콘솔에서 생성할 것이 아니므로 여기서는 &lt;strong&gt;Cancel&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image32.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;service_payload_jcs서비스명.json&lt;/strong&gt; 파일이 생성되었을 것 입니다. 이 파일을 앞서 설명한 REST API의 Input Json으로 사용할 것입니다. 이 파일을 열어서 다음에 설명하는 항목들을 변경해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;빨간 박스로 체크해 둔 항목을 수정해 줍니다. Subnet 부분 변경이 핵심이므로 JCS에서 사용할 &lt;strong&gt;Private Subnet의 OCID&lt;/strong&gt;로 변경해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image33.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;파일 수정이 완료되었으면 위에서 설명한 Create Instance REST API를 수행해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;스크립트로 만들어서 다음과 같이 수행해도 됩니다. API가 수행되면 JOB ID가 다음과 같이 리턴되고, 리턴된 JOB ID로 JOB의 상태를 확인해 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image34.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;checkJCSJob.sh 스크립트 내용&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;curl https://jaas.oraclecloud.com/paas/api/v1.1/activitylog/[identityServiceID]/job/[JOBID] \                                            
+-u [usename]:[password] \                                                                            
+-H 'X-ID-TENANT-NAME: [identityServiceID]'                                           
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;JOB이 실행되고 있는 사항은 JCS 콘솔에서도 확인 할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image35.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위와 같은 방법으로 AD1, AD2를 사용하는 WAS 용 Subnet에 각각 한 개씩 JCS 서비스를 생성 합니다.&lt;/p&gt;
+
+&lt;p&gt;다 완성된 모습은 다음과 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image36.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;web-서버-생성-및-설정&quot;&gt;Web 서버 생성 및 설정&lt;/h1&gt;
+
+&lt;p&gt;JCS 서버의 서비스 앞 단에 WEB 서버 인스턴스를 두고 로드 발란싱을 하도록 구성할 것입니다. 웹서비는 어떤 것을 사용하여도 무방합니다.
+여기에서는 Apache를 사용하는 것으로 설명합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;compute-인스턴스-생성&quot;&gt;Compute 인스턴스 생성&lt;/h2&gt;
+
+&lt;p&gt;웹서버는 IaaS Compute 인스턴스에 구성할 것입니다. 따라서 먼저 Compute Instance를 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;AD1과 AD2 에 각각 한개 씩 구성할 예정이므로 먼저 AD1 의 Public Subnet에 인스턴스를 다음과 같이 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image37.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image38.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image39.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;생성되었습니다. SSH로 접속할 Public IP를 기억해 두세요.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image40.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;두 번째 인스턴스는 첫번 째 인스턴스 구성을 다 완료한 후에 Custom Compute Image로 만들어서 생성할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;그러므로 먼저 첫번째 인스턴스 구성을 먼저 완료하도록 하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;생성된 인스턴스의 Public IP를 이용하여 SSH로 접속합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;apache-설치&quot;&gt;Apache 설치&lt;/h2&gt;
+
+&lt;p&gt;웹서버로 사용할 Apache를 설치하여야 합니다. Yum으로 설치하는 httpd는 shared module이 enabled 된 버전이 아니기 때문에 Apache 소스를 받아서 컴파일하여 설치하는 방법으로 Apache를 설치 해 줍니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://httpd.apache.org/docs/2.4/install.html&quot;&gt;Apache 설치 참고 문서&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;참고로 저는 다음 옵션을 사용하여 컴파일 하였습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;sudo ./configure --prefix=/usr/local/apache --enable-module=so --with-pcre=/usr/local/pcre/bin/pcre-config -enable-rewrite --with-mpm=worker --enable-ssl  
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;weblogic-plugin-설치&quot;&gt;WebLogic Plugin 설치&lt;/h2&gt;
+
+&lt;p&gt;Plugin 소프트웨어를 다음에서 다운 받습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/middleware/webtier/downloads/index-jsp-156711.html&quot;&gt;웹로직 플러그인 다운 받기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image41.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다운 받은 zip 파일을 안에는 여러 웹서버 및 OS용 Plugin들이 모두 들어 있습니다. 이 중에서 Linux용 Apache 플러그인 만 웹서버용 Compute 인스턴스로 복사해 줍니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;scp -i privateKey ~/Downloads/fmw_12.2.1.3.0_wlsplugins_Disk1_1of1/WLSPlugins12c-12.2.1.3.0/WLSPlugin12.2.1.3.0-Apache2.2-Apache2.4-Linux_x86_64-12.2.1.3.0.zip opc@[웹서버 Public IP]:/home/opc/wlplugin/
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;복사된 플러그인 zip 파일의 압축을 풉니다. 아래 라이브러리들 중 mod_wl.so 파일을 사용할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image42.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;apache-구성&quot;&gt;Apache 구성&lt;/h2&gt;
+
+&lt;p&gt;WebLogic Plugin 구성 상세는 다음을 참고하세요&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/middleware/12213/webtier/develop-plugin/apache.htm#PLGWL395&quot;&gt;Configuring the Plug-In for Apache HTTP Server&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 가이드에서는 &lt;strong&gt;/usr/local/apache&lt;/strong&gt; 경로에 Apache가 설치되어 있습니다. conf 디렉토리로 이동하여 httpd.conf 파일을 수정해 줍니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;WebLogicHost&lt;/strong&gt;는 JCS 서비스의 Private IP를 참고하여 변경합니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;애플리케이션은 아직 배포되지 않았으나 미리 설정해 둡니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;JCS가 Private Subnet에 구성되었기 때문에 현재로서는 웹로직 콘솔을 Internet을 통해서 접속할 수가 없습니다. 따라서 웹서버에서 포워딩하는 형태로 웹로직 콘솔에 접속하기 위하여 &lt;strong&gt;/console 설정도 해 줍니다. 여기서의 WebLogicHost는 웹로직 Admin Server의 Host&lt;/strong&gt;여야 합니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;s&quot;&gt;... 생략&lt;/span&gt;                                                          
+                                                                   
+&lt;span class=&quot;c1&quot;&gt;# Weblogic Module 추가                                           &lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;LoadModule weblogic_module /home/opc/wlplugin/lib/mod_wl_24.so&lt;/span&gt; 
+
+&lt;span class=&quot;nn&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;생략&lt;/span&gt;  
+
+&lt;span class=&quot;s&quot;&gt;&amp;lt;Location /console&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;WLSRequest On&lt;/span&gt;   
+ &lt;span class=&quot;s&quot;&gt;WebLogicHost 10.0.3.2&lt;/span&gt;  
+ &lt;span class=&quot;s&quot;&gt;WebLogicPort 7001&lt;/span&gt; 
+&lt;span class=&quot;s&quot;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt; 
+
+&lt;span class=&quot;s&quot;&gt;&amp;lt;Location /cohweb&amp;gt;&lt;/span&gt;   
+ &lt;span class=&quot;s&quot;&gt;WLSRequest On&lt;/span&gt;   
+ &lt;span class=&quot;s&quot;&gt;WebLogicHost 10.0.3.2&lt;/span&gt; 
+ &lt;span class=&quot;s&quot;&gt;WebLogicPort 8001&lt;/span&gt;  
+&lt;span class=&quot;s&quot;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt; 
+
+&lt;span class=&quot;s&quot;&gt;&amp;lt;IfModule mod_weblogic.c&amp;gt;&lt;/span&gt; 
+ &lt;span class=&quot;s&quot;&gt;WebLogicHost 10.0.3.2&lt;/span&gt;   
+ &lt;span class=&quot;s&quot;&gt;WebLogicPort 8001&lt;/span&gt;  
+ &lt;span class=&quot;s&quot;&gt;MatchExpression *.jsp&lt;/span&gt;   
+ &lt;span class=&quot;s&quot;&gt;DebugConfigInfo ON&lt;/span&gt;    
+&lt;span class=&quot;s&quot;&gt;&amp;lt;/IfModule&amp;gt;&lt;/span&gt;  
+
+&lt;span class=&quot;nn&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;생략&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Apache를 구동 시킵니다. Apache가 default로 80 포트로 Listen하고 있는데 해당 Port가 Firewall을 통과할 수 있도록 다음 커맨드를 통해서 등록해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image43.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Apache 구성이 완료되었습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;커스텀-이미지-생성&quot;&gt;커스텀 이미지 생성&lt;/h2&gt;
+
+&lt;p&gt;AD2에서 사용할 Web 서버 인스턴스도 생성해야 합니다. 구성이 완료된 WEB 인스턴스를 Custom Image로 만들어서 Compute Instance를 생성하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image44.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image45.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이미지가 생성되고 나면 이 이미지를 사용하여 Compute Instance를 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image46.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image47.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;AD2의 Subnet을 사용합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image48.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Compute Instance가 다 생성되고 나면, SSH로 접속하여 Apache 설정만 변경해 주면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;AD2의 Apache는 AD2 내의 JCS 서비스를 바라보도록 httpd.conf의 WeblogicHost 정보만 바꿔주고 Apache를 기동시켜 줍니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;coherence-설치-및-구성&quot;&gt;Coherence 설치 및 구성&lt;/h1&gt;
+
+&lt;p&gt;이제는 Coherence 구성을 진행하도록 하겠습니다. 
+두 AD 간의 두개의 JCS 서비스 간 HTTP Session 공유를 위하여 Coherence를 사용할 예정입니다. JCS 내에도 Managed Coherence 서버를 구성할 수 있지만 서로 다른 WebLogic Domain간의 세션 공유를 위해서 별도의 Coherence Cluster를 구성하도록 하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;Coherence 구성을 위해서 두개의 Compute Instance가 필요합니다.&lt;/p&gt;
+
+&lt;p&gt;Coherence용 Compute Instance를 AD1에 먼저 구성한 후 구성이 완료된 후에 WEB의 경우와 마찬가지로 Custom Image를 생성하여 AD2에도 구성하도록 하겠습니다. Coherence는 Private Subnet에 만들어져야 합니다.&lt;/p&gt;
+
+&lt;p&gt;Compute Instance를 만드는 과정을 생략하도록 하겠습니다. 생성되고 난 후의 모습은 다음과 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image49.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;인스턴스가 생성된 후 SSH로 Coherence 노드에 접속합니다. Private Subnet에 속해 있기 때문에 WEB 인스턴스를 통해서 Coherence 인스턴스에 접속합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image50.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;coherence-설치&quot;&gt;Coherence 설치&lt;/h2&gt;
+
+&lt;p&gt;Stand alone으로 설치하는 Coherence는 JCS내의 Coherence 버전과 동일해야 합니다. JCS 콘솔에서 WebLogic 버전을 확인합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image51.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;동일 버전의 Coherence SW를 다운 받습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/middleware/coherence/overview/index.html&quot;&gt;Coherenc Download&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image52.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Coherence 설치 과정은 다음을 참고하시기 바랍니다. 여기에서는 설치 이후의 설정 과정만 설명하도록 하겠습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/middleware/1212/coherence/COHDG/gs_install.htm#COHDG5660&quot;&gt;Installing Oracle Coherence for Java&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 가이드에서는 coherence가 다음 위치에 설치 되었습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image53.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Coherence 기동을 위한 스크립트를 작성합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Coherence*Web&lt;/strong&gt;을 사용할 것이기 때문에 session cache 설정을 해 줍니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Cloud 환경에서 multicast가 지원되지 않기 때문에 &lt;strong&gt;unicast를 사용하는 WKA(Well Known Address)&lt;/strong&gt;를 설정해 줍니다. WKA 상세 설명과 여러 개의 WKA를 설정하는 방법은 다음 문서를 참고 하세요.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/middleware/12213/coherence/COHDG/setting-cluster.htm#COHDG5454&quot;&gt;Using Well Known Addresses&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;java -server -Xms512m -Xmx512m -cp /home/opc/fmw/coherence/lib/coherence.jar:/home/opc/fmw/coherence/lib/coherence-web.jar -Dcoherence.mode=prod -Dcoherence.management.remote=true -Dcoherence.session.localstorage=true -Dcoherence.enable.sessioncontext=true -Dcoherence.cacheconfig=default-session-cache-config.xml -Dcoherence.cluster=mycoh -Dcoherence.wka=10.0.3.3 com.tangosol.net.DefaultCacheServer
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;스크립트를 실행 시켜 Coherence를 기동 시킵니다. 아래와 유사한 로그가 보여질 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image54.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;coherence1 구성이 완료 되었으면 Custom Image를 생성해서 두번째 Instance를 생성합니다.&lt;/p&gt;
+
+&lt;p&gt;생성하는 과정은 생략하도록 하겠습니다. 생성된 후의 모습은 다음과 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image55.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Coherence 구성은 완료된 상황이기 때문에 Coherence 설치 디렉토리로 이동하여 Coherence 구동 스크립트를 실행 시켜 줍니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;jcs에서-coherence-설정&quot;&gt;JCS에서 Coherence 설정&lt;/h1&gt;
+
+&lt;p&gt;이 단계에서는 JCS의 세션을 Coherence에 저장하도록 설정하는 과정을 수행합니다. 
+그렇게 하기 위해서는 WebLogic의 Managed Server들을 앞 단계에서 설정한 Coherence Cluster에 &lt;strong&gt;Join&lt;/strong&gt; 되게 해 주어야 합니다.&lt;/p&gt;
+
+&lt;p&gt;이 설정은 WebLogic Console을 통해 수행해야 하는데 JCS가 Private Subnet에 생성 되었기 때문에 JCS 메뉴에 있는 “WebLogic Console” 열기를 통해서는 콘솔에 접속할 수 없습니다.&lt;/p&gt;
+
+&lt;p&gt;따라서 앞서 Web 설정에서 /console Location을 추가 해 두었기 때문에 웹서버(Apache)의 Public IP를 통해 웹로직 콘솔에 접속합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;http://[웹서버-Public-IP]/console&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;JCS의 WebLogic Cluster들은 Cohernece Cluster의 기본 구성을 사용하도록 설정되어 있습니다. 여기에서는 Default로 구성되는 Coherence를 사용하지 않고 Stand Alone으로 구성된 Coherence에 Join할 것이 때문에 아래 화면에서 설명하는 방법을 따라 Coherence Cluster에서 WebLogic Cluster를 멤버에서 제거해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image56.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image57.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image58.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;멤버에서 잘 제외 되었는지 확인합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image59.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;서버 메뉴로 이동하여서 각 WebLogic Managed Server가 구동할 때 Coherence Cluster의 멤버로 Join할 수 있도록 WebLogic Managed Server의 Start Script 부분을 수정해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image60.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image61.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;기본적으로 설정되어 있는 Start Script의 Arguments를 확인합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image62.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 Argument를 다음과 같이 수정합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image63.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Argument 전체 부분을 변경하면 안되고, 아래 빨간색으로 표시된 부분만 변경 될 수 있도록 합니다. &lt;strong&gt;기존 Argument에서 -Dtangosol.coherence.transport.reliable=tmb -Dtangosol.coherence.socketprovider=tcp 이 두 옵션은 제외해야 하니 주의 하세요.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-Xms256m -Xmx8192m -XX:MaxMetaspaceSize=2048m -Djdk.tls.rejectClientInitiatedRenegotiation=true -Xloggc:/u01/data/domains/privJCS2_domainGC_privJCS2_server_1.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=4 -XX:GCLogFileSize=5m -Dweblogic.rjvm.enableprotocolswitch=true -Djava.net.preferIPv4Stack=true -Doracle.security.jps.db.connect.max.retry=720 -Doracle.security.jps.db.connect.retry.interval=10000 -Djps.auth.debug=false -DUSE_JAAS=false -Djps.combiner.optimize.lazyeval=true -Djps.combiner.optimize=true -Djps.authz=ACC -Djps.subject.cache.key=5 -Djps.subject.cache.ttl=600000 -Dweblogic.security.SSL.minimumProtocolVersion=TLSv1.2 -XX:+UnlockCommercialFeatures -XX:+FlightRecorder -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Dweblogic.data.canTransferAnyFile=true -Djava.security.egd=file:/dev/./urandom -XX:CompileThreshold=8000 -XX:ReservedCodeCacheSize=1024m -Doracle.jdbc.fanEnabled=false -Dcoherence.session.localstorage=false -Dcoherence.enable.sessioncontext=true -Dcoherence.cluster=mycoh -Dtangosol.coherence.cluster=mycoh -Dcoherence.wka=10.0.3.3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;스크립트 변경이 완료되었으면 웹로직 서버를 재기동해야 합니다. 아래와 같이 &lt;strong&gt;Control&lt;/strong&gt; 탭으로 이동하여 해당 서버만 재기동 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image64.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image65.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;서버가 정상적으로 기동되고 나면 세션 테스트을 위핸 샘플 애플리케이션을 배포해야 합니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;애플리케이션-배포&quot;&gt;애플리케이션 배포&lt;/h1&gt;
+
+&lt;p&gt;세션 테스트를 위햔 애플리케이션은 세션을 사용하는 어떤 애플리케이션을 이용하여도 무방합니다. 애플리케이션에서 Coherence*Web을 사용하게 하기 위해서는 &lt;strong&gt;weblogic.xml&lt;/strong&gt; 에 다음과 같은 설정만 추가해 주면 됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;wls:session-descriptor&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;wls:persistent-store-type&amp;gt;&lt;/span&gt;coherence-web&lt;span class=&quot;nt&quot;&gt;&amp;lt;/wls:persistent-store-type&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/wls:session-descriptor&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;여기에서는 간단한 샘플 애플리케이션(cohweb)을 이용할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;웹로직 콘솔의 &lt;strong&gt;Deployments&lt;/strong&gt; 메뉴에서 애플리케이션을 배포합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image66.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;로컬 환경에서 JCS Cloud 환경으로 애플리케이션을 &lt;strong&gt;Upload&lt;/strong&gt;해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image67.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image68.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image69.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image70.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;애플리케이션을 Cluster에 배포합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image71.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image72.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image73.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image74.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;애플리케이션이 배포되고 나서는 애플리케이션을 시작 시켜야 서비스를 할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image75.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;애플리케이션이 서비스 가능 상태가 되었습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image76.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;AD2의 JCS도 위와 마찬가지로 설정해 줍니다. 동일하게 애플리케이션도 배포해 줍니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;load-balancer-생성&quot;&gt;Load Balancer 생성&lt;/h1&gt;
+
+&lt;p&gt;마지막으로 Load Balancer를 생성해 줍니다. 이 Load Balancer는 web1, web2를 Round Robin으로 발란싱하게 구성합니다.
+Load Balancer는 &lt;strong&gt;Sticky Session&lt;/strong&gt;을 지원하도록 설정할 수도 있지만, HA 태스트를 위해서 web1, web2로 Round Robin으로 돌리며 테스트를 진행할 예정이기 때문에 Sticky Session으로 설정하지 않습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image77.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image78.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;생성이 되고 나면 다음과 같이 보여집니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image79.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;test&quot;&gt;Test&lt;/h1&gt;
+
+&lt;p&gt;이제 구성된 Load Balancer를 통해서 Application을 테스트 해 보겠습니다. Load Balancer의 Public IP로 접속합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;http://[Load-Balancer-Public-IP]/cohweb&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;다음과 같은 화면이 보일 것 입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image80.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;세션을 몇개 추가해 봅니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image81.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;브라우저의 Refresh 버튼을 클릭하여 request를 계속 보내 봅니다. 다른 JCS Server 접속된 것을 확인할 수 있고, 세션이 유지되는 것을 확인 할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/image82.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이상으로 모든 구성이 완료되었습니다. 각 Layer의 컴포넌트를 하나씩 내려 보면서 세션이 계속 유지되는지 테스트 해보시면 HA 아키텍처를 이해하는데 더욱 도움이 될 것입니다.&lt;/p&gt;</content><author><name></name></author><category term="Oracle Cloud" /><category term="Virtual Cloud Network" /><category term="IaaS" /><category term="3 Tier Architecture" /><category term="HA" /><category term="Java Cloud Service" /><summary type="html">이 문서에서는 다음과 같은 가장 일반적인 3-Tier 아키텍처 기반의 웹 시스템을 Oracle Cloud Infrastructure(IaaS)와 Java Cloud Service(PaaS)를 이용하여 구축하는 방법에 대해서 기술합니다.</summary></entry><entry><title type="html">Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기</title><link href="http://localhost:4000/chatbot/2019/chatbot_cecs/" rel="alternate" type="text/html" title="Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기" /><published>2019-02-19T00:00:00+09:00</published><updated>2019-02-19T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/chatbot_cecs</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/chatbot_cecs/">&lt;p&gt;이 포스트에서는 오라클 챗봇인 &lt;strong&gt;Digital Assistant&lt;/strong&gt;와 &lt;strong&gt;Content and Experience Cloud (이후 CECS)&lt;/strong&gt;라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다.&lt;/p&gt;
 
 &lt;p&gt;챗봇을 통해서 CECS에 저장되어 있는 컨텐츠를 검색하고 검색된 결과 문서나 폴더의 &lt;strong&gt;Public Link&lt;/strong&gt;를 통해서 바로 해당 컨텐츠를 확인할 수 있는 예제를 설명할 것입니다.&lt;/p&gt;
 
@@ -337,80 +1085,7 @@
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/bots-node-sdk/&quot;&gt;Oracle Bots Node.js SDK&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Custom Component" /><category term="Layout" /><summary type="html">챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;웹-채널-생성&quot;&gt;웹 채널 생성&lt;/h2&gt;
-&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
-&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Name : PizzaBot_{SEQ}.web
-    &lt;blockquote&gt;
-      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
-  &lt;li&gt;Channel Type : Web&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/02_create_channel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route_done.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;웹-페이지에서-테스트-하기&quot;&gt;웹 페이지에서 테스트 하기&lt;/h2&gt;
-&lt;p&gt;Oracle Digital Assistant는 웹채널을 태스트 하기 위한 chat-sample-web 코드를 제공하고 있습니다.&lt;/p&gt;
-
-&lt;p&gt;이 코드가 구동되고 있는 환경 정보가 제공되었을 것입니다. 브라우저를 통해 제공된 URL에 접속합니다. 아래 화면의 왼쪽 브라우저와 같은 페이지가 보여질 것입니다.
-Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채널의 &lt;strong&gt;App Id&lt;/strong&gt;를 복사해서 입력해 줍니다. &lt;strong&gt;Continue&lt;/strong&gt;를 누르면 해당 웹페이지의 채팅은 자신의 PizzaBot에 연결 될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;App Id 입력하는 Text Box가 첫 화면에서 보이지 않는다면 다음과 같이 설정 아이콘을 클릭하여 App ID를 입력해 줍니다.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-  &lt;p&gt;App Id를 자신의 채널 것으로 업데이트하고 Save 합니다.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting_save.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;Chat with your BOT&lt;/strong&gt; 버튼을 클릭하여 대화를 시작해 봅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/05_chat_with_your_bot.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 채팅창이 열리게 됩니다. &lt;strong&gt;Type a message&lt;/strong&gt; 텍스트 박스에 대화를 입력합니다.
-피자봇에서 구현했던 4개의 Intent들을 차례로 테스트 해보면 됩니다.
-&lt;img src=&quot;/assets/images/chatbot_lecture/channel/06_chat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;사용환경-정리&quot;&gt;사용환경 정리&lt;/h2&gt;
-&lt;p&gt;생성한 PizzaBot_{SEQ}를 이전 lab에서 처럼 삭제합니다.&lt;/p&gt;
-
-&lt;p&gt;과정을 완료하였습니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Channel" /><summary type="html">이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;p&gt;이 Lab에서는 피자봇을 직접 만들어 볼 것입니다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Custom Component" /><category term="Layout" /><summary type="html">챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;p&gt;이 Lab에서는 피자봇을 직접 만들어 볼 것입니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
 
@@ -839,7 +1514,80 @@ Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><summary type="html">이 Lab에서는 피자봇을 직접 만들어 볼 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_2</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/">&lt;p&gt;이 Lab에서는 MasterBot이라는 이름의 금융 업무를 수행하는 챗봇을 살펴볼 것입니다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><summary type="html">이 Lab에서는 피자봇을 직접 만들어 볼 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;웹-채널-생성&quot;&gt;웹 채널 생성&lt;/h2&gt;
+&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
+&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Name : PizzaBot_{SEQ}.web
+    &lt;blockquote&gt;
+      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
+  &lt;li&gt;Channel Type : Web&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/02_create_channel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route_done.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;웹-페이지에서-테스트-하기&quot;&gt;웹 페이지에서 테스트 하기&lt;/h2&gt;
+&lt;p&gt;Oracle Digital Assistant는 웹채널을 태스트 하기 위한 chat-sample-web 코드를 제공하고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;이 코드가 구동되고 있는 환경 정보가 제공되었을 것입니다. 브라우저를 통해 제공된 URL에 접속합니다. 아래 화면의 왼쪽 브라우저와 같은 페이지가 보여질 것입니다.
+Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채널의 &lt;strong&gt;App Id&lt;/strong&gt;를 복사해서 입력해 줍니다. &lt;strong&gt;Continue&lt;/strong&gt;를 누르면 해당 웹페이지의 채팅은 자신의 PizzaBot에 연결 될 것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;App Id 입력하는 Text Box가 첫 화면에서 보이지 않는다면 다음과 같이 설정 아이콘을 클릭하여 App ID를 입력해 줍니다.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;App Id를 자신의 채널 것으로 업데이트하고 Save 합니다.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting_save.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Chat with your BOT&lt;/strong&gt; 버튼을 클릭하여 대화를 시작해 봅니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/05_chat_with_your_bot.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 채팅창이 열리게 됩니다. &lt;strong&gt;Type a message&lt;/strong&gt; 텍스트 박스에 대화를 입력합니다.
+피자봇에서 구현했던 4개의 Intent들을 차례로 테스트 해보면 됩니다.
+&lt;img src=&quot;/assets/images/chatbot_lecture/channel/06_chat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;사용환경-정리&quot;&gt;사용환경 정리&lt;/h2&gt;
+&lt;p&gt;생성한 PizzaBot_{SEQ}를 이전 lab에서 처럼 삭제합니다.&lt;/p&gt;
+
+&lt;p&gt;과정을 완료하였습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Channel" /><summary type="html">이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기" /><published>2019-01-23T02:50:00+09:00</published><updated>2019-01-23T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_2</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_2/">&lt;p&gt;이 Lab에서는 MasterBot이라는 이름의 금융 업무를 수행하는 챗봇을 살펴볼 것입니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
 
@@ -1525,193 +2273,4 @@ registerUser.js를 이용하여 user1을 등록하였다면 이 부분은 수정
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html&quot;&gt;Oracle Blockchian Cloud&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/devapplicationtasks.html&quot;&gt;Oracle Blockchian Cloud - 애플리케이션 개발&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="Blockchain" /><category term="오라클 블럭체인" /><category term="Hyperledger Fabric" /><category term="Node.js" /><summary type="html">지난 기고에서 Oracle Autonomous Blockchain Cloud Service에 Hyperledger의 샘플체인 코드인 fabcar의 GO 버전과 Node.js 버전을 배포하고 REST API를 통해 배포된 체인코드를 호출하여 테스트 하는 과정에 대해 설명하였습니다.</summary></entry><entry><title type="html">오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기</title><link href="http://localhost:4000/blockchain/2018/blockchain002/" rel="alternate" type="text/html" title="오라클 블록체인 클라우드에 Hyperledger Fabric 샘플 체인코드 Fabcar 배포하기" /><published>2018-10-30T02:50:00+09:00</published><updated>2018-10-30T02:50:00+09:00</updated><id>http://localhost:4000/blockchain/2018/blockchain002</id><content type="html" xml:base="http://localhost:4000/blockchain/2018/blockchain002/">&lt;p&gt;지난 기고에서 &lt;strong&gt;Oracle Autonomous Blockchain Cloud Service&lt;/strong&gt;의 편리한 관리기능에 대해 살펴보았고, 이번 글에서는 체인코드 배포 방법과 테스트하는 과정에 대해 설명하려고 합니다.&lt;/p&gt;
-
-&lt;p&gt;Oracle Blockchain Cloud는 오픈 소스인 Hyperleder Fabric을 기반으로 하고 있기 때문에 &lt;strong&gt;Hyperledger Fabric&lt;/strong&gt;에서 제공하는 샘플 코드들을 그대로 배포할 수 있습니다. 따라서 여기에서는 Hyperleder Fabric에서 샘플 체인코드로 많이 사용되고 있는 &lt;strong&gt;fabcar&lt;/strong&gt; 예제를 사용하여 배포하는 과정을 설명하려고 합니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;fabric-sample-코드--다운-받기&quot;&gt;Fabric Sample 코드  다운 받기&lt;/h2&gt;
-&lt;p&gt;먼저 Fabric-Samples를 git을 이용하여 다운 받습니다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/hyperledger/fabric-samples.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;다운로드가 완료되면 fabric-samples/chaincode 밑에 fabcar 샘플 폴더가 있고 그 아래 &lt;strong&gt;go&lt;/strong&gt;와 &lt;strong&gt;node&lt;/strong&gt; 샘플이 각각 다른 디렉토리로 아래와 같이 존재 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/jCjWgqqva4Wqf0v5mOp2lyEfrX0Qb3.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;먼저 go 샘플을 Oracle Blockchain Cloud에 배포해 보도록 하겠습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;fabcar-go-체인코드-배포하기&quot;&gt;Fabcar GO 체인코드 배포하기&lt;/h2&gt;
-
-&lt;p&gt;샘플 fabcar.go를 fabcar_go.zip으로 압축합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/abg4v3iucJF37hzpGlyYHMlLjmWows.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 Oracle Blockchain Cloud 서비스 콘솔로 이동합니다. 콘솔 접속 및 각 메뉴는 &lt;a href=&quot;http://www.oracloud.kr/post/blockchain001/&quot;&gt;이전 글&lt;/a&gt;을 참고하세요.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Chaincodes&lt;/strong&gt; 탭으로 이동하여 &lt;strong&gt;Deploy a New Chaincode&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/YdRC18togyaXfGfRSwaMFs4j16hBkP.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Oracle Blockchain Cloud는 다음 두 가지 배포 방법을 제공하고 있습니다. &lt;strong&gt;Quick Deployment&lt;/strong&gt;는 체인코드의 설치(Install), 인스턴스화(Instantiate), 프록시에 등록하는 일련의 과정을 한페이지에서 한번에 수행할 수 있도록 배포 과정을 간략화 한 형태이고 &lt;strong&gt;Advanced Deployment&lt;/strong&gt; 옵션은 이 배포 과정을 몇 스템으로 나누어 좀더 상세한 설정을 할 수 있게 한 옵션입니다. 
-여기에서는 &lt;strong&gt;Quick Deployment&lt;/strong&gt; 옵션을 선택합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/baqaaGJtYO1AebWIfWGVA0Z81UJmGC.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;아래와 같이 입력하고 chaincode source 항목에 이전 과정에서 압축해 둔 &lt;strong&gt;fabcar_go.zip&lt;/strong&gt;을 업로드 합니다. &lt;strong&gt;Submit&lt;/strong&gt;을 클릭하면 &lt;strong&gt;Confirm&lt;/strong&gt; 창이 나타나는데, 여기서 &lt;strong&gt;Yes&lt;/strong&gt;를 클릭하여 확인하면 설치 및 instantiate가 모두 완료됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/qNSkaNgBNgOpAW3TI2Za0qyn6zBhat.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;배포가 성공하였습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/67mjPuM1Yxq35uCvhwmKreidO13rcm.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Oracle Blockchain Cloud의 &lt;strong&gt;Chaincodes&lt;/strong&gt; 탭에서도 배포된 체인코드 상태를 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/TO7pjKUf1rQVpC35AYHzc0oCPzgltj.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;배포가 정상적으로 잘 이루어졌는지 체인코드를 테스트 해 보도록 하겠습니다. Oracle Blockchain Cloud에서는 배포된 체인코드의 메소드 invoke 및 query를 편리하게 하기 위해 &lt;strong&gt;REST Proxy&lt;/strong&gt;라는 기능을 두고 있고 이 REST Proxy를 통해 체인코드의 각 메소드가 REST call을 통해 수행될 수 있게 해 줍니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/APaoPaF4WPpxOvBUZ4hiObFB243Hv6.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;따라서 체인코드 Transaction 호출은 REST를 지원하는 cURL 유틸리티나 Postman 같은 툴을 이용할 수 있는데, 여기에서는 Postman을 이용해 테스트 해보도록 하겠습니다.&lt;/p&gt;
-
-&lt;p&gt;fabcar의 Ledger를 initialize하는 &lt;strong&gt;initLedger&lt;/strong&gt; 메소트를 호출할 예정입니다. 이 메소드는 invoke로 호출해야 하는 메소드이며 Oracle Blockchain에서 invoke 메소드를 호출하기 위하여 Postman을 다음과 같이 설정합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;HTTP Method : POST&lt;/li&gt;
-  &lt;li&gt;url : https://{&lt;strong&gt;REST-PROXY-URL&lt;/strong&gt;}/bcsgw/rest/v1/transaction/invocation&lt;/li&gt;
-  &lt;li&gt;Username : Oracle Cloud 사용자 계정&lt;/li&gt;
-  &lt;li&gt;Password : Oracle Cloud 사용자 계정에 대한 패스워드&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/jPJ4OoNpl4B47yChVssHvlbb4k9r0G.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;REST PROXY URL은 Oracle Blockchain Cloud의 Nodes 탭에서 다음과 같이 확인할 수 있습니다.
-&lt;img src=&quot;https://monosnap.com/image/AJBkkUG5cVuVAZRSjFedmHcNlaunlX.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;Headers&lt;/strong&gt; 탭에서 &lt;strong&gt;Content-Type&lt;/strong&gt;을 추가하고 &lt;strong&gt;application/json&lt;/strong&gt;으로 설정합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/EUDeB7U8vvPFg8qAoAItz9EpXPKdxc.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Body&lt;/strong&gt; 탭에서 다음과 같이 request body를 입력하고 &lt;strong&gt;Send&lt;/strong&gt;를 클릭하면 fabcar_go 체인코드에 transaction이 호출되고 호출이 성공하면 Response Body에 아래와 같이 성공 메시지를 받게 됩니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  &quot;channel&quot;: &quot;default&quot;,
-  &quot;chaincode&quot;: &quot;fabcar_go&quot;,
-  &quot;chaincodeVer&quot;: &quot;v1&quot;,
-  &quot;method&quot;: &quot;initLedger&quot;,
-  &quot;args&quot;:[]
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/PQg22Y0QvXwZDJ30h8IR0ED6w9qNDw.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;fabcar의 Ledger가 잘 생성되었는지 query 메소드를 호출하여 Ledger를 조회해 보겠습니다. invoke 방법과 유사하게 Postman을 설정합니다. REST url이 invoke와 상이하니 url을 정확히 입력합니다. &lt;strong&gt;Authorization&lt;/strong&gt; 설정과 &lt;strong&gt;Headers&lt;/strong&gt; 설정은 invoke 설정과 동일합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;HTTP Method : POST&lt;/li&gt;
-  &lt;li&gt;url : https://{REST-PROXY-URL}/bcsgw/rest/v1/transaction/query&lt;/li&gt;
-  &lt;li&gt;Username : Oracle Cloud 사용자 계정&lt;/li&gt;
-  &lt;li&gt;Password : Oracle Cloud 사용자 계정에 대한 패스워드&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Request Body를 다음과 같이 입력하고 &lt;strong&gt;Send&lt;/strong&gt;를 클릭합니다. 여기서는 모든 Fabcar Ledger를 호출하는 &lt;strong&gt;queryAllCars&lt;/strong&gt; 메소드를 호출하는 예시 입니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  &quot;channel&quot;: &quot;default&quot;,
-  &quot;chaincode&quot;: &quot;fabcar_go&quot;,
-  &quot;chaincodeVer&quot;: &quot;v1&quot;,
-  &quot;method&quot;: &quot;queryAllCars&quot;,
-  &quot;args&quot;:[]
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/oRPi1OOrFYhVXBB5YfA5KjIwiOWSr5.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;fabcar 예제에서 제공하는 다른 메소드들도 동일 방법으로 테스트 할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;이제 동일 fabcar 코드 이지만 Node.js로 작성된 체인코드를 Oracle Blockchain Cloud에 배포해 보도록 하겠습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;fabcar-nodejs-체인코드-배포하기&quot;&gt;Fabcar Node.js 체인코드 배포하기&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;https://github.com/hyperledger/fabric-sdk-node&quot;&gt;Hyperledger Fabric SDK for Node.js 문서&lt;/a&gt;에 의하면 지원하는 노드 버전이 &lt;strong&gt;8.9.0 or higher&lt;/strong&gt;로 되어있기 때문에, 노드 버전을 맞춰서 테스트하도록 하는 것이 좋습니다. 
-다음과 같이 설치된 노드 버전을 확인 합니다.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/89kdq8LjN25GGgCdKzsIzaHiyJQYEs.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;fabric-samples의 fabcar 디렉토리에 &lt;strong&gt;node&lt;/strong&gt; 디렉토리로 이동합니다.
-node.js로 작성된 fabcar 체인코드 샘플이 있을 것입니다. &lt;br /&gt;
-&lt;strong&gt;npm install&lt;/strong&gt; 명령어를 수행하여 필요한 npm_module들을 설치 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/gniHdsWypRkqf5prYCIzaebO76GmxW.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;설치가 완료된 디렉토리는 다음과 같습니다. 디렉토리 내의 모든 파일들을 다음과 같이 zip으로 archiving 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/4kvaRBoGmPCxFPhf74suqkwqolwDNC.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 fabcar_go 체인코드를 배포했던 것과 동일하게 Oracle Blockchain Cloud 콘솔의 &lt;strong&gt;Chaincodes&lt;/strong&gt; 탭에서 &lt;strong&gt;Quick Deployment&lt;/strong&gt; 옵션을 선택하여 fabcar_node 체인코드를 배포합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/g7I2KuOpXLmDUF0AthUi5DIcfqpPSz.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;배포가 완료되면 &lt;strong&gt;Chaincodes&lt;/strong&gt; 탭에서 체인코드 배포 상태를 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/qIWWRRTXNJxniGgvHOEd1ujO9f21QC.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 fabcar_go를 테스트 했던 방법과 동일하게 fabcar_node 체인코드를 테스트 해보겠습니다. fabcar_go와 fabcar_node는 &lt;strong&gt;default&lt;/strong&gt;라는 동일 채널에 배포했지만 이는 서로 다른 체인 코드이기 때문에 서로 다른 Ledger 입니다. 즉 신규로 배포된 fabcar_node는 fabcar ledger가 현재 존재하지 않습니다. 이 ledger를 초기화 하기 위해서는 &lt;strong&gt;initLedger&lt;/strong&gt; 메소드를 수행해 주어야 합니다.&lt;/p&gt;
-
-&lt;p&gt;ledger가 없음을 확인하기 위하여 &lt;strong&gt;initLedger&lt;/strong&gt; 메소드를 호출하기 전에 &lt;strong&gt;queryAllCars&lt;/strong&gt; 메소드 먼저 수행해 보겠습니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  &quot;channel&quot;: &quot;default&quot;,
-  &quot;chaincode&quot;: &quot;fabcar_node&quot;,
-  &quot;chaincodeVer&quot;: &quot;v1&quot;,
-   &quot;method&quot;: &quot;queryAllCars&quot;,
-  &quot;args&quot;:[]
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;다음에서 보듯이 Response Payload가 empty인 것을 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/B3kTSF3N4QCGlY9TiHqVy0zgWj7xmG.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;initLedger&lt;/strong&gt; 메소드를 호출하여 fabcar_node ledger를 초기화 합니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  &quot;channel&quot;: &quot;default&quot;,
-  &quot;chaincode&quot;: &quot;fabcar_node&quot;,
-  &quot;chaincodeVer&quot;: &quot;v1&quot;,
-  &quot;method&quot;: &quot;initLedger&quot;,
-  &quot;args&quot;:[]
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;ledger가 초기화 되었습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/uCzXU7NLsmIkhT3cVIDErQY8CEfRqU.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 다시 &lt;strong&gt;queryAllCars&lt;/strong&gt;를 수행하면 초기화된 ledger 정보가 조회될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/IScYL4RANulcQFGmNpndnhoWWVMmiD.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;특정 Car만 조회하는 &lt;strong&gt;queryCar&lt;/strong&gt; 메소드를 호출하고자 한다면 다음과 깉이 method와 args 옵션을 원하는 형태로 입력하면 됩니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  &quot;channel&quot;: &quot;default&quot;,
-  &quot;chaincode&quot;: &quot;fabcar_node&quot;,
-  &quot;chaincodeVer&quot;: &quot;v1&quot;,
-   &quot;method&quot;: &quot;queryCar&quot;,
-  &quot;args&quot;:[&quot;CAR0&quot;]
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://monosnap.com/image/XzJdTAY4HJC9qRfgYqLaBP2bR1Q9Vy.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;여기까지 Oracle Autonomous Blockchain Cloud Service를 이용하여 Opensource Hyperledger fabric에서 제공하는 fabcar 샘플 체인코드를 배포하고 테스트 하는 과정에 대해 살펴보았습니다.&lt;/p&gt;
-
-&lt;p&gt;더 자세한 사항은 아래 제품 자료를 참고하세요.&lt;/p&gt;
-
-&lt;h2 id=&quot;관련글&quot;&gt;관련글&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;이전글 : &lt;a href=&quot;https://mee-nam-lee.github.io/docs/blockchain001/&quot;&gt;Oracle Autonomous Blockchain Cloud를 이용한 블록체인 네트워크 생성 및 편리한 관리 기능 살펴보기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;다음글 : &lt;a href=&quot;https://mee-nam-lee.github.io/docs/blockchain003/&quot;&gt;Node.js Fabric Client SDK를 사용하여 오라클 블록체인 클라우드에 배포된 Fabcar 체인코드 호출하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/index.html&quot;&gt;Oracle Blockchian Cloud&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/blockchain-cloud/user/deploy-and-manage-chaincodes.html&quot;&gt;Oracle Blockchian Cloud - 체인코드 배포 및 관리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="Blockchain" /><category term="오라클 블럭체인" /><category term="Hyperledger Fabric" /><category term="Node.js" /><summary type="html">지난 기고에서 Oracle Autonomous Blockchain Cloud Service의 편리한 관리기능에 대해 살펴보았고, 이번 글에서는 체인코드 배포 방법과 테스트하는 과정에 대해 설명하려고 합니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="Blockchain" /><category term="오라클 블럭체인" /><category term="Hyperledger Fabric" /><category term="Node.js" /><summary type="html">지난 기고에서 Oracle Autonomous Blockchain Cloud Service에 Hyperledger의 샘플체인 코드인 fabcar의 GO 버전과 Node.js 버전을 배포하고 REST API를 통해 배포된 체인코드를 호출하여 테스트 하는 과정에 대해 설명하였습니다.</summary></entry></feed>
