@@ -626,4 +626,14 @@ Test
 
 ![](/assets/images/3tier/image82.png)
 
-이상으로 모든 구성이 완료되었습니다. 각 Layer의 컴포넌트를 하나씩 내려 보면서 세션이 계속 유지되는지 테스트 해보시면 HA 아키텍처를 이해하는데 더욱 도움이 될 것입니다.
+아래는 3 Tier의 각 컴포넌트를을 차례로 Down 시키면서 세션이 유지되는지 테스트하는 과정입니다.
+각 Layer의 컴포넌트를 하나씩 내려 보면서 세션이 계속 유지되는지 테스트 해보시면 HA 아키텍처를 이해하는데 더욱 도움이 될 것입니다.
+
+1. 먼저 정상 상황에서 서로 다른 두 WebLogic Server간의 세션 공유가 됨을 확인 합니다.
+2. Coherence (Http Serssion 서버) 노드를 하나 다운 시키고 나서 세션이 공유 됨을 확인합니다.
+3. 제일 앞단의 로드 발란서에서 웹서버 사이의 로그 발란싱 정책은 Round Robin 입니다. 세션에 상관없이 이 구간에서는 Round Robin으로 동작하지만 웹서버 WebLogic Server 구간은 Sticky Session이 적용됩니다. 따라서 현재 접속되어 있는 WebLogic Server 정보를 확인하고 해당 서버를 Down 시킴으로써, 요청이 다른 서버로 이동되게 합니다. 이 경우에도 정상적으로 세션이 유지됨을 확인 합니다.
+4. 마지막으로 웹서버를 다운 시켜서 로드 발란서에서 살아있는 웹서버로만 요청이 이루어짐을 확인 합니다.
+
+<iframe width="710" height="410" src="https://www.youtube.com/embed/EiXjE82FuCI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+이상으로 모든 구성이 완료되었습니다. 
