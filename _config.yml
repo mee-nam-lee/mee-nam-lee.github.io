@@ -22,6 +22,9 @@ url: "https://mee-nam-lee.github.io"
 twitter_username: 
 github_username:  mee-nam-lee
 
+environment: production
+google_analytics: UA-136222427-1
+
 show_excerpts: true
 rss: Feed
 # excerpt_separator: <!--more-->

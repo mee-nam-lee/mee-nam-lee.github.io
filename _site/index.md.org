@@ -15,7 +15,17 @@
 <script type="application/ld+json">
 {"description":"이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.","@type":"WebPage","url":"http://localhost:4000/index.md.org","headline":"MN Lee’s IT Blog","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /></head>
+<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
 <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
