@@ -394,12 +394,12 @@ Subnet 생성 전에 Security List와 Route Table을 미리 구성해 두고 Sub
 
 <p>JCS 서비스를 생성하는 REST API는 다음과 같습니다.</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">curl -X POST https://jaas.oraclecloud.com/paas/api/v1.1/instancemgmt/[IdentityServiceID]/services/jaas/instances \
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -X POST https://jaas.oraclecloud.com/paas/api/v1.1/instancemgmt/[IdentityServiceID]/services/jaas/instances \
 -u [User Name]:[Password] \
 -H 'X-ID-TENANT-NAME: [IdentityServiceID]' \
 -H 'Content-Type: application/json' \
 -d @requestBodyFile.json
-</span></code></pre></div></div>
+</code></pre></div></div>
 
 <p>여기서 입력 값으로 사용하는 <strong>requestBodyFile.json</strong>이라는 json의 내용이 복잡하고 많은데, 이는 JCS의 콘솔을 통해서 얻을 수 있습니다.</p>
 
@@ -449,10 +449,10 @@ Subnet 생성 전에 Security List와 Route Table을 미리 구성해 두고 Sub
   <li>checkJCSJob.sh 스크립트 내용</li>
 </ul>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">curl https://jaas.oraclecloud.com/paas/api/v1.1/activitylog/[identityServiceID]/job/[JOBID] \                                            
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://jaas.oraclecloud.com/paas/api/v1.1/activitylog/[identityServiceID]/job/[JOBID] \                                            
 -u [usename]:[password] \                                                                            
 -H 'X-ID-TENANT-NAME: [identityServiceID]'                                           
-</span></code></pre></div></div>
+</code></pre></div></div>
 
 <p>JOB이 실행되고 있는 사항은 JCS 콘솔에서도 확인 할 수 있습니다.</p>
 
@@ -501,8 +501,8 @@ Subnet 생성 전에 Security List와 Route Table을 미리 구성해 두고 Sub
 
 <p>참고로 저는 다음 옵션을 사용하여 컴파일 하였습니다.</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo ./configure --prefix=/usr/local/apache --enable-module=so --with-pcre=/usr/local/pcre/bin/pcre-config -enable-rewrite --with-mpm=worker --enable-ssl  
-</span></code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./configure --prefix=/usr/local/apache --enable-module=so --with-pcre=/usr/local/pcre/bin/pcre-config -enable-rewrite --with-mpm=worker --enable-ssl  
+</code></pre></div></div>
 
 <h2 id="weblogic-plugin-설치">WebLogic Plugin 설치</h2>
 
@@ -516,8 +516,8 @@ Subnet 생성 전에 Security List와 Route Table을 미리 구성해 두고 Sub
 
 <p>다운 받은 zip 파일을 안에는 여러 웹서버 및 OS용 Plugin들이 모두 들어 있습니다. 이 중에서 Linux용 Apache 플러그인 만 웹서버용 Compute 인스턴스로 복사해 줍니다.</p>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">scp -i privateKey ~/Downloads/fmw_12.2.1.3.0_wlsplugins_Disk1_1of1/WLSPlugins12c-12.2.1.3.0/WLSPlugin12.2.1.3.0-Apache2.2-Apache2.4-Linux_x86_64-12.2.1.3.0.zip opc@[웹서버 Public IP]:/home/opc/wlplugin/
-</span></code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp -i privateKey ~/Downloads/fmw_12.2.1.3.0_wlsplugins_Disk1_1of1/WLSPlugins12c-12.2.1.3.0/WLSPlugin12.2.1.3.0-Apache2.2-Apache2.4-Linux_x86_64-12.2.1.3.0.zip opc@[웹서버 Public IP]:/home/opc/wlplugin/
+</code></pre></div></div>
 
 <p>복사된 플러그인 zip 파일의 압축을 풉니다. 아래 라이브러리들 중 mod_wl.so 파일을 사용할 것입니다.</p>
 
@@ -658,8 +658,8 @@ Subnet 생성 전에 Security List와 Route Table을 미리 구성해 두고 Sub
   </li>
 </ul>
 
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">java -server -Xms512m -Xmx512m -cp /home/opc/fmw/coherence/lib/coherence.jar:/home/opc/fmw/coherence/lib/coherence-web.jar -Dcoherence.mode=prod -Dcoherence.management.remote=true -Dcoherence.session.localstorage=true -Dcoherence.enable.sessioncontext=true -Dcoherence.cacheconfig=default-session-cache-config.xml -Dcoherence.cluster=mycoh -Dcoherence.wka=10.0.3.3 com.tangosol.net.DefaultCacheServer
-</span></code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java -server -Xms512m -Xmx512m -cp /home/opc/fmw/coherence/lib/coherence.jar:/home/opc/fmw/coherence/lib/coherence-web.jar -Dcoherence.mode=prod -Dcoherence.management.remote=true -Dcoherence.session.localstorage=true -Dcoherence.enable.sessioncontext=true -Dcoherence.cacheconfig=default-session-cache-config.xml -Dcoherence.cluster=mycoh -Dcoherence.wka=10.0.3.3 com.tangosol.net.DefaultCacheServer
+</code></pre></div></div>
 
 <p>스크립트를 실행 시켜 Coherence를 기동 시킵니다. 아래와 유사한 로그가 보여질 것입니다.</p>
 
@@ -840,7 +840,8 @@ Load Balancer는 <strong>Sticky Session</strong>을 지원하도록 설정할 �
   <!-- POST NAVIGATION --><div class="center">
 <div class="pagination">
   <nav><a href="/chatbot/2019/chatbot_cecs/" title="Digital Assistant(챗봇)와 Content and Experience(CECS) 연동하기
-">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">Next</a></nav>
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="/cloud/2019/basic-3tier-arch-regional/" class="pagination-highlight" title="Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)
+"> Next</a></nav>
 </div>
 </div><a class="u-url" href="/cloud/2019/basic-3tier-arch/" hidden></a>
 </article>

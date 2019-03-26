@@ -230,7 +230,7 @@ Private Subnet을 사용하는 Java Cloud Service(JCS)는JCS 서비스 콘솔을
 
 JCS 서비스를 생성하는 REST API는 다음과 같습니다.
 
-```console
+```
 curl -X POST https://jaas.oraclecloud.com/paas/api/v1.1/instancemgmt/[IdentityServiceID]/services/jaas/instances \
 -u [User Name]:[Password] \
 -H 'X-ID-TENANT-NAME: [IdentityServiceID]' \
@@ -279,7 +279,7 @@ Confirm 화면에서 화살표로 표시된 Input Parameter들이 담긴 **JSON 
 
 - checkJCSJob.sh 스크립트 내용  
 
-```console
+```
 curl https://jaas.oraclecloud.com/paas/api/v1.1/activitylog/[identityServiceID]/job/[JOBID] \                                            
 -u [usename]:[password] \                                                                            
 -H 'X-ID-TENANT-NAME: [identityServiceID]'                                           
@@ -333,7 +333,7 @@ Apache 설치
 
 참고로 저는 다음 옵션을 사용하여 컴파일 하였습니다.
 
-```console 
+```
 sudo ./configure --prefix=/usr/local/apache --enable-module=so --with-pcre=/usr/local/pcre/bin/pcre-config -enable-rewrite --with-mpm=worker --enable-ssl  
 ```
 
@@ -348,7 +348,7 @@ Plugin 소프트웨어를 다음에서 다운 받습니다.
 
 다운 받은 zip 파일을 안에는 여러 웹서버 및 OS용 Plugin들이 모두 들어 있습니다. 이 중에서 Linux용 Apache 플러그인 만 웹서버용 Compute 인스턴스로 복사해 줍니다.
 
-```console
+```
 scp -i privateKey ~/Downloads/fmw_12.2.1.3.0_wlsplugins_Disk1_1of1/WLSPlugins12c-12.2.1.3.0/WLSPlugin12.2.1.3.0-Apache2.2-Apache2.4-Linux_x86_64-12.2.1.3.0.zip opc@[웹서버 Public IP]:/home/opc/wlplugin/
 ```
 
@@ -477,7 +477,7 @@ Coherence 기동을 위한 스크립트를 작성합니다.
 
     -   [Using Well Known Addresses](https://docs.oracle.com/middleware/12213/coherence/COHDG/setting-cluster.htm#COHDG5454)
 
-```console
+```
 java -server -Xms512m -Xmx512m -cp /home/opc/fmw/coherence/lib/coherence.jar:/home/opc/fmw/coherence/lib/coherence-web.jar -Dcoherence.mode=prod -Dcoherence.management.remote=true -Dcoherence.session.localstorage=true -Dcoherence.enable.sessioncontext=true -Dcoherence.cacheconfig=default-session-cache-config.xml -Dcoherence.cluster=mycoh -Dcoherence.wka=10.0.3.3 com.tangosol.net.DefaultCacheServer
 ```
 
