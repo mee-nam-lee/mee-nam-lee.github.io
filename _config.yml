@@ -20,6 +20,7 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://mee-nam-lee.github.io"
 twitter_username: 
+linkedin_username : mee-nam-lee-315695a5
 github_username:  mee-nam-lee
 
 environment: production
