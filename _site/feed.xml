@@ -1,4 +1,119 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-01T11:09:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-regional/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)" /><published>2019-03-25T00:00:00+09:00</published><updated>2019-03-25T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-regional</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-regional/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기&lt;/a&gt;에서는 Availablity Domain Specific Subnet을 이용하여 3 Tier 아키텍처를 구축하는 내용을 설명하였는데, Oracle IaaS에서 &lt;strong&gt;Regional Subnet&lt;/strong&gt;이 지원이 추가되었기 때문에, 이전에 설명되었던 내용이 Regional Subnet 기반으로 구축되려면 어떤 부분이 변경되어야 하는지를 이 문서에서 설명하려고 합니다. 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-03T16:05:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기" /><published>2019-04-01T00:00:00+09:00</published><updated>2019-04-01T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_5</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/">&lt;p&gt;이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;모바일android-채널-생성&quot;&gt;모바일(Android) 채널 생성&lt;/h1&gt;
+&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
+&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Name : PizzaBot_{SEQ}.Android
+    &lt;blockquote&gt;
+      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
+  &lt;li&gt;Channel Type : &lt;strong&gt;Android&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/07_android.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다. 아직 채널이 활성화 된 상태는 아닙니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/08_android_after_create.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
+
+&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/09_android_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;모바일-앱-다운-받기&quot;&gt;모바일 앱 다운 받기&lt;/h2&gt;
+&lt;p&gt;Oracle Digital Assistant는 Android 앱에서 채팅 기능을 사용할 수 있도록 SDK와 샘플 애플리케이션을 제공하고 있습니다.
+이 제공되는 샘플 SDK를 다운 받아 앱을 수정하여 빌드하고 배포하여서 테스트 하도록 되어있지만, 이 Lab에서는 미리 미리 빌드된 apk를 제공하여 설치 후 바로 테스트 할 수 있도록 하였습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;참고--android-용-sample-다운로드&quot;&gt;참고 : Android 용 Sample 다운로드&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/topics/cloud/downloads/amce-downloads-4478270.html&quot;&gt;Oracle Digital Assistant (ODA) and Oracle Mobile Cloud (OMC) Downloads&lt;/a&gt; :  &lt;strong&gt;bots-client-sdk-android-samples-19.1.3.0.zip&lt;/strong&gt;을 다운로드 합니다.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/digital-assistant/use-chatbot/channels-topic.html#GUID-4B97C781-6972-44B9-A7D3-9F2F57CE09B9&quot;&gt;Android 앱 설정&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;미리-빌드된-샘플-sdk-apk-설치&quot;&gt;미리 빌드된 샘플 SDK APK 설치&lt;/h3&gt;
+&lt;p&gt;위 샘플을 빌드한 APK를 다음에서 다운받아 안드로드이 폰에 설치 합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mee-nam-lee/chatbot_lecture/raw/master/labfiles/mobilechat/app-release.apk&quot;&gt;ChatSample SDK APK 다운로드&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;설치 후 앱을 실행 시킵니다. 다음과 같은 화면이 보일 것 입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/15_android_01.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;방금 전에 만든 채널의 &lt;strong&gt;App ID&lt;/strong&gt;를 아래와 같이 Text Box에 입력한 후 &lt;strong&gt;계속&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/16_android_appid.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음 화면에서 챗봇과 대화하기를 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/17_android_before_chat.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 대화가 바로 이루어지는 것을 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/18_android_chat.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;모바일ios-채널-생성&quot;&gt;모바일(iOS) 채널 생성&lt;/h1&gt;
+
+&lt;p&gt;iOS용 모바일 앱을 위한 채널도 하나 생성해  봅니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Name : PizzaBot_{SEQ}.iOS
+    &lt;blockquote&gt;
+      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
+  &lt;li&gt;Channel Type : &lt;strong&gt;iOS&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/10_ios_create.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;채널이 생성되었으면 Route To와 Enabled를 설정해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/11_ios_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;참고--ios-용-sample-다운로드&quot;&gt;참고 : iOS 용 Sample 다운로드&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/topics/cloud/downloads/amce-downloads-4478270.html&quot;&gt;Oracle Digital Assistant (ODA) and Oracle Mobile Cloud (OMC) Downloads&lt;/a&gt; : &lt;strong&gt;bots-client-sdk-ios-samples-19.1.3.0.zip&lt;/strong&gt;을 다운로드 합니다.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/digital-assistant/use-chatbot/channels-topic.html#GUID-4B97C781-6972-44B9-A7D3-9F2F57CE09B9&quot;&gt;Android 앱 설정&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;iOS용 배포 파일은 제공되지 않습니다. 위 샘플 코드를 받아서 iOS XCode Simulator를 통해 시연해 보면 다음과 같이 보여지게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;iOS 앱에서 실행된 화면은 다음과 같습니다. 동일한 방법으로 App ID를 입력해 줍니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/12_ios_appid.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Chat with your Bot&lt;/strong&gt;을 클릭하여 대화를 시작합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/13_ios_start_chat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;피자 주문을 해 보면 다음과 같이 보여집니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/14_ios_chat_pizza.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;과정을 완료하였습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Channel" /><category term="mobile" /><summary type="html">이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.</summary></entry><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-regional/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)" /><published>2019-03-25T00:00:00+09:00</published><updated>2019-03-25T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-regional</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-regional/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기&lt;/a&gt;에서는 Availablity Domain Specific Subnet을 이용하여 3 Tier 아키텍처를 구축하는 내용을 설명하였는데, Oracle IaaS에서 &lt;strong&gt;Regional Subnet&lt;/strong&gt;이 지원이 추가되었기 때문에, 이전에 설명되었던 내용이 Regional Subnet 기반으로 구축되려면 어떤 부분이 변경되어야 하는지를 이 문서에서 설명하려고 합니다. 
 이전 문서에서 설명하였던 과정은 이 문서에서는 모두 생략하고 변경되는 부분만 다루로록 하겠습니다.&lt;/p&gt;
 
 &lt;p&gt;이전의 Availablity Domain Specific Subnet을 이용한 구축 아키텍처는 다음 그림과 같았습니다.&lt;/p&gt;
@@ -1974,235 +2089,4 @@ Oracle Cloud 계정을 이미 가지고 계시다면 Digital Assistant Cloud Ser
   &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><summary type="html">Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.</summary></entry><entry><title type="html">Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기</title><link href="http://localhost:4000/chatbot/2019/chatbot_adw/" rel="alternate" type="text/html" title="Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기" /><published>2019-01-22T02:50:00+09:00</published><updated>2019-01-22T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/chatbot_adw</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/chatbot_adw/">&lt;p&gt;오라클 챗봇인 &lt;strong&gt;Digital Assistant&lt;/strong&gt;에서는 커스텀 비즈니스 코드를 작성을 지원하기 위해 &lt;strong&gt;Custom Component&lt;/strong&gt;라는 기능을 제공하고 있습니다.&lt;/p&gt;
-
-&lt;p&gt;Custom Component는 오라클 &lt;strong&gt;모바일 클라우드&lt;/strong&gt;에서 서비스되도록 작성되거나 &lt;strong&gt;Stand Alone&lt;/strong&gt;으로 동작되도록 작성될 수도 있고, Oracle Digital Assistant가 제공하는 Custom Component를 위한 &lt;strong&gt;임베디드 컨테이너&lt;/strong&gt;에서 구동되도록 작성될 수도 있습니다.&lt;/p&gt;
-
-&lt;p&gt;이 문서에서는 &lt;strong&gt;Oracle Autonomous Data Warehouse&lt;/strong&gt;와 연계하는 방법을 Stand Alone Custom Component를 구현을 통해서 설명할 예정입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;아키텍쳐&quot;&gt;아키텍쳐&lt;/h2&gt;
-&lt;p&gt;연계 아키텍쳐는 다음과 같습니다. Stand Alone Custom Component의 구동 환경은 Oracle Compute Cloud를 사용하였습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/00.architecture.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;사전-준비-사항&quot;&gt;사전 준비 사항&lt;/h2&gt;
-&lt;p&gt;아래 서비스가 미리 생성되어 있어야 합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Oracle Digital Assistant (ODA)&lt;/li&gt;
-  &lt;li&gt;Oracle Autonomous Data Warehouse (ADW)&lt;/li&gt;
-  &lt;li&gt;Oracle Compute Cloud&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;oracle-compute-cloud에-필요한-software-설치하기&quot;&gt;Oracle Compute Cloud에 필요한 Software 설치하기&lt;/h2&gt;
-&lt;p&gt;Compute Cloud를 Digital Assistant의 Custom Component 구동용으로 사용할 것이기 때문에 Custom Component SDK와 Oracle Database 연결을 위한 소프트웨어를 설치해야 합니다.
-필요 소프트웨어는 다음과 같습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Node.js&lt;/li&gt;
-  &lt;li&gt;Oracle Instant Client&lt;/li&gt;
-  &lt;li&gt;GIT Client 설치&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;compute-cloud-생성-및-ssh로-접속하기&quot;&gt;Compute Cloud 생성 및 SSH로 접속하기&lt;/h3&gt;
-&lt;p&gt;Compute Cloud 생성은 다음을 참고합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.oracloud.kr/post/oci_workshop_5/&quot;&gt;Compute Cloud 생성&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;생성된 Compute 인스턴스에 Security Rule을 추가합니다. 여기서 추가하는 포트 3000은 향후 component 서버에서 사용할 포트입니다.
-Security List 설정의 자세한 방법은 아래를 참고 하세요.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.oracloud.kr/post/oci_workshop_3/&quot;&gt;Security List 설정&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/08.security_list.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;OS 자체의 firewall 서비스를 사용할 경우 해당 포트를 firewall에서도 open 시켜줘야 합니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;생성된 Compute의 Public IP를 확인하고 SSH로 접속합니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;nodejs-설치하기&quot;&gt;Node.js 설치하기&lt;/h3&gt;
-&lt;p&gt;Compute Cloud에 Node.js를 설치합니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; sudo yum -y install nodejs
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Node.js 설치 방법 및 바이너리 다운로드는 다음을 참고합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;Nodejs.org&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;oracle-instant-client-설치하기&quot;&gt;Oracle Instant Client 설치하기&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/database/database-technologies/instant-client/downloads/index.html&quot;&gt;Oracle Instant Client 다운로드&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/autonomous-data-warehouse-cloud/user/connecting-nodejs.html#GUID-AB1E323A-65B9-47C4-840B-EC3453F3AD53&quot;&gt;Oracle Instant Client 설치 참고&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;위 다운로드 사이트에서 아래 파일을 다운 받습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/01.oracle_instant_client_download.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Compute Cloud로 upload 합니다. (SCP나 SFTP 이용)&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; scp -i privatekey instantclient-basic-linux.x64-18.3.0.0.0dbru.zip opc@{Compute Public IP}:/home/opc/.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/02.scp_oracle_instant_client.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;업로드된 instant client 파일의 압축을 풉니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;unzip instantclient-basic-linux.x64-18.3.0.0.0dbru.zip 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;.bash_profile에 다음을 추가해 줍니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export LD_LIBRARY_PATH=/home/opc/instantclient_18_3:$LD_LIBRARY_PATH 
-export TNS_ADMIN=/home/opc/instantclient_18_3/network/admin
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Instant Client에서 ADW 연결을 위해서는 ADW Client Wallet을 다운 받아야 합니다. ADW 콘솔에 접속하여 Client Wallet을 다운 받습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/03.download_client_wallet.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/autonomous-data-warehouse-cloud/user/connect-download-wallet.html#GUID-B06202D2-0597-41AA-9481-3B174F75D4B1&quot;&gt;다운로드 ADW Client Credential (Wallet) 참고&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;다운 받은 Wallet의 내용은 다음과 같습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/04.wallet_content.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Wallet을 Compute Cloud의 Instant Client 설치 디렉토리로 복사하여 압축을 풀어 줍니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; scp -i privatekey wallet.zip opc@{Compute Public IP}:/home/opc/instantclient_18_3/network/admin/.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;복사한 Wallet의 압축을 풀고 난 후의 admin 디렉토리 내용은 다음과 같습니다.
-&lt;img src=&quot;/assets/images/ODA_ADW/05.admin_dir_content.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;tnsnames.ora 파일을 열어서 접속할 서비스명을 확인합니다. {DB명}_high, {DB명}_medium, {DB명}_low 중에서 선택하여 사용하면 됩니다.
-&lt;img src=&quot;/assets/images/ODA_ADW/06.tnsnames_ora.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;custom-component-작성하기&quot;&gt;Custom Component 작성하기&lt;/h2&gt;
-&lt;p&gt;ADW에 연결하기 위한 Custom Component 작성을 위한 준비가 완료 되었습니다.
-소스를 Git에서 다운 받기 위해 Git Client가 필요합니다. 다음을 실행하여 git을 설치합니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; sudo yum install git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이제 Sample로 작성된 ADW 연결용 Custom Component를 다운 받습니다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; git clone https://github.com/mee-nam-lee/chatbot.git
-&amp;gt; cd chatbot_adw/bot-start
-&amp;gt; npm install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;샘플 소스 코드에서 ADW 연결을 위한 정보를 수정해 줍니다.
-&lt;strong&gt;chatbot_adw/bot-start/components/dbconfig.js&lt;/strong&gt; 파일을 열어서 &lt;strong&gt;user&lt;/strong&gt;, &lt;strong&gt;password&lt;/strong&gt;, &lt;strong&gt;connectString&lt;/strong&gt; 부분을 수정합니다.
-tns_name은 &lt;strong&gt;tnsnames.ora&lt;/strong&gt;에서 참고하면 됩니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;          &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;NODE_ORACLEDB_USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;your_username&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;password&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;NODE_ORACLEDB_PASSWORD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;your_userpassword&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;connectString&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;NODE_ORACLEDB_CONNECTIONSTRING&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;your_tns_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-
- &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;생략&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;소스-코드-잠깐-살펴-보기&quot;&gt;소스 코드 잠깐 살펴 보기&lt;/h3&gt;
-&lt;p&gt;실제 SQL을 수행하여 Database에서 정보를 조회하는 부분은 &lt;strong&gt;chatbot_adw/bot-start/components/oracledb.js&lt;/strong&gt;에 들어있습니다.
-getADW 함수내의 SQL 문장을 원하는 SQL로 변경하여 수행하면 됩니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getADW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;생략&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// ADW Sample Sales History 조회 SQL&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sqlstring&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SELECT channel_desc, TO_CHAR(SUM(amount_sold),&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;9,999,999,999&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;) SALES$, &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                              RANK() OVER (ORDER BY SUM(amount_sold)) AS default_rank, &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                              RANK() OVER (ORDER BY SUM(amount_sold) DESC NULLS LAST) AS custom_rank &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                       FROM sh.sales, sh.products, sh.customers, sh.times, sh.channels, sh.countries &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                       WHERE sales.prod_id=products.prod_id AND sales.cust_id=customers.cust_id &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                           AND customers.country_id = countries.country_id AND sales.time_id=times.time_id &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                           AND sales.channel_id=channels.channel_id &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                           AND times.calendar_month_desc IN (&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;2000-09&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;2000-10&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;) &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                           AND country_iso_code=&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;US&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;
-                       GROUP BY channel_desc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;생략&lt;/span&gt; 
-
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;조회된 데이터를 챗봇에 보내줄때는 &lt;strong&gt;conversation.reply()&lt;/strong&gt;라는 chatbot SDK의 함수를 사용합니다. 해당 예제에서는 Text 형태로만 리턴하였기 때문에 conversation.reply에 text 만 사용하였으나. 채널 유형에 따라 다양한 형태의 json 메시지를 보낼 수 있습니다. 관련된 상세 정보는 Oracle Bot SDK를 참조하면 됩니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nx&quot;&gt;getADW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;conversation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`매출 현황을 조회하였습니다. 채널 : &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 판매금액 : &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; Rank : &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;커스텀-컴포넌트-구동&quot;&gt;커스텀 컴포넌트 구동&lt;/h3&gt;
-
-&lt;p&gt;다음 명령어를 수행하여 컴포넌트를 구동해 봅니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; node index.js
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;3000번 포트를 사용하여 서비스가 구동되었습니다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;백그라운드로 구동하려면 다음과 깉이 실행합니다.
-nohup node index.js &amp;gt; nohup.out  2&amp;gt;&amp;amp;1 &amp;amp;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/07.component_start.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;브라우저를 통해서 해당 컴포넌트가 잘 구동되었는지 확인합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/09.component_browser_confirm.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;digital-assistant-chatbot에서-custom-component-연결하기&quot;&gt;Digital Assistant (Chatbot)에서 Custom Component 연결하기&lt;/h2&gt;
-&lt;p&gt;작성된 Custom Component를 챗봇에서 사용하기 위해서는 컴포넌트를 사용할 Bot에 Service로 연결해 주어야 합니다. 
-Bot 화면으로 이동하여 다음과 같이 서비스 등록 화면에서 서비스 추가 버튼을 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/10.add_component.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이름과 Metadata URL(위 브라우저에서 테스트 했던 URL)을 입력하고 Username과 Password를 입력합니다.(이 샘플 컴포넌트 등록을 위해서는 test로 입력)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/11.register_service.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;서비스가 잘 등록된 것을 확인할 수 있습니다. &lt;strong&gt;oracledb&lt;/strong&gt; 라는 컴포넌트를 Bot Flow에서 호출하여 사용할 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/12.after_reg_service.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;bot-flow에서-사용하기&quot;&gt;Bot Flow에서 사용하기&lt;/h2&gt;
-&lt;p&gt;Bot Flow에서 등록한 Custom Component는 다음과 같이 호출합니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;na&quot;&gt;printcountry&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;oracledb&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;human&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;meenam&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;    
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h2 id=&quot;테스트&quot;&gt;테스트&lt;/h2&gt;
-&lt;p&gt;연결이 잘 되고 호출이 정상적으로 이루어지는지 Test UI를 통해 테스트를 싱행합니다. 
-정상적으로 수행되면 다음과 같이 ADW에서 Sales History를 조회해 올 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/ODA_ADW/13.bot_test.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;모두 완료되었습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/adwc/OBE_Loading%20Your%20Data/loading_your_data.html&quot;&gt;Autonomous Data Warehouse Toturial&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Oracle 챗봇 컴포넌트 작성을 위한 자세한 SDK 가이드는 다음을 참고하세요&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/bots-node-sdk/&quot;&gt;Oracle Bots Node.js SDK&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Node.js용 Oracle DB Driver 상세와 샘플코드는 아래를 참고하세요.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/node-oracledb&quot;&gt;Node.js Oracle Driver&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="ADW" /><category term="Autonomous Data Warehouse" /><summary type="html">오라클 챗봇인 Digital Assistant에서는 커스텀 비즈니스 코드를 작성을 지원하기 위해 Custom Component라는 기능을 제공하고 있습니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><summary type="html">Oracle Cloud를 이용하여 인간의 언어(Natural Language)를 이해하는 챗봇을 간단하게 만들어 보는 Hands on Workshop 입니다.</summary></entry></feed>

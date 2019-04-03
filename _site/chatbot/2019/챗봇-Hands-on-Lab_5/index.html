@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다." />
+<meta property="og:description" content="이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다." />
+<link rel="canonical" href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/" />
+<meta property="og:url" content="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-01T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.","@type":"BlogPosting","url":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/","headline":"챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기","dateModified":"2019-04-01T00:00:00+09:00","datePublished":"2019-04-01T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">카테고리</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-01T00:00:00+09:00" itemprop="datePublished">Apr 1, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.</p>
+
+<h1 id="모바일android-채널-생성">모바일(Android) 채널 생성</h1>
+<p>좌측 메인 메뉴의 <strong>Channels</strong> 메뉴를 선택합니다.
+<img src="/assets/images/chatbot_lecture/channel/01_channel_settings.png" alt="" /></p>
+
+<p><strong>+ Channel</strong> 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.</p>
+
+<p>다음과 같이 입력하고 <strong>Create</strong> 버튼을 클릭합니다.</p>
+
+<ul>
+  <li>Name : PizzaBot_{SEQ}.Android
+    <blockquote>
+      <p>본인이 생성한 PizzaBot과 동일 명으로 합니다</p>
+    </blockquote>
+  </li>
+  <li>Descrption : 학생이름 = [본인이름]</li>
+  <li>Channel Type : <strong>Android</strong></li>
+</ul>
+
+<p><img src="/assets/images/chatbot_lecture/channel/07_android.png" alt="" /></p>
+
+<p>다음과 같이 채널이 만들어 진 것을 확인 합니다. 아직 채널이 활성화 된 상태는 아닙니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/08_android_after_create.png" alt="" /></p>
+
+<p>만든 채널을 각자의 PizzaBot과 연결하기 위해 <strong>Route To</strong>를 클릭하여 본인의 Bot과 연결되게 합니다.</p>
+
+<p>아래와 같이 연결되었는지를 확인하고 <strong>Channel Enabled</strong>를 활성화 시킵니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/09_android_route.png" alt="" /></p>
+
+<p>채널 생성은 완료되었습니다.</p>
+
+<h2 id="모바일-앱-다운-받기">모바일 앱 다운 받기</h2>
+<p>Oracle Digital Assistant는 Android 앱에서 채팅 기능을 사용할 수 있도록 SDK와 샘플 애플리케이션을 제공하고 있습니다.
+이 제공되는 샘플 SDK를 다운 받아 앱을 수정하여 빌드하고 배포하여서 테스트 하도록 되어있지만, 이 Lab에서는 미리 미리 빌드된 apk를 제공하여 설치 후 바로 테스트 할 수 있도록 하였습니다.</p>
+
+<h3 id="참고--android-용-sample-다운로드">참고 : Android 용 Sample 다운로드</h3>
+<ul>
+  <li><a href="https://www.oracle.com/technetwork/topics/cloud/downloads/amce-downloads-4478270.html">Oracle Digital Assistant (ODA) and Oracle Mobile Cloud (OMC) Downloads</a> :  <strong>bots-client-sdk-android-samples-19.1.3.0.zip</strong>을 다운로드 합니다.</li>
+  <li><a href="https://docs.oracle.com/en/cloud/paas/digital-assistant/use-chatbot/channels-topic.html#GUID-4B97C781-6972-44B9-A7D3-9F2F57CE09B9">Android 앱 설정</a></li>
+</ul>
+
+<h3 id="미리-빌드된-샘플-sdk-apk-설치">미리 빌드된 샘플 SDK APK 설치</h3>
+<p>위 샘플을 빌드한 APK를 다음에서 다운받아 안드로드이 폰에 설치 합니다.</p>
+
+<ul>
+  <li><a href="https://github.com/mee-nam-lee/chatbot_lecture/raw/master/labfiles/mobilechat/app-release.apk">ChatSample SDK APK 다운로드</a></li>
+</ul>
+
+<p>설치 후 앱을 실행 시킵니다. 다음과 같은 화면이 보일 것 입니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/15_android_01.jpeg" alt="" /></p>
+
+<p>방금 전에 만든 채널의 <strong>App ID</strong>를 아래와 같이 Text Box에 입력한 후 <strong>계속</strong>을 클릭합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/16_android_appid.png" alt="" /></p>
+
+<p>다음 화면에서 챗봇과 대화하기를 클릭합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/17_android_before_chat.jpeg" alt="" /></p>
+
+<p>다음과 같이 대화가 바로 이루어지는 것을 볼 수 있습니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/18_android_chat.jpeg" alt="" /></p>
+
+<h1 id="모바일ios-채널-생성">모바일(iOS) 채널 생성</h1>
+
+<p>iOS용 모바일 앱을 위한 채널도 하나 생성해  봅니다.</p>
+
+<ul>
+  <li>Name : PizzaBot_{SEQ}.iOS
+    <blockquote>
+      <p>본인이 생성한 PizzaBot과 동일 명으로 합니다</p>
+    </blockquote>
+  </li>
+  <li>Descrption : 학생이름 = [본인이름]</li>
+  <li>Channel Type : <strong>iOS</strong></li>
+</ul>
+
+<p><img src="/assets/images/chatbot_lecture/channel/10_ios_create.png" alt="" /></p>
+
+<p>채널이 생성되었으면 Route To와 Enabled를 설정해 줍니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/11_ios_created.png" alt="" /></p>
+
+<h3 id="참고--ios-용-sample-다운로드">참고 : iOS 용 Sample 다운로드</h3>
+<ul>
+  <li><a href="https://www.oracle.com/technetwork/topics/cloud/downloads/amce-downloads-4478270.html">Oracle Digital Assistant (ODA) and Oracle Mobile Cloud (OMC) Downloads</a> : <strong>bots-client-sdk-ios-samples-19.1.3.0.zip</strong>을 다운로드 합니다.</li>
+  <li><a href="https://docs.oracle.com/en/cloud/paas/digital-assistant/use-chatbot/channels-topic.html#GUID-4B97C781-6972-44B9-A7D3-9F2F57CE09B9">Android 앱 설정</a></li>
+</ul>
+
+<p>iOS용 배포 파일은 제공되지 않습니다. 위 샘플 코드를 받아서 iOS XCode Simulator를 통해 시연해 보면 다음과 같이 보여지게 됩니다.</p>
+
+<p>iOS 앱에서 실행된 화면은 다음과 같습니다. 동일한 방법으로 App ID를 입력해 줍니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/12_ios_appid.png" alt="" /></p>
+
+<p><strong>Chat with your Bot</strong>을 클릭하여 대화를 시작합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/13_ios_start_chat.png" alt="" /></p>
+
+<p>피자 주문을 해 보면 다음과 같이 보여집니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/channel/14_ios_chat_pizza.png" alt="" /></p>
+
+<p>과정을 완료하였습니다.</p>
+
+<h1 id="chatbot-workshop-lab">Chatbot-Workshop Lab</h1>
+<ul>
+  <li>Lab 개요 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_1/">챗봇 Hands-on Lab (1) - Lab 개요</a></li>
+  <li>Lab 100 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_2/">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</a></li>
+  <li>Lab 200 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_3/">챗봇 Hands-on Lab (3) - 피자봇 만들기 </a></li>
+  <li>Lab 300 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_4/">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</a></li>
+</ul>
+
+
+
+  </div><div>
+  <p>
+    <img src="/assets/images/tag.png"/><a href="#" class="keywords" rel="tag">Channel</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">chatbot</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Hands-on-Lab</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">mobile</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">오라클 챗봇</a></p>
+</div><div>
+  <p>
+    <img src="/assets/images/share.png"/>
+  
+    <a href="https://twitter.com/intent/tweet?text=%EC%B1%97%EB%B4%87+Hands-on+Lab+%285%29+-+%5B%EC%B1%84%EB%84%90+%EC%97%B0%EA%B2%B0%5D+Mobile+%EC%95%B1+%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_5%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_5%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_5%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_5%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/cloud/2019/basic-3tier-arch-regional/" title="Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">Next</a></nav>
+</div>
+</div><a class="u-url" href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li><li><a href="/feed.xml"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#rss"></use></svg> <span>Feed</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>
