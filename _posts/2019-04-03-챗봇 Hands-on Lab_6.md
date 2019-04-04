@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  챗봇 Hands-on Lab (6) - Insight(분석) 기능 사용하기
+title:  챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기
 categories: chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab, Insight]
 ---
@@ -39,7 +39,7 @@ Intent List에 구현된 Intent들이 다 나오지 않는다면, **해당 Inten
 
 ![](/assets/images/chatbot_lecture/insights/06_insights.png)
 
-**Retainer** 탭으로 이동합니다. 이 메뉴에서는 Intent Resolution에 대한 결과를 조건절을 이용해서 검색해 볼 수 있습니다. **unresolvedIntent**가 있나 확인합니다. 해당 조건에 맞는 내용이 없다면 채팅창을 이용하여 대화를 더 시도해 봅니다.
+**Retrainer** 탭으로 이동합니다. 이 메뉴에서는 Intent Resolution에 대한 결과를 조건절을 이용해서 검색해 볼 수 있습니다. **unresolvedIntent**가 있나 확인합니다. 해당 조건에 맞는 내용이 없다면 채팅창을 이용하여 대화를 더 시도해 봅니다.
 
 ![](/assets/images/chatbot_lecture/insights/07_insights.png)
 
@@ -59,9 +59,15 @@ Intent List에 구현된 Intent들이 다 나오지 않는다면, **해당 Inten
 챗봇의 Intent를 학습 시키다 보면 비슷한 Sample Data들이 서로 다른 Intent들에 포함되어 Intent간의 구분/구별을 명확하게 하지 못하게 되는 경우가 있습니다. 이 때문에 챗봇의 정확도가 감소하게 될 수 있는데, 이 Intent의 품질을 검사해 주는 기능을 활용하면 챗봇의 정확도를 개선하는데 도움이 됩니다.
 
 
-비슷 간의 명확한 구별/구분 (distinct)
+**Quality** 메뉴를 클릭하여 Report 생성 화면으로 이동합니다. **Run Report** 버튼을 클릭하여 Report 생성 작업을 시작 시킵니다. 
 
-과정을 완료하였습니다.
+![](/assets/images/chatbot_lecture/insights/10_runreport.png)
+
+잠시 후 Report가 나타나면 다음과 같이 Conflict이 있을 수 있는 Intent들을 보여줍니다. 빨간색 경고에 해당하는 Intent를 살펴봐야 합니다. 아래 결과는 **"주문"** / **"주문 취소"**가 유사한 Utterance이지만 서로 다른 Intent에 속해 있어 Accuracy가 떨어질 수 있음을 보여주고 있습니다.
+
+![](/assets/images/chatbot_lecture/insights/11_reportresult.png)
+
+이상으로 과정을 완료하였습니다.
 
 # Chatbot-Workshop Lab 
 * Lab 개요 : [챗봇 Hands-on Lab (1) - Lab 개요](/chatbot/2019/챗봇-Hands-on-Lab_1/)
