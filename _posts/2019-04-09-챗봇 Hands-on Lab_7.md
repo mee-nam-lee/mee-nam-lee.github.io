@@ -84,6 +84,39 @@ Job이 생성되고 나면 Job Configuration 화면으로 이동됩니다. **Sou
 
 ![](/assets/images/chatbot_lecture/component/13_selectrepo.png)
 
+**Steps** 탭으로 이동하여 Build Step을 추가합니다. node.js로 개발된 소스에 필요한 package를을 설치하고 archiving하기 위해서 **Unix Shell** Build Executor를 선택하도록 하겠습니다.
+
+![](/assets/images/chatbot_lecture/component/14_addstep.png)
+
+**Script** 입력 부분에 다음 3줄을 입력합니다. 
+```
+cd src
+npm install
+npm pack
+```
+![](/assets/images/chatbot_lecture/component/15_npm.png)
+
+빌드된 Artifact를 저장하기 위한 post build 작업이 필요하기 때문에 **Post Build** 탭으로 이동합니다.
+**Add Post Build Action** 메뉴에서 **Artifact Archiver**를 선택합니다.
+
+![](/assets/images/chatbot_lecture/component/16_postbuild.png)
+
+Archive할 파일을 다음과 같이 입력합니다.
+
+- Files to archive : src/*.tgz
+
+**Save**를 클릭하여 구성된 내용을 저장합니다.
+
+![](/assets/images/chatbot_lecture/component/17_tgz.png)
+
+상단의 **Build Now**를 클릭하면 구성된 내용으로 Build 작업이 시작됩니다.
+
+![](/assets/images/chatbot_lecture/component/18_buildnow.png)
+
+Build가 큐잉되고 실제 Build가 수행될 Runtime VM 환경이 준비되는 것을 기다리고 있습니다. VM이 할당되면 Build가 시작 될 것입니다.
+
+![](/assets/images/chatbot_lecture/component/19_queue.png)
+
 
 이상으로 과정을 완료하였습니다.
 
