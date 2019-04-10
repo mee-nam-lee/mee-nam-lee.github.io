@@ -1,4 +1,170 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-10T16:05:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (7) - Custom Component 구현하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (7) - Custom Component 구현하기" /><published>2019-04-09T00:00:00+09:00</published><updated>2019-04-09T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_7</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/">&lt;p&gt;커스텀 비즈니스 로직을 챗봇에 추가하기 위해서는 Node.js 기반의 챗봇 SDK를 사용하여 Custom 로직을 구현하여야 합니다. 이 Lab에서는 지금까지 만든 챗봇에 Custom Component를 구현하여 연결해 볼 것입니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-10T17:50:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계" /><published>2019-04-10T00:00:00+09:00</published><updated>2019-04-10T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_8</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/">&lt;p&gt;챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 &lt;strong&gt;Instant App&lt;/strong&gt;이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;instant-app-생성&quot;&gt;Instant App 생성&lt;/h1&gt;
+
+&lt;h2 id=&quot;미리-만들어둔-instant-app-파일-다운-받기&quot;&gt;미리 만들어둔 Instant App 파일 다운 받기&lt;/h2&gt;
+
+&lt;p&gt;챗봇의 &lt;strong&gt;Instant App Builder&lt;/strong&gt;에서 새롭게 Instant App을 처음부터 생성할 수 있으나, 이 Lab에서는 기존에 생성된 Instant App을 Import 받아서 항목을 수정하는 형태로 진행할 예정입니다.&lt;/p&gt;
+
+&lt;p&gt;다음에서 설문을 수행하는 Instant App인 Survey 앱 (survey.json) 파일을 다운 받습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/mee-nam-lee/chatbot_lecture/master/labfiles/instantapp/survey.json&quot;&gt;Survey Instant App 다운로드&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;instant-app-builder에서-import-하기&quot;&gt;Instant App Builder에서 Import 하기&lt;/h2&gt;
+
+&lt;p&gt;챗봇 콘솔로 이동합니다. 상단 메뉴의 &lt;strong&gt;Instant Apps&lt;/strong&gt;를 클릭하여 Instant App 빌더 화명으로 이동합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/01_instant.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Add Instant App&lt;/strong&gt;을 클릭하여 다운받아둔 survey.json을 import 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/02_import.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Schema File&lt;/strong&gt; 항목에 survey.json을 끌어다 놓으면 Import가 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/03_upload.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Import 후에는 해당 Instant App의 Edit 화면으로 바로 이동합니다.
+좌측 메뉴에서 &lt;strong&gt;INSTANT APP INFO&lt;/strong&gt;를 클릭하여 &lt;strong&gt;API ID&lt;/strong&gt;를 확인 합니다. 이 API ID는 챗봇에서 Instant App을 호출할 때 사용됩니다.
+&lt;strong&gt;Save&lt;/strong&gt; 버튼을 클릭하여 저장합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/04_survey.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 앱이 어떤 기능이 있는지 챗봇과 연계 전에 &lt;strong&gt;Instant App Builder&lt;/strong&gt;에서 바로 테스트 해 볼 수 있습니다.
+우측 화면의 &lt;strong&gt;Test&lt;/strong&gt; 탭을 클릭하고 모바일 화면 하단의 &lt;strong&gt;Start as Recipient&lt;/strong&gt;를 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/05_test.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;팝업으로 나타나는 &lt;strong&gt;survey: Parameters&lt;/strong&gt; 부분에서는 &lt;strong&gt;OK&lt;/strong&gt;를 눌러주면 됩니다.
+서비스 만족도의 별점에 점수에 따라 다른 질문들이 나타납니다. 별점의 점수를 바꿔보세요.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/06_test1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;화면이 어떻게 바뀌는지 확인한 후 화면에 보이는 입력값을을 넣어주고 &lt;strong&gt;설문 완료&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/07_test2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;설문이 완료되고 Confirmation이 보여집니다. Instant App의 Test를 종료하기 위해 &lt;strong&gt;Stop&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/08_test3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;어떤 Component로 이루어진 Instant App인지 좌측의 Layout을 하나씩 살펴보세요.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/09_layout.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PANE_2&lt;/strong&gt;의 &lt;strong&gt;Add Element&lt;/strong&gt;를 클릭하여 새로운 Element 하나를 더 추가해 보겠습니다.
+Content의 &lt;strong&gt;Social Buttons&lt;/strong&gt;를 클릭해서 추가합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/10_edit.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PREVIEW&lt;/strong&gt;에서 추가된 Element를 바로 확인할 수 있습니다. &lt;strong&gt;Save&lt;/strong&gt;를 클릭하여 변경사항을 저장합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/11_social.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;챗봇에-연결하기&quot;&gt;챗봇에 연결하기&lt;/h1&gt;
+
+&lt;p&gt;이제 Survey Instant App을 챗봇에서 호출해 보도록 하겠습니다.
+Flow에서 Intant App을 호출아는 Built-in Component를 이용해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;이 설문 앱을 피자 주문이 완료된 후에 만족도 평가를 위해서 호출하는 형태로 챗봇 Flow를 변경해 보도록 하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;Flow Edit 화면으로 들어가서 다음 부분을 수정, 추가해 줍니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;na&quot;&gt;Confirmation&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.CommonResponse&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;keepTurn&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;## 추가&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;responseItems&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;주문해&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;주셔서&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;감사합니다.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;주문하신&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${pizzaSize}&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${orderedPizza}&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;피자가&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;30분&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;내로&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;배달될&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;예정입니다.&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;text&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;conf&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;separateBubbles&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;attachment&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;attachmentType&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;image&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;image&quot;&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;attachmentUrl&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${orderedPizzaImage}&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;processUserMessage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;## 변경&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;## 아래는 추가&lt;/span&gt;
+ &lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;askSurvey&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.List&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+      &lt;span class=&quot;na&quot;&gt;prompt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;서비스&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;만족도&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;진행&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;중입니다.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;참여하시겠습니까?&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;네&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;yes&quot;&lt;/span&gt; 
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;아니요&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;no&quot;&lt;/span&gt; 
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;yes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;doSurvey&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;thankyou&quot;&lt;/span&gt;      
+
+  &lt;span class=&quot;na&quot;&gt;thankyou&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Output&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;감사합니다.&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;doSurvey&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Interactive&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;sourceVariableList&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;variable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dummy&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;survey2&quot;&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;## Instant App의 API ID를 사용합니다.&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;설문을&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;진행합니다.&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;linkLabel&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;설문으로&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;바로가기&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;textOnlyResponse&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt;
+   
+  &lt;span class=&quot;na&quot;&gt;surveyOutput&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Output&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${dummy.value.result}&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Flow 수정 후 상단의 &lt;strong&gt;Validate&lt;/strong&gt;를 클릭하여 Flow에 오류가 없는지 확인합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/12_flow.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;test&quot;&gt;Test&lt;/h1&gt;
+&lt;p&gt;Flow가 수정되었으면 &lt;strong&gt;Skill Tester&lt;/strong&gt;에서 테스트를 수행해 봅니다.
+피자 주문 프로세스를 완료한 후 설문 진행 여부를 묻는 Flow가 나오게 구성되어 있습니다.
+&lt;strong&gt;설문으로 바로가기&lt;/strong&gt; 링크를 클릭하면 Instant App으로 이동합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/13_callsurvey.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Instant App에서 설문을 완료하고 챗봇으로 돌아옵니다.&lt;/p&gt;
+
+&lt;p&gt;브라우저 기반의 챗봇에서 Instant App을 호출하면 별도의 Tab으로 이동하여 Instant App이 실행된 후 다시 챗봇이 수행 중인 Tab으로 돌아와야 합니다.
+모바일 앱에서 실행 될 때에는 어떻게 동작하는 모바일 앱에서도 확인 해 보세요.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/20_mobile2.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;설문 완료 후 앱의 돌아가기를 클릭하면 모바일 챗봇으로 돌아갑니다.
+&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/20_mobile1.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Script&lt;/strong&gt; 입력 부분에 다음 3줄을 입력합니다.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd src
+npm install
+npm pack
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이상으로 Custom Component 구현 과정을 완료하였습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Instant App" /><summary type="html">챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 Instant App이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (7) - Custom Component 구현하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (7) - Custom Component 구현하기" /><published>2019-04-09T00:00:00+09:00</published><updated>2019-04-09T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_7</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/">&lt;p&gt;커스텀 비즈니스 로직을 챗봇에 추가하기 위해서는 Node.js 기반의 챗봇 SDK를 사용하여 Custom 로직을 구현하여야 합니다. 이 Lab에서는 지금까지 만든 챗봇에 Custom Component를 구현하여 연결해 볼 것입니다.&lt;/p&gt;
 
 &lt;h1 id=&quot;prerequisite&quot;&gt;Prerequisite&lt;/h1&gt;
 &lt;p&gt;기본적으로 커스텀 코드 작성을 위해서 각자의 로컬 환경에 개발툴과 Node.js, 챗봇 SDK를 설치하여 구현하여야 하지만 이 실습 과정에서는 개별 로컬 개발 환경 설정 과정을 생략하기 위해여 Cloud 기반의 소스 관리 및 빌드 기능을 이용하여 코드를 수정해 보는 과정으로 진행하도록 하겠습니다.
@@ -1759,80 +1925,7 @@ Load Balancer는 &lt;strong&gt;Sticky Session&lt;/strong&gt;을 지원하도록 
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/bots-node-sdk/&quot;&gt;Oracle Bots Node.js SDK&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Custom Component" /><category term="Layout" /><summary type="html">챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_4</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_4/">&lt;p&gt;이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;웹-채널-생성&quot;&gt;웹 채널 생성&lt;/h2&gt;
-&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
-&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Name : PizzaBot_{SEQ}.web
-    &lt;blockquote&gt;
-      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
-  &lt;li&gt;Channel Type : Web&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/02_create_channel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/03_Channel_route_done.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;웹-페이지에서-테스트-하기&quot;&gt;웹 페이지에서 테스트 하기&lt;/h2&gt;
-&lt;p&gt;Oracle Digital Assistant는 웹채널을 태스트 하기 위한 chat-sample-web 코드를 제공하고 있습니다.&lt;/p&gt;
-
-&lt;p&gt;이 코드가 구동되고 있는 환경 정보가 제공되었을 것입니다. 브라우저를 통해 제공된 URL에 접속합니다. 아래 화면의 왼쪽 브라우저와 같은 페이지가 보여질 것입니다.
-Text Box에 자신의 PizzaBot에서 만든 &lt;strong&gt;Web&lt;/strong&gt; 채널의 &lt;strong&gt;App Id&lt;/strong&gt;를 복사해서 입력해 줍니다. &lt;strong&gt;Continue&lt;/strong&gt;를 누르면 해당 웹페이지의 채팅은 자신의 PizzaBot에 연결 될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;App Id 입력하는 Text Box가 첫 화면에서 보이지 않는다면 다음과 같이 설정 아이콘을 클릭하여 App ID를 입력해 줍니다.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-  &lt;p&gt;App Id를 자신의 채널 것으로 업데이트하고 Save 합니다.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/04_web_app_id_setting_save.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;Chat with your BOT&lt;/strong&gt; 버튼을 클릭하여 대화를 시작해 봅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/05_chat_with_your_bot.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 채팅창이 열리게 됩니다. &lt;strong&gt;Type a message&lt;/strong&gt; 텍스트 박스에 대화를 입력합니다.
-피자봇에서 구현했던 4개의 Intent들을 차례로 테스트 해보면 됩니다.
-&lt;img src=&quot;/assets/images/chatbot_lecture/channel/06_chat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;사용환경-정리&quot;&gt;사용환경 정리&lt;/h2&gt;
-&lt;p&gt;생성한 PizzaBot_{SEQ}를 이전 lab에서 처럼 삭제합니다.&lt;/p&gt;
-
-&lt;p&gt;과정을 완료하였습니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Channel" /><summary type="html">이 Lab에서는 지금까지 만든 피자봇을 웹 채팅 창을 통해서 연결해 보는 실습을 할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;p&gt;이 Lab에서는 피자봇을 직접 만들어 볼 것입니다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Custom Component" /><category term="Layout" /><summary type="html">챗봇을 구현할 때 Dialogue Flow에서 Text 형태 이외의 다양한 포맷을 이용한 Response를 생성해내야 하는 경우가 많습니다. 이를 위해서 오라클 챗봇은 System.Output 이라는 text 기반 응답 외에 다양한 형태의 Response를 만들어 낼 수 있는 System.CommonResponse라는 빌트인 컴포넌트를 제공하고 있습니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (3) - 피자봇 만들기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (3) - 피자봇 만들기" /><published>2019-01-24T02:50:00+09:00</published><updated>2019-01-24T02:50:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_3</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_3/">&lt;p&gt;이 Lab에서는 피자봇을 직접 만들어 볼 것입니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;학습-내용&quot;&gt;학습 내용&lt;/h2&gt;
 

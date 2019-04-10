@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 Instant App이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다." />
+<meta property="og:description" content="챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 Instant App이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다." />
+<link rel="canonical" href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/" />
+<meta property="og:url" content="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-10T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 Instant App이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.","@type":"BlogPosting","url":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/","headline":"챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계","dateModified":"2019-04-10T00:00:00+09:00","datePublished":"2019-04-10T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">카테고리</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-10T00:00:00+09:00" itemprop="datePublished">Apr 10, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 <strong>Instant App</strong>이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.</p>
+
+<h1 id="instant-app-생성">Instant App 생성</h1>
+
+<h2 id="미리-만들어둔-instant-app-파일-다운-받기">미리 만들어둔 Instant App 파일 다운 받기</h2>
+
+<p>챗봇의 <strong>Instant App Builder</strong>에서 새롭게 Instant App을 처음부터 생성할 수 있으나, 이 Lab에서는 기존에 생성된 Instant App을 Import 받아서 항목을 수정하는 형태로 진행할 예정입니다.</p>
+
+<p>다음에서 설문을 수행하는 Instant App인 Survey 앱 (survey.json) 파일을 다운 받습니다.</p>
+
+<ul>
+  <li><a href="https://raw.githubusercontent.com/mee-nam-lee/chatbot_lecture/master/labfiles/instantapp/survey.json">Survey Instant App 다운로드</a></li>
+</ul>
+
+<h2 id="instant-app-builder에서-import-하기">Instant App Builder에서 Import 하기</h2>
+
+<p>챗봇 콘솔로 이동합니다. 상단 메뉴의 <strong>Instant Apps</strong>를 클릭하여 Instant App 빌더 화명으로 이동합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/01_instant.png" alt="" /></p>
+
+<p><strong>Add Instant App</strong>을 클릭하여 다운받아둔 survey.json을 import 합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/02_import.png" alt="" /></p>
+
+<p><strong>Schema File</strong> 항목에 survey.json을 끌어다 놓으면 Import가 됩니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/03_upload.png" alt="" /></p>
+
+<p>Import 후에는 해당 Instant App의 Edit 화면으로 바로 이동합니다.
+좌측 메뉴에서 <strong>INSTANT APP INFO</strong>를 클릭하여 <strong>API ID</strong>를 확인 합니다. 이 API ID는 챗봇에서 Instant App을 호출할 때 사용됩니다.
+<strong>Save</strong> 버튼을 클릭하여 저장합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/04_survey.png" alt="" /></p>
+
+<p>이 앱이 어떤 기능이 있는지 챗봇과 연계 전에 <strong>Instant App Builder</strong>에서 바로 테스트 해 볼 수 있습니다.
+우측 화면의 <strong>Test</strong> 탭을 클릭하고 모바일 화면 하단의 <strong>Start as Recipient</strong>를 클릭합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/05_test.png" alt="" /></p>
+
+<p>팝업으로 나타나는 <strong>survey: Parameters</strong> 부분에서는 <strong>OK</strong>를 눌러주면 됩니다.
+서비스 만족도의 별점에 점수에 따라 다른 질문들이 나타납니다. 별점의 점수를 바꿔보세요.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/06_test1.png" alt="" /></p>
+
+<p>화면이 어떻게 바뀌는지 확인한 후 화면에 보이는 입력값을을 넣어주고 <strong>설문 완료</strong> 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/07_test2.png" alt="" /></p>
+
+<p>설문이 완료되고 Confirmation이 보여집니다. Instant App의 Test를 종료하기 위해 <strong>Stop</strong> 버튼을 클릭합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/08_test3.png" alt="" /></p>
+
+<p>어떤 Component로 이루어진 Instant App인지 좌측의 Layout을 하나씩 살펴보세요.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/09_layout.png" alt="" /></p>
+
+<p><strong>PANE_2</strong>의 <strong>Add Element</strong>를 클릭하여 새로운 Element 하나를 더 추가해 보겠습니다.
+Content의 <strong>Social Buttons</strong>를 클릭해서 추가합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/10_edit.png" alt="" /></p>
+
+<p><strong>PREVIEW</strong>에서 추가된 Element를 바로 확인할 수 있습니다. <strong>Save</strong>를 클릭하여 변경사항을 저장합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/11_social.png" alt="" /></p>
+
+<h1 id="챗봇에-연결하기">챗봇에 연결하기</h1>
+
+<p>이제 Survey Instant App을 챗봇에서 호출해 보도록 하겠습니다.
+Flow에서 Intant App을 호출아는 Built-in Component를 이용해야 합니다.</p>
+
+<p>이 설문 앱을 피자 주문이 완료된 후에 만족도 평가를 위해서 호출하는 형태로 챗봇 Flow를 변경해 보도록 하겠습니다.</p>
+
+<p>Flow Edit 화면으로 들어가서 다음 부분을 수정, 추가해 줍니다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="na">Confirmation</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.CommonResponse"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">keepTurn</span><span class="pi">:</span> <span class="no">true</span> <span class="c1">## 추가</span>
+      <span class="na">metadata</span><span class="pi">:</span>
+        <span class="na">responseItems</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">주문해</span><span class="nv"> </span><span class="s">주셔서</span><span class="nv"> </span><span class="s">감사합니다.</span><span class="nv"> </span><span class="s">주문하신</span><span class="nv"> </span><span class="s">${pizzaSize}</span><span class="nv"> </span><span class="s">${orderedPizza}</span><span class="nv"> </span><span class="s">피자가</span><span class="nv"> </span><span class="s">30분</span><span class="nv"> </span><span class="s">내로</span><span class="nv"> </span><span class="s">배달될</span><span class="nv"> </span><span class="s">예정입니다."</span>
+          <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">text"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">conf"</span>
+          <span class="na">separateBubbles</span><span class="pi">:</span> <span class="no">true</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">attachment"</span>
+          <span class="na">attachmentType</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+          <span class="na">attachmentUrl</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${orderedPizzaImage}"</span>
+      <span class="na">processUserMessage</span><span class="pi">:</span> <span class="no">false</span>
+    <span class="na">transitions</span><span class="pi">:</span> <span class="pi">{}</span> <span class="c1">## 변경</span>
+
+<span class="c1">## 아래는 추가</span>
+ <span class="err"> </span><span class="na">askSurvey</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.List"</span>
+    <span class="na">properties</span><span class="pi">:</span> 
+      <span class="na">prompt</span><span class="pi">:</span> <span class="s2">"</span><span class="s">서비스</span><span class="nv"> </span><span class="s">만족도</span><span class="nv"> </span><span class="s">진행</span><span class="nv"> </span><span class="s">중입니다.</span><span class="nv"> </span><span class="s">참여하시겠습니까?"</span>
+      <span class="na">options</span><span class="pi">:</span> 
+      <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">네"</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span> 
+      <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">아니요"</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span> 
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">actions</span><span class="pi">:</span>
+        <span class="na">yes</span><span class="pi">:</span> <span class="s2">"</span><span class="s">doSurvey"</span>
+        <span class="na">no</span><span class="pi">:</span> <span class="s2">"</span><span class="s">thankyou"</span>      
+
+  <span class="na">thankyou</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Output"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">감사합니다."</span>
+    <span class="na">transitions</span><span class="pi">:</span>
+      <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span>
+
+  <span class="na">doSurvey</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Interactive"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">sourceVariableList</span><span class="pi">:</span>
+      <span class="na">variable</span><span class="pi">:</span> <span class="s2">"</span><span class="s">dummy"</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s2">"</span><span class="s">survey2"</span>    <span class="c1">## Instant App의 API ID를 사용합니다.</span>
+      <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">설문을</span><span class="nv"> </span><span class="s">진행합니다."</span>
+      <span class="na">linkLabel</span><span class="pi">:</span> <span class="s2">"</span><span class="s">설문으로</span><span class="nv"> </span><span class="s">바로가기"</span>
+      <span class="na">textOnlyResponse</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">transitions</span><span class="pi">:</span> <span class="pi">{}</span>
+   
+  <span class="na">surveyOutput</span><span class="pi">:</span>
+    <span class="na">component</span><span class="pi">:</span> <span class="s2">"</span><span class="s">System.Output"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">${dummy.value.result}"</span>
+    <span class="na">transitions</span><span class="pi">:</span> 
+      <span class="na">return</span><span class="pi">:</span> <span class="s2">"</span><span class="s">done"</span>
+</code></pre></div></div>
+<p>Flow 수정 후 상단의 <strong>Validate</strong>를 클릭하여 Flow에 오류가 없는지 확인합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/12_flow.png" alt="" /></p>
+
+<h1 id="test">Test</h1>
+<p>Flow가 수정되었으면 <strong>Skill Tester</strong>에서 테스트를 수행해 봅니다.
+피자 주문 프로세스를 완료한 후 설문 진행 여부를 묻는 Flow가 나오게 구성되어 있습니다.
+<strong>설문으로 바로가기</strong> 링크를 클릭하면 Instant App으로 이동합니다.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/13_callsurvey.png" alt="" /></p>
+
+<p>Instant App에서 설문을 완료하고 챗봇으로 돌아옵니다.</p>
+
+<p>브라우저 기반의 챗봇에서 Instant App을 호출하면 별도의 Tab으로 이동하여 Instant App이 실행된 후 다시 챗봇이 수행 중인 Tab으로 돌아와야 합니다.
+모바일 앱에서 실행 될 때에는 어떻게 동작하는 모바일 앱에서도 확인 해 보세요.</p>
+
+<p><img src="/assets/images/chatbot_lecture/instantapp/20_mobile2.jpeg" alt="" /></p>
+
+<p>설문 완료 후 앱의 돌아가기를 클릭하면 모바일 챗봇으로 돌아갑니다.
+<img src="/assets/images/chatbot_lecture/instantapp/20_mobile1.jpeg" alt="" /></p>
+
+<p><strong>Script</strong> 입력 부분에 다음 3줄을 입력합니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd src
+npm install
+npm pack
+</code></pre></div></div>
+
+<p>이상으로 Custom Component 구현 과정을 완료하였습니다.</p>
+
+<h1 id="chatbot-workshop-lab">Chatbot-Workshop Lab</h1>
+<ul>
+  <li>Lab 개요 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_1/">챗봇 Hands-on Lab (1) - Lab 개요</a></li>
+  <li>Lab 100 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_2/">챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기</a></li>
+  <li>Lab 200 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_3/">챗봇 Hands-on Lab (3) - 피자봇 만들기 </a></li>
+  <li>Lab 300 : <a href="/chatbot/2019/챗봇-Hands-on-Lab_4/">챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기</a></li>
+</ul>
+
+
+
+  </div><div>
+  <p>
+    <img src="/assets/images/tag.png"/><a href="#" class="keywords" rel="tag">chatbot</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Hands-on-Lab</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Instant App</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">오라클 챗봇</a></p>
+</div><div>
+  <p>
+    <img src="/assets/images/share.png"/>
+  
+    <a href="https://twitter.com/intent/tweet?text=%EC%B1%97%EB%B4%87+Hands-on+Lab+%289%29+-+Instant+App+%EA%B5%AC%ED%98%84+%EB%B0%8F+%EC%B1%97%EB%B4%87+%EC%97%B0%EA%B3%84%20http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_8%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_8%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_8%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fchatbot%2F2019%2F%25EC%25B1%2597%25EB%25B4%2587-Hands-on-Lab_8%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/" title="챗봇 Hands-on Lab (7) - Custom Component 구현하기
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">Next</a></nav>
+</div>
+</div><a class="u-url" href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li><li><a href="/feed.xml"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#rss"></use></svg> <span>Feed</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>
