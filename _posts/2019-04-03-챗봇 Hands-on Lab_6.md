@@ -70,7 +70,11 @@ Intent List에 구현된 Intent들이 다 나오지 않는다면, **해당 Inten
 이상으로 과정을 완료하였습니다.
 
 # Chatbot-Workshop Lab 
-* Lab 개요 : [챗봇 Hands-on Lab (1) - Lab 개요](/chatbot/2019/챗봇-Hands-on-Lab_1/)
-* Lab 100 : [챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기](/chatbot/2019/챗봇-Hands-on-Lab_2/)
-* Lab 200 : [챗봇 Hands-on Lab (3) - 피자봇 만들기 ](/chatbot/2019/챗봇-Hands-on-Lab_3/)
-* Lab 300 : [챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기](/chatbot/2019/챗봇-Hands-on-Lab_4/)
+* [챗봇 Hands-on Lab (1) - Lab 개요](/chatbot/2019/챗봇-Hands-on-Lab_1/)
+* [챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기](/chatbot/2019/챗봇-Hands-on-Lab_2/)
+* [챗봇 Hands-on Lab (3) - 피자봇 만들기 ](/chatbot/2019/챗봇-Hands-on-Lab_3/)
+* [챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기](/chatbot/2019/챗봇-Hands-on-Lab_4/)
+* [챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기](/chatbot/2019/챗봇-Hands-on-Lab_5/)
+* [챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기](/chatbot/2019/챗봇-Hands-on-Lab_6/)
+* [챗봇 Hands-on Lab (7) - Custom Component 구현하기](/chatbot/2019/챗봇-Hands-on-Lab_7/)
+* [챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계](/chatbot/2019/챗봇-Hands-on-Lab_8/)

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계
+title:  챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계
 categories: chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab,Instant App]
 ---
@@ -13,18 +13,18 @@ tags: [chatbot, 오라클 챗봇, Hands-on-Lab,Instant App]
 
 챗봇의 **Instant App Builder**에서 새롭게 Instant App을 처음부터 생성할 수 있으나, 이 Lab에서는 기존에 생성된 Instant App을 Import 받아서 항목을 수정하는 형태로 진행할 예정입니다.
 
-다음에서 설문을 수행하는 Instant App인 Survey 앱 (survey.json) 파일을 다운 받습니다.
+다음에서 설문을 수행하는 Instant App인 Survey 앱 (**survey.json**) 파일을 다운 받습니다.
 
 - [Survey Instant App 다운로드](https://raw.githubusercontent.com/mee-nam-lee/chatbot_lecture/master/labfiles/instantapp/survey.json)
 
 
 ## Instant App Builder에서 Import 하기
 
-챗봇 콘솔로 이동합니다. 상단 메뉴의 **Instant Apps**를 클릭하여 Instant App 빌더 화명으로 이동합니다.
+챗봇 콘솔로 이동합니다. 상단 메뉴의 **Instant Apps**를 클릭하여 Instant App Builder 화면으로 이동합니다.
 
 ![](/assets/images/chatbot_lecture/instantapp/01_instant.png)
 
-**Add Instant App**을 클릭하여 다운받아둔 survey.json을 import 합니다.
+**Add Instant App**을 클릭하여 다운받아 둔 survey.json을 import 합니다.
 
 ![](/assets/images/chatbot_lecture/instantapp/02_import.png)
 
@@ -72,9 +72,9 @@ Content의 **Social Buttons**를 클릭해서 추가합니다.
 # 챗봇에 연결하기
 
 이제 Survey Instant App을 챗봇에서 호출해 보도록 하겠습니다.
-Flow에서 Intant App을 호출아는 Built-in Component를 이용해야 합니다. 
+Flow에서 Instant App을 호출하는 Built-in Component를 이용해야 합니다. 
 
-이 설문 앱을 피자 주문이 완료된 후에 만족도 평가를 위해서 호출하는 형태로 챗봇 Flow를 변경해 보도록 하겠습니다.
+이 설문 앱을 피자 주문이 완료된 후에 **만족도 평가**를 위해서 호출하는 형태로 챗봇 Flow를 변경해 보도록 하겠습니다.
 
 Flow Edit 화면으로 들어가서 다음 부분을 수정, 추가해 줍니다.
 
@@ -141,34 +141,43 @@ Flow 수정 후 상단의 **Validate**를 클릭하여 Flow에 오류가 없는�
 ![](/assets/images/chatbot_lecture/instantapp/12_flow.png)
 
 # Test
-Flow가 수정되었으면 **Skill Tester**에서 테스트를 수행해 봅니다.
+Flow가 수정이 완료 되었으면 **Skill Tester**에서 테스트를 수행해 봅니다.
 피자 주문 프로세스를 완료한 후 설문 진행 여부를 묻는 Flow가 나오게 구성되어 있습니다.
 **설문으로 바로가기** 링크를 클릭하면 Instant App으로 이동합니다.
 
 ![](/assets/images/chatbot_lecture/instantapp/13_callsurvey.png)
 
+브라우저의 다른 탭에서 설문 Instant App이 열립니다. Star Rating의 별점 수에 따라 하단에 보이는 Form이 달라집니다.  
+별점을 바꿔가며 Form의 내용을 살펴봅니다.
+
+![](/assets/images/chatbot_lecture/instantapp/14_survey1.png)
+
+![](/assets/images/chatbot_lecture/instantapp/14_survey2.png)
 
 Instant App에서 설문을 완료하고 챗봇으로 돌아옵니다.
 
-브라우저 기반의 챗봇에서 Instant App을 호출하면 별도의 Tab으로 이동하여 Instant App이 실행된 후 다시 챗봇이 수행 중인 Tab으로 돌아와야 합니다.
-모바일 앱에서 실행 될 때에는 어떻게 동작하는 모바일 앱에서도 확인 해 보세요.
+![](/assets/images/chatbot_lecture/instantapp/14_survey3.png)
 
-![](/assets/images/chatbot_lecture/instantapp/20_mobile2.jpeg)
+설문이 종료되었음을 Instant App으로부터 전달받고 다시 대화가 진행될 수 있는 상태가 됩니다.
+
+![](/assets/images/chatbot_lecture/instantapp/14_survey4.png)
+
+## 모바일 앱에서 보기
+
+브라우저 기반의 챗봇에서 Instant App을 호출하면 별도의 Tab으로 이동하여 Instant App이 실행된 후 다시 챗봇이 수행 중인 Tab으로 돌아와야 합니다.
+모바일 앱에서 실행 될 때에는 어떻게 동작하는지 모바일 앱에서도 확인 해 보세요.
 
 설문 완료 후 앱의 돌아가기를 클릭하면 모바일 챗봇으로 돌아갑니다.
 ![](/assets/images/chatbot_lecture/instantapp/20_mobile1.jpeg)
 
-**Script** 입력 부분에 다음 3줄을 입력합니다. 
-```
-cd src
-npm install
-npm pack
-```
-
-이상으로 Custom Component 구현 과정을 완료하였습니다.
+이상으로 Instant App 구현 과정을 완료하였습니다.
 
 # Chatbot-Workshop Lab 
-* Lab 개요 : [챗봇 Hands-on Lab (1) - Lab 개요](/chatbot/2019/챗봇-Hands-on-Lab_1/)
-* Lab 100 : [챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기](/chatbot/2019/챗봇-Hands-on-Lab_2/)
-* Lab 200 : [챗봇 Hands-on Lab (3) - 피자봇 만들기 ](/chatbot/2019/챗봇-Hands-on-Lab_3/)
-* Lab 300 : [챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기](/chatbot/2019/챗봇-Hands-on-Lab_4/)
+* [챗봇 Hands-on Lab (1) - Lab 개요](/chatbot/2019/챗봇-Hands-on-Lab_1/)
+* [챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기](/chatbot/2019/챗봇-Hands-on-Lab_2/)
+* [챗봇 Hands-on Lab (3) - 피자봇 만들기 ](/chatbot/2019/챗봇-Hands-on-Lab_3/)
+* [챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기](/chatbot/2019/챗봇-Hands-on-Lab_4/)
+* [챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기](/chatbot/2019/챗봇-Hands-on-Lab_5/)
+* [챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기](/chatbot/2019/챗봇-Hands-on-Lab_6/)
+* [챗봇 Hands-on Lab (7) - Custom Component 구현하기](/chatbot/2019/챗봇-Hands-on-Lab_7/)
+* [챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계](/chatbot/2019/챗봇-Hands-on-Lab_8/)

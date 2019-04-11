@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-10T17:50:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (9) - Instant App 구현 및 챗봇 연계" /><published>2019-04-10T00:00:00+09:00</published><updated>2019-04-10T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_8</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/">&lt;p&gt;챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 &lt;strong&gt;Instant App&lt;/strong&gt;이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-11T10:05:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계" /><published>2019-04-10T00:00:00+09:00</published><updated>2019-04-10T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_8</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/">&lt;p&gt;챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 &lt;strong&gt;Instant App&lt;/strong&gt;이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.&lt;/p&gt;
 
 &lt;h1 id=&quot;instant-app-생성&quot;&gt;Instant App 생성&lt;/h1&gt;
 
@@ -6,7 +6,7 @@
 
 &lt;p&gt;챗봇의 &lt;strong&gt;Instant App Builder&lt;/strong&gt;에서 새롭게 Instant App을 처음부터 생성할 수 있으나, 이 Lab에서는 기존에 생성된 Instant App을 Import 받아서 항목을 수정하는 형태로 진행할 예정입니다.&lt;/p&gt;
 
-&lt;p&gt;다음에서 설문을 수행하는 Instant App인 Survey 앱 (survey.json) 파일을 다운 받습니다.&lt;/p&gt;
+&lt;p&gt;다음에서 설문을 수행하는 Instant App인 Survey 앱 (&lt;strong&gt;survey.json&lt;/strong&gt;) 파일을 다운 받습니다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/mee-nam-lee/chatbot_lecture/master/labfiles/instantapp/survey.json&quot;&gt;Survey Instant App 다운로드&lt;/a&gt;&lt;/li&gt;
@@ -14,11 +14,11 @@
 
 &lt;h2 id=&quot;instant-app-builder에서-import-하기&quot;&gt;Instant App Builder에서 Import 하기&lt;/h2&gt;
 
-&lt;p&gt;챗봇 콘솔로 이동합니다. 상단 메뉴의 &lt;strong&gt;Instant Apps&lt;/strong&gt;를 클릭하여 Instant App 빌더 화명으로 이동합니다.&lt;/p&gt;
+&lt;p&gt;챗봇 콘솔로 이동합니다. 상단 메뉴의 &lt;strong&gt;Instant Apps&lt;/strong&gt;를 클릭하여 Instant App Builder 화면으로 이동합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/01_instant.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Add Instant App&lt;/strong&gt;을 클릭하여 다운받아둔 survey.json을 import 합니다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Add Instant App&lt;/strong&gt;을 클릭하여 다운받아 둔 survey.json을 import 합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/02_import.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -66,9 +66,9 @@ Content의 &lt;strong&gt;Social Buttons&lt;/strong&gt;를 클릭해서 추가합
 &lt;h1 id=&quot;챗봇에-연결하기&quot;&gt;챗봇에 연결하기&lt;/h1&gt;
 
 &lt;p&gt;이제 Survey Instant App을 챗봇에서 호출해 보도록 하겠습니다.
-Flow에서 Intant App을 호출아는 Built-in Component를 이용해야 합니다.&lt;/p&gt;
+Flow에서 Instant App을 호출하는 Built-in Component를 이용해야 합니다.&lt;/p&gt;
 
-&lt;p&gt;이 설문 앱을 피자 주문이 완료된 후에 만족도 평가를 위해서 호출하는 형태로 챗봇 Flow를 변경해 보도록 하겠습니다.&lt;/p&gt;
+&lt;p&gt;이 설문 앱을 피자 주문이 완료된 후에 &lt;strong&gt;만족도 평가&lt;/strong&gt;를 위해서 호출하는 형태로 챗봇 Flow를 변경해 보도록 하겠습니다.&lt;/p&gt;
 
 &lt;p&gt;Flow Edit 화면으로 들어가서 다음 부분을 수정, 추가해 줍니다.&lt;/p&gt;
 
@@ -134,36 +134,47 @@ Flow에서 Intant App을 호출아는 Built-in Component를 이용해야 합니�
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/12_flow.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;test&quot;&gt;Test&lt;/h1&gt;
-&lt;p&gt;Flow가 수정되었으면 &lt;strong&gt;Skill Tester&lt;/strong&gt;에서 테스트를 수행해 봅니다.
+&lt;p&gt;Flow가 수정이 완료 되었으면 &lt;strong&gt;Skill Tester&lt;/strong&gt;에서 테스트를 수행해 봅니다.
 피자 주문 프로세스를 완료한 후 설문 진행 여부를 묻는 Flow가 나오게 구성되어 있습니다.
 &lt;strong&gt;설문으로 바로가기&lt;/strong&gt; 링크를 클릭하면 Instant App으로 이동합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/13_callsurvey.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;브라우저의 다른 탭에서 설문 Instant App이 열립니다. Star Rating의 별점 수에 따라 하단에 보이는 Form이 달라집니다.&lt;br /&gt;
+별점을 바꿔가며 Form의 내용을 살펴봅니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/14_survey1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/14_survey2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;Instant App에서 설문을 완료하고 챗봇으로 돌아옵니다.&lt;/p&gt;
 
-&lt;p&gt;브라우저 기반의 챗봇에서 Instant App을 호출하면 별도의 Tab으로 이동하여 Instant App이 실행된 후 다시 챗봇이 수행 중인 Tab으로 돌아와야 합니다.
-모바일 앱에서 실행 될 때에는 어떻게 동작하는 모바일 앱에서도 확인 해 보세요.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/14_survey3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/20_mobile2.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;설문이 종료되었음을 Instant App으로부터 전달받고 다시 대화가 진행될 수 있는 상태가 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/14_survey4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;모바일-앱에서-보기&quot;&gt;모바일 앱에서 보기&lt;/h2&gt;
+
+&lt;p&gt;브라우저 기반의 챗봇에서 Instant App을 호출하면 별도의 Tab으로 이동하여 Instant App이 실행된 후 다시 챗봇이 수행 중인 Tab으로 돌아와야 합니다.
+모바일 앱에서 실행 될 때에는 어떻게 동작하는지 모바일 앱에서도 확인 해 보세요.&lt;/p&gt;
 
 &lt;p&gt;설문 완료 후 앱의 돌아가기를 클릭하면 모바일 챗봇으로 돌아갑니다.
 &lt;img src=&quot;/assets/images/chatbot_lecture/instantapp/20_mobile1.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Script&lt;/strong&gt; 입력 부분에 다음 3줄을 입력합니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd src
-npm install
-npm pack
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이상으로 Custom Component 구현 과정을 완료하였습니다.&lt;/p&gt;
+&lt;p&gt;이상으로 Instant App 구현 과정을 완료하였습니다.&lt;/p&gt;
 
 &lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
 &lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_5/&quot;&gt;챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Instant App" /><summary type="html">챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 Instant App이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (7) - Custom Component 구현하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (7) - Custom Component 구현하기" /><published>2019-04-09T00:00:00+09:00</published><updated>2019-04-09T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_7</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/">&lt;p&gt;커스텀 비즈니스 로직을 챗봇에 추가하기 위해서는 Node.js 기반의 챗봇 SDK를 사용하여 Custom 로직을 구현하여야 합니다. 이 Lab에서는 지금까지 만든 챗봇에 Custom Component를 구현하여 연결해 볼 것입니다.&lt;/p&gt;
 
 &lt;h1 id=&quot;prerequisite&quot;&gt;Prerequisite&lt;/h1&gt;
@@ -471,10 +482,14 @@ Package File 부분에 이전 단계에서 다운로드 받아둔 Archive를 업
 
 &lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
 &lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_5/&quot;&gt;챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Custom Component" /><summary type="html">커스텀 비즈니스 로직을 챗봇에 추가하기 위해서는 Node.js 기반의 챗봇 SDK를 사용하여 Custom 로직을 구현하여야 합니다. 이 Lab에서는 지금까지 만든 챗봇에 Custom Component를 구현하여 연결해 볼 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_6/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기" /><published>2019-04-03T00:00:00+09:00</published><updated>2019-04-03T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_6</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_6/">&lt;p&gt;이 Lab에서는 지금까지 만든 챗봇에 분석 기능을 추가해 볼 것 입니다.&lt;/p&gt;
 
 &lt;h1 id=&quot;insights-분석-기능-활성화&quot;&gt;Insights (분석 기능 활성화)&lt;/h1&gt;
@@ -541,10 +556,14 @@ Intent List에 구현된 Intent들이 다 나오지 않는다면, &lt;strong&gt;
 
 &lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
 &lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_5/&quot;&gt;챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Insight" /><summary type="html">이 Lab에서는 지금까지 만든 챗봇에 분석 기능을 추가해 볼 것 입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기" /><published>2019-04-01T00:00:00+09:00</published><updated>2019-04-01T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_5</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/">&lt;p&gt;이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.&lt;/p&gt;
 
 &lt;h1 id=&quot;모바일android-채널-생성&quot;&gt;모바일(Android) 채널 생성&lt;/h1&gt;
@@ -656,10 +675,14 @@ Intent List에 구현된 Intent들이 다 나오지 않는다면, &lt;strong&gt;
 
 &lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
 &lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_5/&quot;&gt;챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Channel" /><category term="mobile" /><summary type="html">이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.</summary></entry><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-regional/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)" /><published>2019-03-25T00:00:00+09:00</published><updated>2019-03-25T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-regional</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-regional/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기&lt;/a&gt;에서는 Availablity Domain Specific Subnet을 이용하여 3 Tier 아키텍처를 구축하는 내용을 설명하였는데, Oracle IaaS에서 &lt;strong&gt;Regional Subnet&lt;/strong&gt;이 지원이 추가되었기 때문에, 이전에 설명되었던 내용이 Regional Subnet 기반으로 구축되려면 어떤 부분이 변경되어야 하는지를 이 문서에서 설명하려고 합니다. 
 이전 문서에서 설명하였던 과정은 이 문서에서는 모두 생략하고 변경되는 부분만 다루로록 하겠습니다.&lt;/p&gt;
 
@@ -2350,8 +2373,12 @@ Load Balancer는 &lt;strong&gt;Sticky Session&lt;/strong&gt;을 지원하도록 
 
 &lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
 &lt;ul&gt;
-  &lt;li&gt;Lab 개요 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 100 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 200 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Lab 300 : &lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_5/&quot;&gt;챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><summary type="html">이 Lab에서는 피자봇을 직접 만들어 볼 것입니다.</summary></entry></feed>
