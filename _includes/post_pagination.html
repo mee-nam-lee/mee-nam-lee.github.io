@@ -11,7 +11,7 @@
     {%- if page.next -%}
       <a href="{{ page.next.url | relative_url }}" class="pagination-highlight" title="{{ page.next.title | markdownify | strip_html }}"> Next</a>
     {%- else -%}
-      <a href="#">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      <a href="#">{{ site.data.ui-text[site.locale].pagination_next | default: "&nbsp&nbsp Next &nbsp&nbsp" }}</a>
     {%- endif -%}
   </nav>
 </div>
