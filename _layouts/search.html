@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+    {%- unless page.header.overlay_color or page.header.overlay_image -%}
+      <h1 id="page-title" class="page__title">{{ page.title }}</h1>
+    {%- endunless -%}
+
+    <script>
+      (function() {
+        var cx = '009533749814764318780:0pdv-elv4eo';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+    <gcse:search></gcse:search>
+
+    {{ content }}
