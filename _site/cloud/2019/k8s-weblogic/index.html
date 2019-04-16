@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>WebLogic Operator를 사용하여 Kubernetes에 WebLogic Domain 올리기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="WebLogic Operator를 사용하여 Kubernetes에 WebLogic Domain 올리기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 WebLogic Operator를 지원하고 있다." />
+<meta property="og:description" content="Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 WebLogic Operator를 지원하고 있다." />
+<link rel="canonical" href="http://localhost:4000/cloud/2019/k8s-weblogic/" />
+<meta property="og:url" content="http://localhost:4000/cloud/2019/k8s-weblogic/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-15T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 WebLogic Operator를 지원하고 있다.","@type":"BlogPosting","url":"http://localhost:4000/cloud/2019/k8s-weblogic/","headline":"WebLogic Operator를 사용하여 Kubernetes에 WebLogic Domain 올리기","dateModified":"2019-04-15T00:00:00+09:00","datePublished":"2019-04-15T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cloud/2019/k8s-weblogic/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- begin _includes/seo.html --><title>WebLogic Operator를 사용하여 Kubernetes에 WebLogic Domain 올리기 - MN Lee’s IT Blog</title>
+<meta name="description" content="Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 WebLogic Operator를 지원하고 있다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MN Lee's IT Blog">
+<meta property="og:title" content="WebLogic Operator를 사용하여 Kubernetes에 WebLogic Domain 올리기">
+<meta property="og:url" content="http://localhost:4000/cloud/2019/k8s-weblogic/">
+
+
+  <meta property="og:description" content="Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 WebLogic Operator를 지원하고 있다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-04-15T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/cloud/2019/k8s-weblogic/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">카테고리</a><a class="page-link" href="/search/">검색</a></div>
+
+        
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">WebLogic Operator를 사용하여 Kubernetes에 WebLogic Domain 올리기</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-15T00:00:00+09:00" itemprop="datePublished">Apr 15, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 <strong>WebLogic Operator</strong>를 지원하고 있다.</p>
+
+<p>이 문서에서는 Managed Kubernetes Cloud 서비스인 <strong>Oracle Kubernetes Engine(OKE)</strong>와 <strong>WebLogic Operator</strong>를 사용하여 웹로직 도메인을 Provision하는 방법에 대해서 다룰 것이다.</p>
+
+<h1 id="prerequistes">Prerequistes</h1>
+
+<ul>
+  <li>
+    <p>Oracle Kubernetes Engine(OKE) : 여기에서는 OKE를 Provision하는 방법에 대해서 다루지 않을 것이다. OKE 프로비전 과정은 다음 문서를 참고한다.</p>
+
+    <ul>
+      <li><a href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/oci/oke-full/index.html">Creating a Cluster with Oracle Cloud Infrastructure Container Engine for Kubernetes</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="oke-접속-확인하기">OKE 접속 확인하기</h1>
+<p>위 과정을 따라 OKE를 생성하고 Kubeconfig까지 설정하였다고 하면 <strong>kubectl</strong>을 통해 worker node의 상태를 확인해 본다.</p>
+
+<p><img src="/assets/images/kubeweblogic/01_getnode.png" alt="" /></p>
+
+<p><strong>OKE</strong>를 통해 Kubernetes Cluster를 기본 설정으로 구성하면 Private Subnet 안에 Worker Node가 구성되므로 Node IP가 Private IP로 할당된다.</p>
+
+<h1 id="weblogic-operator-설치">WebLogic Operator 설치</h1>
+<p>WebLogic Operator는 <strong>helm</strong>을 통해 설치 된다.
+먼저 WebLogic Operator를 위한 Repository를 추가해 준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm repo add weblogic-operator https://oracle.github.io/weblogic-kubernetes-operator/charts
+</code></pre></div></div>
+
+<p>잘 추가되었는지 확인해 본다.</p>
+
+<p><img src="/assets/images/kubeweblogic/02_helm_wlsoperator.png" alt="" /></p>
+
+<p>helm을 통해 weblogic-operator를 설치한다 default 설정으로 설치하면 <strong>defaut</strong> namespace에 설치된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm install weblogic-operator/weblogic-operator --name weblogic-operator --wait
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic/02_install_wlsoperator.png" alt="" /></p>
+
+<h1 id="weblogic-image-준비">WebLogic Image 준비</h1>
+
+<p>WebLogic Domain을 생성하기 위해서는 WebLogic Server Image가 필요하다. Dockerhub에서 Oracle Certified WebLogic Server Image를 다운 받을 수 있다. 이 이미지를 사용하려면 License Agreement를 Accept 해야 한다. 이 과정을 거치면 이미지를 다운 받는 방법이 보여진다.</p>
+
+<ul>
+  <li><a href="https://hub.docker.com/u/mnlee30/content/sub-b3c05bc6-7dbf-4e96-ad1c-e8d74a626643">Oracle WebLogic Server Docker Image</a></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; docker login 
+
+&gt; docker pull store/oracle/weblogic:12.2.1.3
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic/06_docker_pull_weblogic.png" alt="" /></p>
+
+<h1 id="weblogic-domain-준비">WebLogic Domain 준비</h1>
+
+<p>WebLogic Operator를 사용하여 원하는 형태의 WebLogic Domain을 만들어 프로비전 하려면 관련 Kubernetes Configuration File(YAML)이 필요하다.</p>
+
+<p>WebLogic Operator 사이트에서 몇가지 샘플을 제공하고 있다.
+다음을 통해 소스를 받아온다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/oracle/weblogic-kubernetes-operator.git
+</code></pre></div></div>
+
+<p><strong>weblogic-kubernetes-operator/kubernetes/samples/scripts</strong>에 필요한 Script들이 존재하고 이 스크립트를 통해서 Kubernates configuration 파일을 생성시킬 것이다.</p>
+
+<p>먼저 도메인 구성에 필요한 <strong>credential</strong>을 생성한다. 제공된 <strong>create-weblogic-credentials.sh</strong>을 통해 생성하면 된다. 사용법은 다음과 같다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./create-weblogic-credentials.sh -h
+usage: ./create-weblogic-credentials.sh -u username -p password [-d domainUID] [-n namespace] [-s secretName] [-h]
+  -u username, must be specified.
+  -p password, must be specified.
+  -d domainUID, optional. The default value is domain1. If specified, the secret will be labeled with the domainUID unless the given value is an empty string.
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cd scripts/create-weblogic-domain-credentials
+&gt; ./create-weblogic-credentials.sh \
+   -u weblogic -p welcome1 \
+   -d domain1 -n default  \
+   -s domain1-weblogic-credentials
+</code></pre></div></div>
+<p>다음과 같이 생성 된다.</p>
+
+<p><img src="/assets/images/kubeweblogic/05_credential_created.png" alt="" /></p>
+
+<p><strong>kubectl</strong>로 생성된 secret 정보를 확인해 볼 수 있다.</p>
+
+<p><img src="/assets/images/kubeweblogic/07_desc_secret.png" alt="" /></p>
+
+<p>이제 Domain 생성에 필요한 구성 파일들을 생성할 단계가 되었다.</p>
+
+<p>여러가지 샘플들 중에서 구성이 가장 간단한 <strong>Domain in a Docker image</strong> Model를 먼저 사용해 볼 것이다.
+해당 디렉토리로 이동하여 <strong>create-domain.sh</strong>를 수행한다. 사용법은 다음과 같다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cd weblogic-kubernetes-operator/kubernetes/samples/scripts/create-weblogic-domain/domain-home-in-image
+&gt; ./create-domain.sh \
+  -u username \
+  -p password \
+  -i create-domain-inputs.yaml \
+  -o /path/to/output-directory
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic/08_createdomain.png" alt="" /></p>
+
+<p>진행 사항이 계속 보이고 마지막에 생성된 산출물들의 위치가 표시된다.</p>
+
+<p><img src="/assets/images/kubeweblogic/08_createdomain2.png" alt="" /></p>
+
+<p>해당 디렉토리로 이동하여 생성된 산출물의 내용을 한번 확인해 보자</p>
+
+<p>두개의 파일과 Docker Image가 생성된 것을 볼 수 있다.</p>
+
+<p><img src="/assets/images/kubeweblogic/08_createdomain3.png" alt="" /></p>
+
+<h3 id="domainyaml-내용">domain.yaml 내용</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Copyright 2017, 2019, Oracle Corporation and/or its affiliates. All rights reserved.</span>
+<span class="c1"># Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.</span>
+<span class="c1">#</span>
+<span class="c1"># This is an example of how to define a Domain resource.</span>
+<span class="c1">#</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">weblogic.oracle/v3"</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Domain</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">domain1</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="s">weblogic.resourceVersion</span><span class="pi">:</span> <span class="s">domain-v2</span>
+    <span class="s">weblogic.domainUID</span><span class="pi">:</span> <span class="s">domain1</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="c1"># The WebLogic Domain Home</span>
+  <span class="na">domainHome</span><span class="pi">:</span> <span class="s">/u01/oracle/user_projects/domains/domain1</span>
+  <span class="c1"># If the domain home is in the image</span>
+  <span class="na">domainHomeInImage</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># The WebLogic Server Docker image that the Operator uses to start the domain</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s2">"</span><span class="s">domain-home-in-image:12.2.1.3"</span>
+  <span class="c1"># imagePullPolicy defaults to "Always" if image version is :latest</span>
+  <span class="na">imagePullPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">IfNotPresent"</span>
+  <span class="c1"># Identify which Secret contains the credentials for pulling an image</span>
+  <span class="c1">#imagePullSecrets:</span>
+  <span class="c1">#- name: </span>
+  <span class="c1"># Identify which Secret contains the WebLogic Admin credentials (note that there is an example of</span>
+  <span class="c1"># how to create that Secret at the end of this file)</span>
+  <span class="na">webLogicCredentialsSecret</span><span class="pi">:</span> 
+    <span class="na">name</span><span class="pi">:</span> <span class="s">domain1-weblogic-credentials</span>
+  <span class="c1"># Whether to include the server out file into the pod's stdout, default is true</span>
+  <span class="na">includeServerOutInPodLog</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># Whether to enable log home</span>
+  <span class="c1"># logHomeEnabled: false</span>
+  <span class="c1"># The in-pod location for domain log, server logs, server out, and Node Manager log files</span>
+  <span class="c1"># logHome: /shared/logs/domain1</span>
+  <span class="c1"># serverStartPolicy legal values are "NEVER", "IF_NEEDED", or "ADMIN_ONLY"</span>
+  <span class="c1"># This determines which WebLogic Servers the Operator will start up when it discovers this Domain</span>
+  <span class="c1"># - "NEVER" will not start any server in the domain</span>
+  <span class="c1"># - "ADMIN_ONLY" will start up only the administration server (no managed servers will be started)</span>
+  <span class="c1"># - "IF_NEEDED" will start all non-clustered servers, including the administration server and clustered servers up to the replica count</span>
+  <span class="na">serverStartPolicy</span><span class="pi">:</span> <span class="s2">"</span><span class="s">IF_NEEDED"</span>
+  <span class="na">serverPod</span><span class="pi">:</span>
+    <span class="c1"># an (optional) list of environment variable to be set on the servers</span>
+    <span class="na">env</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">JAVA_OPTIONS</span>
+      <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">-Dweblogic.StdoutDebugEnabled=false"</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">USER_MEM_ARGS</span>
+      <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">-Djava.security.egd=file:/dev/./urandom</span><span class="nv"> </span><span class="s">-Xms64m</span><span class="nv"> </span><span class="s">-Xmx256m</span><span class="nv"> </span><span class="s">"</span>
+    <span class="c1"># volumes:</span>
+    <span class="c1"># - name: weblogic-domain-storage-volume</span>
+    <span class="c1">#   persistentVolumeClaim:</span>
+    <span class="c1">#     claimName: domain1-weblogic-sample-pvc</span>
+    <span class="c1"># volumeMounts:</span>
+    <span class="c1"># - mountPath: /shared</span>
+    <span class="c1">#   name: weblogic-domain-storage-volume</span>
+  <span class="c1"># adminServer is used to configure the desired behavior for starting the administration server.</span>
+  <span class="na">adminServer</span><span class="pi">:</span>
+    <span class="c1"># serverStartState legal values are "RUNNING" or "ADMIN"</span>
+    <span class="c1"># "RUNNING" means the listed server will be started up to "RUNNING" mode</span>
+    <span class="c1"># "ADMIN" means the listed server will be start up to "ADMIN" mode</span>
+    <span class="na">serverStartState</span><span class="pi">:</span> <span class="s2">"</span><span class="s">RUNNING"</span>
+    <span class="c1"># adminService:</span>
+    <span class="c1">#   channels:</span>
+    <span class="c1"># The Admin Server's NodePort</span>
+    <span class="c1">#    - channelName: default</span>
+    <span class="c1">#      nodePort: 30701</span>
+    <span class="c1"># Uncomment to export the T3Channel as a service</span>
+    <span class="c1">#    - channelName: T3Channel</span>
+  <span class="c1"># clusters is used to configure the desired behavior for starting member servers of a cluster.  </span>
+  <span class="c1"># If you use this entry, then the rules will be applied to ALL servers that are members of the named clusters.</span>
+  <span class="na">clusters</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">clusterName</span><span class="pi">:</span> <span class="s">cluster-1</span>
+    <span class="na">serverStartState</span><span class="pi">:</span> <span class="s2">"</span><span class="s">RUNNING"</span>
+    <span class="na">replicas</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="c1"># The number of managed servers to start for unlisted clusters</span>
+  <span class="c1"># replicas: 1</span>
+</code></pre></div></div>
+<p>위 파일에서 <strong>image</strong> 부분을 수정해 줄 것이다. 현재 Domain Image는 Local Repository에 존재하는데 Cloud의 OKE에서는 내 Local Repository에 접근할 수 없기 때문에, 이 이미지를 Docker Hub에 올려준 후 docker hub의 이미지를 참조하도록 할 것이다.</p>
+
+<p>먼저 domain.yaml 파일을 수정해 준다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Before</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s2">"</span><span class="s">domain-home-in-image:12.2.1.3"</span>
+
+<span class="c1"># After</span>
+<span class="c1"># image: "[dockerhub repository name]/domain-home-in-image:12.2.1.3"</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mnlee30/domain-home-in-image:12.2.1.3"</span>
+
+</code></pre></div></div>
+<p>Domain Image를 Dockerhub에 push 하기 위해 tag를 변경해 준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker tag domain-home-in-image:12.2.1.3 mnlee30/domain-home-in-image:12.2.1.3
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic/09_docker_tag.png" alt="" /></p>
+
+<p>image를 docker hub에 push 한다</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker push mnlee30/domain-home-in-image:12.2.1.3
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic/10_docker_push.png" alt="" /></p>
+
+<p>이제 domain.yaml을 배포할 준비가 모두 완료되었다.
+다음을 수행한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply -f domain.yaml
+</code></pre></div></div>
+
+<p>kubectl 명령어를 통해 domain이 잘 생성되고 있음을 확인 할 수 있다.</p>
+
+<p><img src="/assets/images/kubeweblogic/11_kubectl_apply.png" alt="" /></p>
+
+<p>Admin Server 1개와 Managed Server 2개로 구성된 도메인이 생성되었음을 확인할 수 있다.</p>
+
+<p><img src="/assets/images/kubeweblogic/12_get_pods.png" alt="" /></p>
+
+<p>service 정보를 확인해 보자. 앞서서 OKE의 Worker Node가 Private Subnet에 생성되었다고 설명하였다.
+따라서 WebLogic Instance들을 Node IP로는 접근할 수가 없다.</p>
+
+<p><img src="/assets/images/kubeweblogic/13_get_services.png" alt="" /></p>
+
+<p>이 서비스들을 Load Balancer를 통해 서비스 될 수 있도록 <strong>LoadBalancer</strong> Type을 사용하는 서비스를 추가해 줄 것이다.
+Admin Server(domain1-admin-server)의 콘솔에 접근하기 위한 서비스와 Cluster(domain1-cluster-cluster-1)에 접근하는 서비스가 필요하다.</p>
+
+<h3 id="admin-server용-서비스">Admin Server용 서비스</h3>
+
+<p>service-admin-lb.yaml 파일을 생성해 준다</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">domain1-admin-lb-ext</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">domain1-admin</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-shape</span><span class="pi">:</span> <span class="s2">"</span><span class="s">100Mbps"</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-backend-protocol</span><span class="pi">:</span> <span class="s2">"</span><span class="s">HTTP"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+    <span class="na">port</span><span class="pi">:</span> <span class="s">7001</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="s">30012</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="s">weblogic.serverName</span><span class="pi">:</span> <span class="s">admin-server</span>
+    <span class="s">weblogic.domainUID</span><span class="pi">:</span> <span class="s">domain1</span>
+</code></pre></div></div>
+
+<p>생성된 파일을 적용한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply -f service-admin-lb.yaml
+</code></pre></div></div>
+<p>서비스가 생성되고 EXTERNAL-IP가 할당된 것을 볼 수 있다.</p>
+
+<p><img src="/assets/images/kubeweblogic/14_admin_service.png" alt="" /></p>
+
+<p>이 IP를 이용하여 WebLogic Console에 접근해 본다.</p>
+
+<p><img src="/assets/images/kubeweblogic/15_weblogic_console.png" alt="" /></p>
+
+<p>다음과 같이 WebLogic Managed Sever들이 Running 중 임을 볼 수 있다.</p>
+
+<p><img src="/assets/images/kubeweblogic/15_weblogic_console2.png" alt="" /></p>
+
+<p>이 도메인에는 어떤 애플리케이션도 배포되어 있지 않기 때문에 Sample Application을 WebLogic Console을 통해 배포 한다.</p>
+
+<p>배포 과정은 여기서는 생략 한다. 배포된 후의 모습은 다음과 같다.</p>
+
+<p><img src="/assets/images/kubeweblogic/16_application.png" alt="" /></p>
+
+<h3 id="cluster용-서비스">Cluster용 서비스</h3>
+
+<p>위에서 배포한 애플리케이션을 테스트 해보기 위해서는 weblogic cluster 서비스에 접근해야 한다.
+이를 위해 LoadBalancer Type의 서비스를 하나 더 추가해 준다.</p>
+
+<p>service-cluster-lb.yaml 파일을 생성해 준다</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">domain1-cluster1-lb-ext</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">domain1-cluster1</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-shape</span><span class="pi">:</span> <span class="s2">"</span><span class="s">100Mbps"</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-backend-protocol</span><span class="pi">:</span> <span class="s2">"</span><span class="s">HTTP"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+    <span class="na">port</span><span class="pi">:</span> <span class="s">80</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="s">8001</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="s">weblogic.clusterName</span><span class="pi">:</span> <span class="s">cluster-1</span>
+    <span class="s">weblogic.domainUID</span><span class="pi">:</span> <span class="s">domain1</span>
+</code></pre></div></div>
+<p>생성된 파일을 적용한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply -f service-cluster-lb.yaml
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic/17_cluster_service.png" alt="" /></p>
+
+<p>서비스가 생성되고 EXTERNAL-IP가 할당된 것을 볼 수 있다.</p>
+
+<p>위 IP를 통해서 애플리케이션에 접속해 본다. 
+샘플 애플리케이션을 통해 WebLogic Managed Server 명과 구동되고 있는 Pod의 Hostname을 볼수 있다.</p>
+
+<p>제공된 Session Insert / Update 기능을 통해 세션도 추가해 본다.</p>
+
+<p><img src="/assets/images/kubeweblogic/18_app_test1.png" alt="" /></p>
+
+<p>브라우저를 새로 열어 다른 Managed Server에 연결되게 해본다.
+라운드 로빈에 의해서 다른 서버에서 요청이 처리되는 것을 볼 수 있다.</p>
+
+<p><img src="/assets/images/kubeweblogic/18_app_test2.png" alt="" /></p>
+
+<p>Saling Up / Down은 다음 글에서 다룰 예정이다.</p>
+
+<h1 id="참고-자료">참고 자료</h1>
+
+<ul>
+  <li><a href="https://oracle.github.io/weblogic-kubernetes-operator/">Oracle WebLogic Server Kubernetes Operator</a></li>
+</ul>
+
+
+
+
+  </div><div>
+  <p>
+    <!--img src="/assets/images/tag.png"/--><a href="#" class="keywords" rel="tag">Kubernetes</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Oracle Kubernetes Engine</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">WebLogic</a></p>
+</div><div>
+  <p>
+    <!--img src="/assets/images/share.png"/-->
+  
+    <a href="https://twitter.com/intent/tweet?text=WebLogic+Operator%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+Kubernetes%EC%97%90+WebLogic+Domain+%EC%98%AC%EB%A6%AC%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_8/" title="챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">&nbsp&nbsp Next &nbsp&nbsp</a></nav>
+</div>
+</div><a class="u-url" href="/cloud/2019/k8s-weblogic/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li><li><a href="/feed.xml"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#rss"></use></svg> <span>Feed</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>
