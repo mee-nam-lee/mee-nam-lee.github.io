@@ -274,8 +274,8 @@ spec:
   type: LoadBalancer
   ports:
   - name: http
-    port: 7001
-    targetPort: 30012
+    port: 6001
+    targetPort: 7001
   selector:
     weblogic.serverName: admin-server
     weblogic.domainUID: domain1
