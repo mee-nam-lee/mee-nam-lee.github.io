@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  Kubernetes에 WebLogic Domain 올리기 - Persistent Volume 사용
+title:  Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Persistent Volume 사용
 categories: cloud
-tags: [WebLogic, Kubernetes, Oracle Kubernetes Engine]
+tags: [WebLogic, Kubernetes, Oracle Kubernetes Engine, Persistent Volume]
 ---
 
 이 전 예제에서는 Docker Image 내에 WebLogic Binary와 Domain 구성 정보가 모두 들어있는 Sample을 이용하였다. 
