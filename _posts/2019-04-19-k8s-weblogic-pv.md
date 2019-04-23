@@ -11,6 +11,10 @@ tags: [WebLogic, Kubernetes, Oracle Kubernetes Engine, Persistent Volume]
 이전 글에서 사용한 **WebLogic Operator**의 Sample에 Persistent Volume을 사용하는 예제도 함께 들어있다. 
 이 예제를 이용하여 Persistent Volume을 **Oracle Cloud Infrastructure**의 **File System**을 사용하도록 구성하는 방법으로 설명할 것이다.
 
+# Architecture
+
+![](/assets/images/kubeweblogic2/arch2.png)
+
 # Prerequistes 
 
 - Oracle Kubernetes Engine(OKE) 

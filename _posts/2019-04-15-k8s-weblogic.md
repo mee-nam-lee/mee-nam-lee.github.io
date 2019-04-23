@@ -9,6 +9,10 @@ Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain�
 
 이 문서에서는 Managed Kubernetes Cloud 서비스인 **Oracle Kubernetes Engine(OKE)**와 **WebLogic Operator**를 사용하여 웹로직 도메인을 Provision하는 방법에 대해서 다룰 것이다.
 
+# Architecture
+
+![](/assets/images/kubeweblogic/arch.png)
+
 # Prerequistes 
 
 - Oracle Kubernetes Engine(OKE) : 여기에서는 OKE를 Provision하는 방법에 대해서 다루지 않을 것이다. OKE 프로비전 과정은 다음 문서를 참고한다.
