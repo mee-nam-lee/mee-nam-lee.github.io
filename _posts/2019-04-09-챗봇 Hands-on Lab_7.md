@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  챗봇 Hands-on Lab (7) - Custom Component 구현하기
-categories: chatbot
+categories: Chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab,Custom Component]
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD에 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)
-categories: cloud
+categories: Cloud
 tags: [Oracle Cloud, Virtual Cloud Network,IaaS, 3 Tier Architecture, HA, Java Cloud Service] 
 ---
 

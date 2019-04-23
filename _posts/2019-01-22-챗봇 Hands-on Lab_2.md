@@ -1,8 +1,7 @@
 ---
 layout: post
 title:  챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기
-date:   2019-01-22 17:50:00
-categories: chatbot
+categories: Chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab]
 ---
 

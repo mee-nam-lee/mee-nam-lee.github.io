@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계
-categories: chatbot
+categories: Chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab,Instant App]
 ---
 

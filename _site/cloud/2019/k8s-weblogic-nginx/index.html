@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다." />
+<meta property="og:description" content="이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다." />
+<link rel="canonical" href="http://localhost:4000/cloud/2019/k8s-weblogic-nginx/" />
+<meta property="og:url" content="http://localhost:4000/cloud/2019/k8s-weblogic-nginx/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-23T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다.","@type":"BlogPosting","url":"http://localhost:4000/cloud/2019/k8s-weblogic-nginx/","headline":"Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가","dateModified":"2019-04-23T00:00:00+09:00","datePublished":"2019-04-23T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cloud/2019/k8s-weblogic-nginx/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- begin _includes/seo.html --><title>Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가 - MN Lee’s IT Blog</title>
+<meta name="description" content="이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MN Lee's IT Blog">
+<meta property="og:title" content="Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가">
+<meta property="og:url" content="http://localhost:4000/cloud/2019/k8s-weblogic-nginx/">
+
+
+  <meta property="og:description" content="이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-04-23T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/cloud/2019/k8s-weblogic-nginx/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">카테고리</a><a class="page-link" href="/search/">검색</a></div>
+
+        
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-23T00:00:00+09:00" itemprop="datePublished">Apr 23, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다.</p>
+
+<h1 id="architecture">Architecture</h1>
+
+<p><img src="/assets/images/kubeweblogic3/00_arch3.png" alt="" /></p>
+
+<h1 id="prerequistes">Prerequistes</h1>
+
+<ul>
+  <li>Oracle Kubernetes Engine(OKE)</li>
+  <li>Oracle File System</li>
+  <li>Nginx</li>
+</ul>
+
+<h1 id="nginx-deployment-구성하기">Nginx Deployment 구성하기</h1>
+
+<p>이전의 WebLogic Domain 환경이 그대로 남아있는 상황에서 <strong>Nginx</strong> 구성만 추가해 볼 것이다.
+Nginx를 통해 WebLogic Cluster로 요청이 넘어갈 수 있도록 WebLogic Server와 연결하는 구성이 필요하다.
+Nginx와 WebLogic Server 간의 연결 방법에 대해서는 Nginx 문서에 잘 설명되어 있다.</p>
+
+<ul>
+  <li><a href="https://docs.nginx.com/nginx/deployment-guides/oracle-weblogic-server-load-balancing-nginx-plus/">Load Balancing Oracle WebLogic Server with NGINX Open Source and NGINX Plus</a></li>
+</ul>
+
+<h2 id="weblogic-basicconf">weblogic-basic.conf</h2>
+
+<p>WebLogic Server 연결을 위해 <strong>weblogic-basic.conf</strong> 파일이 필요하다. 파일 내용은 아래를 참고한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxy_cache_path /tmp/NGINX_wl_cache/ keys_zone=backcache:10m;
+
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+upstream weblogic {
+    #ip_hash;
+    hash $remote_addr;
+
+    # WebLogic Cluster Kubernetes Service Name:Port
+    server domain1-cluster-cluster-1:8001;
+}
+
+server {
+    listen 80;
+    server_name  _;
+
+    location / {
+        proxy_cache backcache;
+        proxy_pass http://weblogic;
+
+    }
+}
+</code></pre></div></div>
+
+<h2 id="nginxconf">nginx.conf</h2>
+
+<p><strong>nginx.conf</strong> 내용은 다음과 같다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include conf.d/weblogic-basic.conf;
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+    keepalive_timeout  65;
+    #gzip  on;
+}
+</code></pre></div></div>
+
+<h2 id="configmap-yaml">ConfigMap YAML</h2>
+
+<p>Nginx 배포를 위해서 Deployment 구성 파일을 작성할 것이다. Nginx 이미지는 Docker Hub에서 가져와서 사용할 것이다. 이 Base 이미지의 기본 구성 파일이 아닌 내가 작성한 Custom Configuration을 사용하도록 하기 위햐여 Kubernetes의 <strong>ConfigMap</strong> 기능을 이용할 것이다.</p>
+
+<p>커스텀 <strong>nginx.conf</strong>와 <strong>weblogic-basic.conf</strong>를 ConfigMap으로 만들기 위한 구성 내용이다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-cm</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="s">nginx.conf</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="no">user  nginx;</span>
+    <span class="no">worker_processes  1;</span>
+
+    <span class="no">error_log  /var/log/nginx/error.log warn;</span>
+    <span class="no">pid        /var/run/nginx.pid;</span>
+
+    <span class="no">events {</span>
+        <span class="no">worker_connections  1024;</span>
+    <span class="no">}</span>
+
+    <span class="no">http {</span>
+        <span class="no">include conf.d/weblogic-basic.conf;</span>
+        <span class="no">include       /etc/nginx/mime.types;</span>
+        <span class="no">default_type  application/octet-stream;</span>
+
+        <span class="no">log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span>
+                          <span class="no">'$status $body_bytes_sent "$http_referer" '</span>
+                          <span class="no">'"$http_user_agent" "$http_x_forwarded_for"';</span>
+
+        <span class="no">access_log  /var/log/nginx/access.log  main;</span>
+
+        <span class="no">sendfile        on;</span>
+        <span class="no">#tcp_nopush     on;</span>
+        <span class="no">keepalive_timeout  65;</span>
+        <span class="no">#gzip  on;</span>
+    <span class="no">}</span>
+  <span class="s">weblogic-basic.conf</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="no">proxy_cache_path /tmp/NGINX_wl_cache/ keys_zone=backcache:10m;</span>
+
+    <span class="no">map $http_upgrade $connection_upgrade {</span>
+        <span class="no">default upgrade;</span>
+        <span class="no">''      close;</span>
+    <span class="no">}</span>
+
+    <span class="no">upstream weblogic {</span>
+        <span class="no">hash $remote_addr;</span>
+
+        <span class="no"># WebLogic Cluster Kubernetes Service Name:Port</span>
+        <span class="no">server domain1-cluster-cluster-1:8001;</span>
+    <span class="no">}</span>
+
+    <span class="no">server {</span>
+        <span class="no">listen 80;</span>
+        <span class="no">server_name  _;</span>
+
+        <span class="no">location / {</span>
+            <span class="no">proxy_cache backcache;</span>
+            <span class="no">proxy_pass http://weblogic;</span>
+
+        <span class="no">}</span>
+    <span class="no">}</span>
+</code></pre></div></div>
+
+<h2 id="deployment-yaml">Deployment YAML</h2>
+
+<p>Nginx를 배포하기 위한 구성 파일이다. Container에서 위에서 구성한 <strong>ConfigMap</strong>을 Volume으로 Mount하여 Custom Configuration을 참조하게된다</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-dp</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">nginx</span>
+        <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="s">80</span>
+        <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/nginx/nginx.conf</span> <span class="c1"># mount nginx.conf volume</span>
+          <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-conf</span>
+          <span class="na">subPath</span><span class="pi">:</span> <span class="s">nginx.conf</span>
+        <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/etc/nginx/conf.d</span> <span class="c1"># mount conf.d where weblogic-basic.conf is located</span>
+          <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-confd</span>
+      <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-conf</span>
+        <span class="na">configMap</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-cm</span> <span class="c1"># refer to ConfigMap for `nginx-conf` </span>
+          <span class="na">items</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">nginx.conf</span>
+              <span class="na">path</span><span class="pi">:</span> <span class="s">nginx.conf</span>
+      <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-confd</span>
+        <span class="na">configMap</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">nginx-cm</span> <span class="c1"># refer to ConfigMap for `nginx-confd`</span>
+          <span class="na">items</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">weblogic-basic.conf</span>
+              <span class="na">path</span><span class="pi">:</span> <span class="s">weblogic-basic.conf</span> 
+</code></pre></div></div>
+<h2 id="service-yaml">Service YAML</h2>
+
+<p>Load Balancer를 통해 외부에서 접속하기 위한 서비스를 추가한다.</p>
+
+<blockquote>
+  <p>이전 환경에서 포트 80을 사용하고 있는 서비스 (domain1-cluster1-lb-ext)는 미리 삭제해 둔다.</p>
+</blockquote>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">ngnix-lb-ext</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-shape</span><span class="pi">:</span> <span class="s2">"</span><span class="s">100Mbps"</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-backend-protocol</span><span class="pi">:</span> <span class="s2">"</span><span class="s">HTTP"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+    <span class="na">port</span><span class="pi">:</span> <span class="s">80</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="s">80</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+</code></pre></div></div>
+
+<h2 id="배포하기">배포하기</h2>
+
+<p>위에서 설명한 ConfigMap, Deployment, Service를 하나의 파일로 구성하여 한번에 적용할 것이다.
+<strong>nginx-dp-cm.yaml</strong> 파일을 생성하여 위 3개의 구성 내용을 넣어준다.
+파일이 완료되었으면 kubectl를 통해 적용한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; kubectl apply -f nginx-dp-cm.yaml 
+</code></pre></div></div>
+<p>배포가 완료되면 다음과 같이 보일 것이다.</p>
+
+<p><img src="/assets/images/kubeweblogic3/01_nginx.png" alt="" /></p>
+
+<p>Nginx Service의 External IP를 통해 서비스에 접근해 보자.
+WebLogic Cluster로 요청이 정상적으로 Forward 되어 서비스 되는 것을 볼 수 있을 것이다.</p>
+
+<p><img src="/assets/images/kubeweblogic3/02_weblogic_app.png" alt="" /></p>
+
+<h1 id="persistent-session">Persistent Session</h1>
+
+<p>위 구성으로 테스트해 보면 매 요청 마다 다른 Managed Server가 호출되는 것을 볼 수 있을 것이다. WebLogic Cluster 간에 세션이 공유되기 때문에, 어느 Managed Server로 접속되더라도 세션이 유지되긴 하지만 동일 세션일 경우 같은 Managed Server로 요청이 갈수 있도록 하는 <strong>Sticky Session</strong> 구성은 <strong>Nginx Plus</strong>에서 가능하므로
+여기에서는 IP Hash를 통해 같은 Backend Server로 요청이 되어질 수 있도록 하는 구성으로 바꿔보려고 한다.</p>
+
+<p>이를 위해서는 Backend Server들이 upstream에 리스트 되어야 하기 때문에 cluster service를 사용하지 않고 Managed Server 각각을 list 해줘야 한다.
+변경된 <strong>weblogic-basic.conf</strong>는 다음과 같다.</p>
+
+<h2 id="weblogic-basicconf-1">weblogic-basic.conf</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxy_cache_path /tmp/NGINX_wl_cache/ keys_zone=backcache:10m;
+
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+upstream weblogic {
+    #ip_hash;
+    hash $remote_addr;
+
+    # WebLogic Managed Server Kubernetes Service Name:Port
+    server domain1-managed-server1:8001;
+    server domain1-managed-server2:8001;
+    server domain1-managed-server3:8001;
+
+}
+
+server {
+    listen 80;
+    server_name  _;
+
+    location / {
+        proxy_cache backcache;
+        proxy_pass http://weblogic;
+
+    }
+}
+</code></pre></div></div>
+
+<p>변경 사항을 다시 반영한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; kubectl apply -f nginx-dp-cm.yaml
+</code></pre></div></div>
+
+<p>CofigMap만 변경되었다.</p>
+
+<p><img src="/assets/images/kubeweblogic3/03_update.png" alt="" /></p>
+
+<p>Nginx Container Restart를 위해서 다음 작업을 수행한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; kubectl scale deployment nginx-dp --replicas=0
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic3/04_scale0.png" alt="" /></p>
+
+<p>다시 Container를 구동한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; kubectl scale deployment nginx-dp --replicas=1
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic3/05_scale1.png" alt="" /></p>
+
+<p>이제 다시 애플리케이션을 브라우저에서 테스트 해보면 요청 시마다 다른 Managed Server로 접속되지 않고 한 Managed Server로 고정되는 것을 볼 수 있을 것이다.</p>
+
+<h1 id="참고-자료">참고 자료</h1>
+
+<ul>
+  <li><a href="https://oracle.github.io/weblogic-kubernetes-operator/">Oracle WebLogic Server Kubernetes Operator</a></li>
+  <li><a href="https://docs.nginx.com/nginx/deployment-guides/oracle-weblogic-server-load-balancing-nginx-plus/">Load Balancing Oracle WebLogic Server with NGINX Open Source and NGINX Plus</a></li>
+</ul>
+
+
+
+
+  </div><div>
+  <p>
+    <!--img src="/assets/images/tag.png"/--><a href="#" class="keywords" rel="tag">Kubernetes</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Nginx</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Oracle Kubernetes Engine</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">Persistent Volume</a>&nbsp&nbsp<a href="#" class="keywords" rel="tag">WebLogic</a></p>
+</div><div>
+  <p>
+    <!--img src="/assets/images/share.png"/-->
+  
+    <a href="https://twitter.com/intent/tweet?text=Oracle+Kubernetes+Engine%EC%97%90+WebLogic+Domain+%EC%98%AC%EB%A6%AC%EA%B8%B0+-+Nginx+%EC%B6%94%EA%B0%80%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic-nginx%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic-nginx%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic-nginx%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fk8s-weblogic-nginx%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/cloud/2019/k8s-weblogic-pv/" title="Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Persistent Volume 사용
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">&nbsp&nbsp Next &nbsp&nbsp</a></nav>
+</div>
+</div><a class="u-url" href="/cloud/2019/k8s-weblogic-nginx/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li><li><a href="/feed.xml"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#rss"></use></svg> <span>Feed</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>

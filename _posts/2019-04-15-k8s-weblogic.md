@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  WebLogic Operator를 사용하여 Kubernetes에 WebLogic Domain 올리기
-categories: cloud
+categories: Cloud
 tags: [WebLogic, Kubernetes, Oracle Kubernetes Engine]
 ---
 

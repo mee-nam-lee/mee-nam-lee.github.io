@@ -1,8 +1,7 @@
 ---
 layout: post
 title:  DevOps Workshop (CI/CD 실습) - (2) - Lab 01
-date:   2017-12-07 17:00:00
-categories: devops
+categories: DevOps
 tags: [Developer Cloud, DevOps, CI/CD, Hands-on-lab]
 ---
 

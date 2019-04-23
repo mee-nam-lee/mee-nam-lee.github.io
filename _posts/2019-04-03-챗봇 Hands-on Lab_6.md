@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기
-categories: chatbot
+categories: Chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab, Insight]
 ---
 

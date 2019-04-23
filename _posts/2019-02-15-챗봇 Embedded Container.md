@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  챗봇 Embedded Container에 Custom Component 올리기
-categories: chatbot
+categories: Chatbot
 tags: [chatbot, 오라클 챗봇, Custom Component, Container]
 ---
 

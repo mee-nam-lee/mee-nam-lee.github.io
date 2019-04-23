@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기
-categories: chatbot
+categories: Chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab, Channel, mobile]
 ---
 

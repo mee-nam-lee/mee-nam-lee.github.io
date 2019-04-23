@@ -1,4 +1,317 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-23T13:38:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Persistent Volume 사용</title><link href="http://localhost:4000/cloud/2019/k8s-weblogic-pv/" rel="alternate" type="text/html" title="Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Persistent Volume 사용" /><published>2019-04-19T00:00:00+09:00</published><updated>2019-04-19T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/k8s-weblogic-pv</id><content type="html" xml:base="http://localhost:4000/cloud/2019/k8s-weblogic-pv/">&lt;p&gt;이 전 예제에서는 Docker Image 내에 WebLogic Binary와 Domain 구성 정보가 모두 들어있는 Sample을 이용하였다. 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-23T16:15:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가</title><link href="http://localhost:4000/cloud/2019/k8s-weblogic-nginx/" rel="alternate" type="text/html" title="Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가" /><published>2019-04-23T00:00:00+09:00</published><updated>2019-04-23T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/k8s-weblogic-nginx</id><content type="html" xml:base="http://localhost:4000/cloud/2019/k8s-weblogic-nginx/">&lt;p&gt;이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다.&lt;/p&gt;
+
+&lt;h1 id=&quot;architecture&quot;&gt;Architecture&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic3/00_arch3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;prerequistes&quot;&gt;Prerequistes&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Oracle Kubernetes Engine(OKE)&lt;/li&gt;
+  &lt;li&gt;Oracle File System&lt;/li&gt;
+  &lt;li&gt;Nginx&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;nginx-deployment-구성하기&quot;&gt;Nginx Deployment 구성하기&lt;/h1&gt;
+
+&lt;p&gt;이전의 WebLogic Domain 환경이 그대로 남아있는 상황에서 &lt;strong&gt;Nginx&lt;/strong&gt; 구성만 추가해 볼 것이다.
+Nginx를 통해 WebLogic Cluster로 요청이 넘어갈 수 있도록 WebLogic Server와 연결하는 구성이 필요하다.
+Nginx와 WebLogic Server 간의 연결 방법에 대해서는 Nginx 문서에 잘 설명되어 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.nginx.com/nginx/deployment-guides/oracle-weblogic-server-load-balancing-nginx-plus/&quot;&gt;Load Balancing Oracle WebLogic Server with NGINX Open Source and NGINX Plus&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;weblogic-basicconf&quot;&gt;weblogic-basic.conf&lt;/h2&gt;
+
+&lt;p&gt;WebLogic Server 연결을 위해 &lt;strong&gt;weblogic-basic.conf&lt;/strong&gt; 파일이 필요하다. 파일 내용은 아래를 참고한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;proxy_cache_path /tmp/NGINX_wl_cache/ keys_zone=backcache:10m;
+
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+upstream weblogic {
+    #ip_hash;
+    hash $remote_addr;
+
+    # WebLogic Cluster Kubernetes Service Name:Port
+    server domain1-cluster-cluster-1:8001;
+}
+
+server {
+    listen 80;
+    server_name  _;
+
+    location / {
+        proxy_cache backcache;
+        proxy_pass http://weblogic;
+
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;nginxconf&quot;&gt;nginx.conf&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;nginx.conf&lt;/strong&gt; 내용은 다음과 같다.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include conf.d/weblogic-basic.conf;
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '
+                      '$status $body_bytes_sent &quot;$http_referer&quot; '
+                      '&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+    keepalive_timeout  65;
+    #gzip  on;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;configmap-yaml&quot;&gt;ConfigMap YAML&lt;/h2&gt;
+
+&lt;p&gt;Nginx 배포를 위해서 Deployment 구성 파일을 작성할 것이다. Nginx 이미지는 Docker Hub에서 가져와서 사용할 것이다. 이 Base 이미지의 기본 구성 파일이 아닌 내가 작성한 Custom Configuration을 사용하도록 하기 위햐여 Kubernetes의 &lt;strong&gt;ConfigMap&lt;/strong&gt; 기능을 이용할 것이다.&lt;/p&gt;
+
+&lt;p&gt;커스텀 &lt;strong&gt;nginx.conf&lt;/strong&gt;와 &lt;strong&gt;weblogic-basic.conf&lt;/strong&gt;를 ConfigMap으로 만들기 위한 구성 내용이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ConfigMap&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-cm&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;nginx.conf&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;user  nginx;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;worker_processes  1;&lt;/span&gt;
+
+    &lt;span class=&quot;no&quot;&gt;error_log  /var/log/nginx/error.log warn;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;pid        /var/run/nginx.pid;&lt;/span&gt;
+
+    &lt;span class=&quot;no&quot;&gt;events {&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;worker_connections  1024;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;no&quot;&gt;http {&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;include conf.d/weblogic-basic.conf;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;include       /etc/nginx/mime.types;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;default_type  application/octet-stream;&lt;/span&gt;
+
+        &lt;span class=&quot;no&quot;&gt;log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '&lt;/span&gt;
+                          &lt;span class=&quot;no&quot;&gt;'$status $body_bytes_sent &quot;$http_referer&quot; '&lt;/span&gt;
+                          &lt;span class=&quot;no&quot;&gt;'&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;';&lt;/span&gt;
+
+        &lt;span class=&quot;no&quot;&gt;access_log  /var/log/nginx/access.log  main;&lt;/span&gt;
+
+        &lt;span class=&quot;no&quot;&gt;sendfile        on;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;#tcp_nopush     on;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;keepalive_timeout  65;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;#gzip  on;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;weblogic-basic.conf&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;proxy_cache_path /tmp/NGINX_wl_cache/ keys_zone=backcache:10m;&lt;/span&gt;
+
+    &lt;span class=&quot;no&quot;&gt;map $http_upgrade $connection_upgrade {&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;default upgrade;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;''      close;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;no&quot;&gt;upstream weblogic {&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;hash $remote_addr;&lt;/span&gt;
+
+        &lt;span class=&quot;no&quot;&gt;# WebLogic Cluster Kubernetes Service Name:Port&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;server domain1-cluster-cluster-1:8001;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;no&quot;&gt;server {&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;listen 80;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;server_name  _;&lt;/span&gt;
+
+        &lt;span class=&quot;no&quot;&gt;location / {&lt;/span&gt;
+            &lt;span class=&quot;no&quot;&gt;proxy_cache backcache;&lt;/span&gt;
+            &lt;span class=&quot;no&quot;&gt;proxy_pass http://weblogic;&lt;/span&gt;
+
+        &lt;span class=&quot;no&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;deployment-yaml&quot;&gt;Deployment YAML&lt;/h2&gt;
+
+&lt;p&gt;Nginx를 배포하기 위한 구성 파일이다. Container에서 위에서 구성한 &lt;strong&gt;ConfigMap&lt;/strong&gt;을 Volume으로 Mount하여 Custom Configuration을 참조하게된다&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deployment&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-dp&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;80&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;volumeMounts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mountPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/etc/nginx/nginx.conf&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# mount nginx.conf volume&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;readOnly&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-conf&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;subPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx.conf&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;volumeMounts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mountPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/etc/nginx/conf.d&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# mount conf.d where weblogic-basic.conf is located&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;readOnly&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-confd&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-conf&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;configMap&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-cm&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# refer to ConfigMap for `nginx-conf` &lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx.conf&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx.conf&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-confd&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;configMap&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx-cm&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# refer to ConfigMap for `nginx-confd`&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;weblogic-basic.conf&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;weblogic-basic.conf&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;service-yaml&quot;&gt;Service YAML&lt;/h2&gt;
+
+&lt;p&gt;Load Balancer를 통해 외부에서 접속하기 위한 서비스를 추가한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이전 환경에서 포트 80을 사용하고 있는 서비스 (domain1-cluster1-lb-ext)는 미리 삭제해 둔다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ngnix-lb-ext&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-shape&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;100Mbps&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-backend-protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;HTTP&quot;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;LoadBalancer&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;http&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;80&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;80&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nginx&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;배포하기&quot;&gt;배포하기&lt;/h2&gt;
+
+&lt;p&gt;위에서 설명한 ConfigMap, Deployment, Service를 하나의 파일로 구성하여 한번에 적용할 것이다.
+&lt;strong&gt;nginx-dp-cm.yaml&lt;/strong&gt; 파일을 생성하여 위 3개의 구성 내용을 넣어준다.
+파일이 완료되었으면 kubectl를 통해 적용한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; kubectl apply -f nginx-dp-cm.yaml 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;배포가 완료되면 다음과 같이 보일 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic3/01_nginx.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Nginx Service의 External IP를 통해 서비스에 접근해 보자.
+WebLogic Cluster로 요청이 정상적으로 Forward 되어 서비스 되는 것을 볼 수 있을 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic3/02_weblogic_app.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;persistent-session&quot;&gt;Persistent Session&lt;/h1&gt;
+
+&lt;p&gt;위 구성으로 테스트해 보면 매 요청 마다 다른 Managed Server가 호출되는 것을 볼 수 있을 것이다. WebLogic Cluster 간에 세션이 공유되기 때문에, 어느 Managed Server로 접속되더라도 세션이 유지되긴 하지만 동일 세션일 경우 같은 Managed Server로 요청이 갈수 있도록 하는 &lt;strong&gt;Sticky Session&lt;/strong&gt; 구성은 &lt;strong&gt;Nginx Plus&lt;/strong&gt;에서 가능하므로
+여기에서는 IP Hash를 통해 같은 Backend Server로 요청이 되어질 수 있도록 하는 구성으로 바꿔보려고 한다.&lt;/p&gt;
+
+&lt;p&gt;이를 위해서는 Backend Server들이 upstream에 리스트 되어야 하기 때문에 cluster service를 사용하지 않고 Managed Server 각각을 list 해줘야 한다.
+변경된 &lt;strong&gt;weblogic-basic.conf&lt;/strong&gt;는 다음과 같다.&lt;/p&gt;
+
+&lt;h2 id=&quot;weblogic-basicconf-1&quot;&gt;weblogic-basic.conf&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;proxy_cache_path /tmp/NGINX_wl_cache/ keys_zone=backcache:10m;
+
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+upstream weblogic {
+    #ip_hash;
+    hash $remote_addr;
+
+    # WebLogic Managed Server Kubernetes Service Name:Port
+    server domain1-managed-server1:8001;
+    server domain1-managed-server2:8001;
+    server domain1-managed-server3:8001;
+
+}
+
+server {
+    listen 80;
+    server_name  _;
+
+    location / {
+        proxy_cache backcache;
+        proxy_pass http://weblogic;
+
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;변경 사항을 다시 반영한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; kubectl apply -f nginx-dp-cm.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;CofigMap만 변경되었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic3/03_update.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Nginx Container Restart를 위해서 다음 작업을 수행한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; kubectl scale deployment nginx-dp --replicas=0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic3/04_scale0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다시 Container를 구동한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; kubectl scale deployment nginx-dp --replicas=1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic3/05_scale1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 다시 애플리케이션을 브라우저에서 테스트 해보면 요청 시마다 다른 Managed Server로 접속되지 않고 한 Managed Server로 고정되는 것을 볼 수 있을 것이다.&lt;/p&gt;
+
+&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://oracle.github.io/weblogic-kubernetes-operator/&quot;&gt;Oracle WebLogic Server Kubernetes Operator&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.nginx.com/nginx/deployment-guides/oracle-weblogic-server-load-balancing-nginx-plus/&quot;&gt;Load Balancing Oracle WebLogic Server with NGINX Open Source and NGINX Plus&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="WebLogic" /><category term="Kubernetes" /><category term="Oracle Kubernetes Engine" /><category term="Persistent Volume" /><category term="Nginx" /><summary type="html">이 예제에서는 이전에 생성한 WebLogic Domain 앞 단에 Frontend 역할을 수행하는 Nginx를 추가해 볼 것이다.</summary></entry><entry><title type="html">Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Persistent Volume 사용</title><link href="http://localhost:4000/cloud/2019/k8s-weblogic-pv/" rel="alternate" type="text/html" title="Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Persistent Volume 사용" /><published>2019-04-19T00:00:00+09:00</published><updated>2019-04-19T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/k8s-weblogic-pv</id><content type="html" xml:base="http://localhost:4000/cloud/2019/k8s-weblogic-pv/">&lt;p&gt;이 전 예제에서는 Docker Image 내에 WebLogic Binary와 Domain 구성 정보가 모두 들어있는 Sample을 이용하였다. 
 여기서는 WebLogic Binary는 Docker Image 내에 존재 하지만 Domain 정보는 Persistent Volume을 사용하여 외부에 구성하는 예제를 살펴볼 것 이다.&lt;/p&gt;
 
 &lt;p&gt;이전 글에서 사용한 &lt;strong&gt;WebLogic Operator&lt;/strong&gt;의 Sample에 Persistent Volume을 사용하는 예제도 함께 들어있다. 
@@ -2300,43 +2613,4 @@ Load Balancer는 &lt;strong&gt;Sticky Session&lt;/strong&gt;을 지원하도록 
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/bots-node-sdk/&quot;&gt;Oracle Bots Node.js SDK&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="CECS" /><summary type="html">이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다.</summary></entry><entry><title type="html">챗봇 Embedded Container에 Custom Component 올리기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/" rel="alternate" type="text/html" title="챗봇 Embedded Container에 Custom Component 올리기" /><published>2019-02-15T00:00:00+09:00</published><updated>2019-02-15T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Embedded%20Container</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Embedded-Container/">&lt;p&gt;챗봇을 구현하다 보면 Dialogue Flow 만을 이용해서는 다양한 비즈니스 로직을 구현하기에 한계가 있을 수 있습니다. 이를 위해 Oracle Digital Assistant에서는 Custom Component를 개발하여 연동할 수 있게 되어있는데, 이 개발된 Custom Component는 다음 3가지 형태로 서비스될 수 있습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Embedded Container&lt;/li&gt;
-  &lt;li&gt;Oracle Mobile Cloud&lt;/li&gt;
-  &lt;li&gt;External&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Oracle Mobile Cloud와 External 옵션은 구축된 Custom Component가 Oracle Digital Assistant 외부에서 서비스되는 것을 연동하는 방식이고 Embedded Container는 Digital Assistant 내에 Container를 구동하게 하여 Custom Component 구현체가 서비스 될 수 있도록 해주는 옵션입니다.&lt;/p&gt;
-
-&lt;p&gt;Custom Component의 작성 방법과 SDK 사용법은 이전 글들에서 소개가 되었으므로, 이 글에서는 이미 만들어진 Custom Component를 Embedded Container에 올리기 위해 Packaging 하는 방법만 다룰 것 입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;packaging&quot;&gt;Packaging&lt;/h2&gt;
-&lt;p&gt;Custom Component 디렉토리로 이동하여 &lt;strong&gt;npm pack&lt;/strong&gt; 명령어를 수행합니다. my-custom-component-1.0.0.tgz 파일이 생성될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/npm_pack.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;digital-assistant에서-service-등록하기&quot;&gt;Digital Assistant에서 Service 등록하기&lt;/h2&gt;
-&lt;p&gt;Digital Assistant 콘솔로 이동하여 Service를 등록합니다.&lt;br /&gt;
-서비스 생성 옵션에서 &lt;strong&gt;Embedded Container&lt;/strong&gt; 옵션을 선택하고 이전 단계에서 생성한 .tgz 파일을 업로드 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/create_service.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;업로드가 되고 나면 다음 처럼 보이게 됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/upload_package.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;서비스 생성을 클릭하고 나면 새로운 서비스가 등록되어있을 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_embedded/service_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 서비스를 사용하는 방법은 이전 글에서 설명한 방법과 동일 합니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
-
-&lt;p&gt;Oracle 챗봇 컴포넌트 작성을 위한 자세한 SDK 가이드는 다음을 참고하세요&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/oracle/bots-node-sdk/&quot;&gt;Oracle Bots Node.js SDK&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Custom Component" /><category term="Container" /><summary type="html">챗봇을 구현하다 보면 Dialogue Flow 만을 이용해서는 다양한 비즈니스 로직을 구현하기에 한계가 있을 수 있습니다. 이를 위해 Oracle Digital Assistant에서는 Custom Component를 개발하여 연동할 수 있게 되어있는데, 이 개발된 Custom Component는 다음 3가지 형태로 서비스될 수 있습니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="CECS" /><summary type="html">이 포스트에서는 오라클 챗봇인 Digital Assistant와 Content and Experience Cloud (이후 CECS)라는 Content 관리 솔루션과 연계하는 방법에 대해서 다룰 것입니다.</summary></entry></feed>

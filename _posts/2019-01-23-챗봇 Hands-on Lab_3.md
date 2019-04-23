@@ -1,8 +1,7 @@
 ---
 layout: post
 title:  챗봇 Hands-on Lab (3) - 피자봇 만들기 
-date:   2019-01-23 17:50:00
-categories: chatbot
+categories: Chatbot
 tags: [chatbot, 오라클 챗봇, Hands-on-Lab]
 ---
 

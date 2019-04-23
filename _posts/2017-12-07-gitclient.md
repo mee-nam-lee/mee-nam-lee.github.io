@@ -1,8 +1,7 @@
 ---
 layout: post
 title:  DevOps Workshop (CI/CD 실습) - (5) - Git Client 설치
-date:   2017-12-07 17:00:00
-categories: devops
+categories: DevOps
 tags: [Developer Cloud, DevOps, Git, Hands-on-lab]
 ---
 
