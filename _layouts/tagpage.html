@@ -1,0 +1,31 @@
+---
+layout: default
+---
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+ 
+    <div class="post-content e-content" itemprop="articleBody">
+
+        <h1>Tag: {{ page.tag }}</h1>
+
+<ul class="post-list">
+{% for post in site.tags[page.tag] %}
+  <li>
+    {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+    <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+    <h3>
+      <a class="post-link" href="{{ post.url | relative_url }}">
+        {{ post.title | escape }}
+      </a>
+    </h3>
+
+    {%- if site.show_excerpts -%}
+      <span style="font-size:0.9rem;color: #828282;">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</span>  
+    {%- endif -%}
+  </li>
+{% endfor %}
+</ul>
+  
+    </div>
+  
+  </article>

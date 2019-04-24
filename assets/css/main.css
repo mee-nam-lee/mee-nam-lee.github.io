@@ -92,6 +92,17 @@
   display: inline-block;
 }
 
+.keywords2 {
+  background-color: #343030;
+  color: white;
+  padding: 7px 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+  margin: 2px;
+}
+
 .keywords:visited {
   background-color: #0e0d0d;
   color: white;
@@ -99,6 +110,16 @@
 
 .keywords:hover {
   background-color: #0e0d0d;
+  color: white;
+}
+
+.keywords2:visited {
+  background-color: #343030;
+  color: white;
+}
+
+.keywords2:hover {
+  background-color: #343030;
   color: white;
 }
 

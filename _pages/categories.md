@@ -1,9 +1,12 @@
 ---
 layout: archive
-title: "카테고리"
+title: "Archive"
 permalink: /categories/
 author_profile: false
 ---
+<h2 id="page-title" class="page__title">Tags</h2>
+
+  {%- include collecttags.html -%}
 
 {%- assign categories_max = 0 -%}
 {%- for category in site.categories -%}
@@ -11,6 +14,8 @@ author_profile: false
     {%- assign categories_max = category[1].size -%}
   {%- endif -%}
 {%- endfor -%}
+
+<h2 id="page-title" class="page__title">카테고리</h2>
 
 <ul>
   {%- for i in (1..categories_max) reversed -%}
@@ -30,7 +35,7 @@ author_profile: false
   {%- for category in site.categories -%}
     {%- if category[1].size == i -%}
       <section id="{{ category[0] | slugify | downcase }}">
-        <h2>{{ category[0] }}</h2>
+        <h3>{{ category[0] }}</h3>
         <div class="entries-{{ page.entries_layout | default: 'list' }}">
           <ul>
           {%- for post in category.last -%}

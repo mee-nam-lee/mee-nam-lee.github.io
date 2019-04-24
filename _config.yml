@@ -27,14 +27,14 @@ environment: production
 google_analytics: UA-136222427-1
 
 show_excerpts: true
-rss: Feed
+#rss: Feed
 # excerpt_separator: <!--more-->
 
 permalink: /:categories/:year/:title/
 # Build settings
 
 plugins:
-  - jekyll-feed
+#  - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap
 
