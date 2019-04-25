@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Nginx 추가
+title:  Oracle Kubernetes Engine에 WebLogic 올리기 - Nginx 추가
 categories: Cloud
 tags: [WebLogic, Kubernetes, Oracle Kubernetes Engine, Persistent Volume, Nginx]
 ---

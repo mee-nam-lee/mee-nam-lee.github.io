@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Oracle Kubernetes Engine에 WebLogic Domain 올리기 - Persistent Volume 사용
+title:  Oracle Kubernetes Engine에 WebLogic 올리기 - Persistent Volume 사용
 categories: Cloud
 tags: [WebLogic, Kubernetes, Oracle Kubernetes Engine, Persistent Volume]
 ---

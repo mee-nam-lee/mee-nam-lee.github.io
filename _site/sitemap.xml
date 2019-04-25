@@ -113,6 +113,10 @@
 <lastmod>2019-04-23T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/cloud/2019/k8s-weblogic-monitoring/</loc>
+<lastmod>2019-04-25T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/tags/3%20Tier%20Architecture/</loc>
 </url>
 <url>
@@ -158,10 +162,13 @@
 <loc>http://localhost:4000/tags/Git/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/tags/Grafana/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/tags/HA/</loc>
 </url>
 <url>
-<loc>http://localhost:4000/tags/Hands-on-Lab/</loc>
+<loc>http://localhost:4000/tags/Hands-on-lab/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/tags/Hyperledger%20Fabric/</loc>
@@ -203,6 +210,9 @@
 <loc>http://localhost:4000/tags/Pipeline/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/tags/Prometheus/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/tags/Virtual%20Cloud%20Network/</loc>
 </url>
 <url>
@@ -222,9 +232,6 @@
 </url>
 <url>
 <loc>http://localhost:4000/search/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/tags/%EB%9D%BC%ED%81%B4%20%EB%B8%94%EB%9F%AD%EC%B2%B4%EC%9D%B8/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/tags/%EC%98%A4%EB%9D%BC%ED%81%B4%20%EB%B8%94%EB%9F%AD%EC%B2%B4%EC%9D%B8/</loc>
