@@ -20,7 +20,7 @@ WebLogic Server에서는 JMX를 통한 모니터링 이외에 REST API 기반으
 
 # Architecture
 
-![](/assets/images/kubeweblogic3/00_arch3.png)
+![](/assets/images/kubeweblogic4/00_arch.png)
 
 # Prerequistes 
 
@@ -84,6 +84,28 @@ mvn package
 이제 **metrics**라는 상단의 링크를 클릭해 보면 metric이 다음과 같은 형태로 추출되고 있는 것을 볼 수 있다.
 
 ![](/assets/images/kubeweblogic4/04_wls_exporter_metrics.png)
+
+## Monitoring Metric 추가
+
+Sample로 제공되는 metric 외에 다른 metric를 추가하거나 변경하고자 한다면 제공된 구성 파일을 바탕으로 metric을 조정하면 된다.
+예를 들어 제공된 jvm.yml에서 metric를 추가하고 싶다면, 아래의 WebLogic Server **WLST (Weblogic Script Tool)** 툴을 통해 다른 Metric들의 이름을 확인하고 추가해 주면 된다.
+
+![](/assets/images/kubeweblogic4/12_wls_mbean.png)
+
+**HeapSizeMax**와 **Uptime**을 추가한다면 파일을 다음과 같이 수정하면 된다.
+
+```yml
+# jvm_custom.yml
+metricsNameSnakeCase: true
+queries:
+- JVMRuntime:
+    key: name
+    prefix: jvm_
+    values: [heapFreeCurrent, heapFreePercent, heapSizeCurrent, heapSizeMax, uptime]
+```
+수정한 구성파일을 WebLogic Monitoring Exporter에 적용하고 매트릭이 잘 추출되는지 확인해 본다.
+
+![](/assets/images/kubeweblogic4/13_metric_added.png)
 
 WebLogic Domain 쪽에서의 준비는 완료가 되었다.
 
@@ -171,7 +193,7 @@ Role이 생성되고 Bind 되었다.
 ![](/assets/images/kubeweblogic4/02_rbac.png)
 
 이제 Prometheus를 배포할 차례이다. 
-제공되는 **prometheus-deployment.yaml**에 보면 Service 항목이 존재하는데 이 서비스의 Type이 **NodePort**로 되어있다. 기억하겠지만 Oracle Kubernetes Engine을 **Private Subnet**에 Privision 했기 때문에 NodePort를 사용하여서는 외부에서 바로 접속할 수가 없다.
+제공되는 **prometheus-deployment.yaml**에 보면 Service 항목이 존재하는데 이 서비스의 Type이 **NodePort**로 되어있다. 기억하겠지만 Oracle Kubernetes Engine을 **Private Subnet**에 생성 했기 때문에 NodePort를 사용하여서는 외부에서 바로 접속할 수가 없다.
 
 따라서 이 부분을 **LoadBalancer** Type으로 변경해 줘야 한다.
 
@@ -227,6 +249,86 @@ kubectl apply -f prometheus-deployment.yaml
 
 ![](/assets/images/kubeweblogic4/09_monitoring.png)
 
+# Grafana 구성
+
+Grafana를 배포할 것이다. 
+**grafana-deployment.yaml**에 보면 Service 항목이 존재하는데 이 서비스의 Type이 **NodePort**로 되어있다. 이 부분도  **LoadBalancer** Type으로 변경해 줘야 한다.
+
+변경된 Service 구성 부분은 다음과 같다.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-shape: "100Mbps"
+    service.beta.kubernetes.io/oci-load-balancer-backend-protocol: "HTTP"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+#    nodePort: 31000
+  selector:
+    name: grafana
+#  type: NodePort
+```
+
+![](/assets/images/kubeweblogic4/14_grafana.png)
+
+브라우저로 접속한다
+
+- http://[grafana-external-service-ip]:[port]
+- Username : admin
+- Password : admin
+
+![](/assets/images/kubeweblogic4/15_grafana_login.png)
+
+좌측 메뉴의 **Datasource** 메뉴로 이동한다.
+
+![](/assets/images/kubeweblogic4/19_add_datasource.png)
+
+다음과 같이 입력하고 **Add**를 클릭한다.
+
+- Name : Prometheus
+- Type : Prometheus
+- URL : http://prometheus:9090
+- Access : proxy
+
+![](/assets/images/kubeweblogic4/16_add_datasource.png)
+
+Data Source Edit 창에서 Prometheus Stats Dashboard를 Import 할 수 있다.
+여기에서는 이 Dashboard는 사용할 것이 아니기 때문에 Import 하지 않아도 된다.
+
+![](/assets/images/kubeweblogic4/17_import_datasource.png)
+
+좌측 메뉴의 **Dashboards** 메뉴에서 **New**를 선택하여 Dashboard를 새롭게 하나 생성한다.
+Dashboard 이름은 나중에 수정하고 먼저 **Graph** 하나를 추가해 볼 것이다.
+
+![](/assets/images/kubeweblogic4/20_new_dashboard.png)
+
+상단의 **Panel Title**을 클릭하면 **Edit** 할 수 있는 메뉴가 나타난다. 여기서 **Edit**를 클릭하면 하단에 Graph를 수정할 수 있는 속성 탭들이 나타난다.
+
+Data Source Drop Down 메뉴에서 **Prometheus**를 선택하고 텍스트 박스에 Metric 항목의 이름을 입력한다. 아래 예는 **jvm_heap_free_current**를 사용했다. 우측의 **눈** 모양 아이콘을 클릭하면 상단의 그래프에 Metric이 표시된다.
+
+![](/assets/images/kubeweblogic4/21_metric_add.png)
+
+Panel Title은 **General** 탭에서 수정한다.
+![](/assets/images/kubeweblogic4/22_pane_title.png)
+
+Metric이 다 추가되었으면 Dashboard의 이름을 변경해준다. Dashboard 옆 **설정** 아이콘을 클릭하면 **Settings** 메뉴가 나온다. 
+여기에서 Name 항목을 원하는 이름으로 설정하면 된다.
+
+![](/assets/images/kubeweblogic4/23_dashboard_name.png)
+
+설정이 완료되고 나면 아래와 같이 보이게 될 것이다.
+
+![](/assets/images/kubeweblogic4/18_grafana_dashboard.png)
+
+여기까지 Kubernetes에 배포된 WebLogic Server 환경을 Custom Exporter와 Open Source Monitoring 솔루션인 **Prometheus**를 사용하여 모니터링하고 **Grafana**를 이용하여 더욱 보기 좋은 형태의 Dashboard를 만드는 작업에 대해 다루었다.
 
 # 참고 자료
 

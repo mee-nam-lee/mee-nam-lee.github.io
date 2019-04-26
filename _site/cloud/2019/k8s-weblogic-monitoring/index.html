@@ -59,7 +59,9 @@
 
 
 <!-- end _includes/seo.html -->
-<link rel="stylesheet" href="/assets/css/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -116,7 +118,7 @@ WebLogic Server는 다양한 매트릭을 MBean으로 제공하고 있고 일반
 
 <h1 id="architecture">Architecture</h1>
 
-<p><img src="/assets/images/kubeweblogic3/00_arch3.png" alt="" /></p>
+<p><img src="/assets/images/kubeweblogic4/00_arch.png" alt="" /></p>
 
 <h1 id="prerequistes">Prerequistes</h1>
 
@@ -188,6 +190,27 @@ mvn package
 <p>이제 <strong>metrics</strong>라는 상단의 링크를 클릭해 보면 metric이 다음과 같은 형태로 추출되고 있는 것을 볼 수 있다.</p>
 
 <p><img src="/assets/images/kubeweblogic4/04_wls_exporter_metrics.png" alt="" /></p>
+
+<h2 id="monitoring-metric-추가">Monitoring Metric 추가</h2>
+
+<p>Sample로 제공되는 metric 외에 다른 metric를 추가하거나 변경하고자 한다면 제공된 구성 파일을 바탕으로 metric을 조정하면 된다.
+예를 들어 제공된 jvm.yml에서 metric를 추가하고 싶다면, 아래의 WebLogic Server <strong>WLST (Weblogic Script Tool)</strong> 툴을 통해 다른 Metric들의 이름을 확인하고 추가해 주면 된다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/12_wls_mbean.png" alt="" /></p>
+
+<p><strong>HeapSizeMax</strong>와 <strong>Uptime</strong>을 추가한다면 파일을 다음과 같이 수정하면 된다.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># jvm_custom.yml</span>
+<span class="na">metricsNameSnakeCase</span><span class="pi">:</span> <span class="no">true</span>
+<span class="na">queries</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">JVMRuntime</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s">name</span>
+    <span class="na">prefix</span><span class="pi">:</span> <span class="s">jvm_</span>
+    <span class="na">values</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">heapFreeCurrent</span><span class="pi">,</span> <span class="nv">heapFreePercent</span><span class="pi">,</span> <span class="nv">heapSizeCurrent</span><span class="pi">,</span> <span class="nv">heapSizeMax</span><span class="pi">,</span> <span class="nv">uptime</span><span class="pi">]</span>
+</code></pre></div></div>
+<p>수정한 구성파일을 WebLogic Monitoring Exporter에 적용하고 매트릭이 잘 추출되는지 확인해 본다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/13_metric_added.png" alt="" /></p>
 
 <p>WebLogic Domain 쪽에서의 준비는 완료가 되었다.</p>
 
@@ -274,7 +297,7 @@ kubectl apply -f monitoring-namespace.yaml
 <p><img src="/assets/images/kubeweblogic4/02_rbac.png" alt="" /></p>
 
 <p>이제 Prometheus를 배포할 차례이다. 
-제공되는 <strong>prometheus-deployment.yaml</strong>에 보면 Service 항목이 존재하는데 이 서비스의 Type이 <strong>NodePort</strong>로 되어있다. 기억하겠지만 Oracle Kubernetes Engine을 <strong>Private Subnet</strong>에 Privision 했기 때문에 NodePort를 사용하여서는 외부에서 바로 접속할 수가 없다.</p>
+제공되는 <strong>prometheus-deployment.yaml</strong>에 보면 Service 항목이 존재하는데 이 서비스의 Type이 <strong>NodePort</strong>로 되어있다. 기억하겠지만 Oracle Kubernetes Engine을 <strong>Private Subnet</strong>에 생성 했기 때문에 NodePort를 사용하여서는 외부에서 바로 접속할 수가 없다.</p>
 
 <p>따라서 이 부분을 <strong>LoadBalancer</strong> Type으로 변경해 줘야 한다.</p>
 
@@ -329,6 +352,90 @@ kubectl apply -f monitoring-namespace.yaml
 <p>다시 Graph 메뉴로 이동하여 모니터링 하고자 하는 매트릭을 선택한다.</p>
 
 <p><img src="/assets/images/kubeweblogic4/09_monitoring.png" alt="" /></p>
+
+<h1 id="grafana-구성">Grafana 구성</h1>
+
+<p>Grafana를 배포할 것이다. 
+<strong>grafana-deployment.yaml</strong>에 보면 Service 항목이 존재하는데 이 서비스의 Type이 <strong>NodePort</strong>로 되어있다. 이 부분도  <strong>LoadBalancer</strong> Type으로 변경해 줘야 한다.</p>
+
+<p>변경된 Service 구성 부분은 다음과 같다.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">grafana</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">monitoring</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-shape</span><span class="pi">:</span> <span class="s2">"</span><span class="s">100Mbps"</span>
+    <span class="s">service.beta.kubernetes.io/oci-load-balancer-backend-protocol</span><span class="pi">:</span> <span class="s2">"</span><span class="s">HTTP"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="s">3000</span>
+    <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="s">3000</span>
+<span class="c1">#    nodePort: 31000</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">grafana</span>
+<span class="c1">#  type: NodePort</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/kubeweblogic4/14_grafana.png" alt="" /></p>
+
+<p>브라우저로 접속한다</p>
+
+<ul>
+  <li>http://[grafana-external-service-ip]:[port]</li>
+  <li>Username : admin</li>
+  <li>Password : admin</li>
+</ul>
+
+<p><img src="/assets/images/kubeweblogic4/15_grafana_login.png" alt="" /></p>
+
+<p>좌측 메뉴의 <strong>Datasource</strong> 메뉴로 이동한다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/19_add_datasource.png" alt="" /></p>
+
+<p>다음과 같이 입력하고 <strong>Add</strong>를 클릭한다.</p>
+
+<ul>
+  <li>Name : Prometheus</li>
+  <li>Type : Prometheus</li>
+  <li>URL : http://prometheus:9090</li>
+  <li>Access : proxy</li>
+</ul>
+
+<p><img src="/assets/images/kubeweblogic4/16_add_datasource.png" alt="" /></p>
+
+<p>Data Source Edit 창에서 Prometheus Stats Dashboard를 Import 할 수 있다.
+여기에서는 이 Dashboard는 사용할 것이 아니기 때문에 Import 하지 않아도 된다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/17_import_datasource.png" alt="" /></p>
+
+<p>좌측 메뉴의 <strong>Dashboards</strong> 메뉴에서 <strong>New</strong>를 선택하여 Dashboard를 새롭게 하나 생성한다.
+Dashboard 이름은 나중에 수정하고 먼저 <strong>Graph</strong> 하나를 추가해 볼 것이다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/20_new_dashboard.png" alt="" /></p>
+
+<p>상단의 <strong>Panel Title</strong>을 클릭하면 <strong>Edit</strong> 할 수 있는 메뉴가 나타난다. 여기서 <strong>Edit</strong>를 클릭하면 하단에 Graph를 수정할 수 있는 속성 탭들이 나타난다.</p>
+
+<p>Data Source Drop Down 메뉴에서 <strong>Prometheus</strong>를 선택하고 텍스트 박스에 Metric 항목의 이름을 입력한다. 아래 예는 <strong>jvm_heap_free_current</strong>를 사용했다. 우측의 <strong>눈</strong> 모양 아이콘을 클릭하면 상단의 그래프에 Metric이 표시된다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/21_metric_add.png" alt="" /></p>
+
+<p>Panel Title은 <strong>General</strong> 탭에서 수정한다.
+<img src="/assets/images/kubeweblogic4/22_pane_title.png" alt="" /></p>
+
+<p>Metric이 다 추가되었으면 Dashboard의 이름을 변경해준다. Dashboard 옆 <strong>설정</strong> 아이콘을 클릭하면 <strong>Settings</strong> 메뉴가 나온다. 
+여기에서 Name 항목을 원하는 이름으로 설정하면 된다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/23_dashboard_name.png" alt="" /></p>
+
+<p>설정이 완료되고 나면 아래와 같이 보이게 될 것이다.</p>
+
+<p><img src="/assets/images/kubeweblogic4/18_grafana_dashboard.png" alt="" /></p>
+
+<p>여기까지 Kubernetes에 배포된 WebLogic Server 환경을 Custom Exporter와 Open Source Monitoring 솔루션인 <strong>Prometheus</strong>를 사용하여 모니터링하고 <strong>Grafana</strong>를 이용하여 더욱 보기 좋은 형태의 Dashboard를 만드는 작업에 대해 다루었다.</p>
 
 <h1 id="참고-자료">참고 자료</h1>
 
