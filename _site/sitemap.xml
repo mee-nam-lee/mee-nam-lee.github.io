@@ -121,6 +121,10 @@
 <lastmod>2019-04-29T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/</loc>
+<lastmod>2019-05-03T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/tags/3%20Tier%20Architecture/</loc>
 </url>
 <url>
@@ -229,6 +233,9 @@
 <loc>http://localhost:4000/tags/Prometheus/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/tags/Terraform/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/tags/Virtual%20Cloud%20Network/</loc>
 </url>
 <url>
@@ -269,6 +276,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/page6/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page7/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/google42bc57defce8662f.html</loc>
