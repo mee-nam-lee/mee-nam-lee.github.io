@@ -33,6 +33,7 @@ tags: [Oracle Cloud, Virtual Cloud Network,IaaS, 3 Tier Architecture, HA, Java C
 
 ```
 > git clone https://github.com/mee-nam-lee/terraform_oci_paas.git
+> cd terraform_oci_paas
 ```
 
 생성되는 각 컴포턴트는 이전 예제와 동일한 이름을 사용하였다. 컴포넌트 상세는 이전 글을 참고한다.
@@ -59,20 +60,42 @@ tags: [Oracle Cloud, Virtual Cloud Network,IaaS, 3 Tier Architecture, HA, Java C
 | loadbalancer.tf | LoadBalancer      | Loadbalancer 생성 후 Web 인스턴스에 연결하는 BackendSet 구성 |
 | output.tf       |                   | 필요 정보 출력 |
 
+
 ## env.sh 수정
 
 **env.sh** 파일을 각자의 환경에 맞게 수정한다.
 
 ![](/assets/images/3tier/terraform/01_env_sh.png)
 
+수정한 환경 변수 파일을 실행 시키고 Terraform Provider를 설치한다.
 
 ```
-> cd terraform_oci_paas
 > source env.sh
 > terraform init
 ```
 ![](/assets/images/3tier/terraform/01_terraform_init.png)
 
+## variables.tf 확인
+
+**variables.tf** 파일에는 사용하는 Compute Shape 및 Admin Password 등의 변수들이 선언되어 있다.
+이 파일을 열어 각 변수를 원하는 값으로 편집해도 된다.
+
+참고로 Web용 Compute와 Coherence용 Compute는 이전 과정에서 만들어 둔 Custom Image를 참조하도록 Custom Image의 OCID로 설정되어 있다.
+Custom Image를 사용하지 못하거나, 다른 Image를 사용하려면 아래 부분을 수정하면 된다.
+
+```
+variable "instance_image_ocid" {
+  type = "map"
+
+  default = {
+    // custom image OCID
+    web= "ocid1.image.oc1.phx.aaaaaaaa5bxabwjdny6dpaf2xr63rvxoofxslzkahjnfqlcpodfl5oobualq"
+    coherence ="ocid1.image.oc1.phx.aaaaaaaacp2wktef46wf255fh3lu3df6rea52dd2zjcqz34wmoj7tigbxeka"
+  }
+}
+```
+
+변수들을 살펴봤으면 이제 적용해 보자
 
 ## Terraform Plan
 
@@ -101,6 +124,8 @@ Oracle Cloud Console에 접속해서 리소스들이 잘 생성되었는지 확�
 ## Network
 
 ![](/assets/images/3tier/terraform/05_network.png)
+
+## Load Balacner
 
 ![](/assets/images/3tier/terraform/06_loadbalancer.png)
 
@@ -135,6 +160,10 @@ Web과 Coherence 인스턴스에 접속해서 서비스를 구동시키고, 웹�
 ```
 
 ![](/assets/images/3tier/terraform/11_destroy.png)
+
+리소스 삭제에도 약간의 시간이 걸린다. 모두 완료되면 다음과 같이 표시 될 것이다.
+
+![](/assets/images/3tier/terraform/12_destroy_2.png)
 
 # 이전 문서 참고
 

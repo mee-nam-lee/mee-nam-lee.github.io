@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-03T14:13:06+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)" /><published>2019-05-03T00:00:00+09:00</published><updated>2019-05-03T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-terraform</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch-regional/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)&lt;/a&gt;에서는 각 Tier에 필요한 모든 컴포넌트들을 &lt;strong&gt;Oracle Cloud Console&lt;/strong&gt;을 통해 Step by Step으로 생성하였었다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-03T14:52:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)" /><published>2019-05-03T00:00:00+09:00</published><updated>2019-05-03T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-terraform</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch-regional/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)&lt;/a&gt;에서는 각 Tier에 필요한 모든 컴포넌트들을 &lt;strong&gt;Oracle Cloud Console&lt;/strong&gt;을 통해 Step by Step으로 생성하였었다.&lt;/p&gt;
 
 &lt;p&gt;여기에서는 이전 문서에서 설명한 모든 필요 컴포넌트를 &lt;strong&gt;Terraform&lt;/strong&gt;을 이용해서 프로비전 하는 과정에 대해서 설명할 것이다.&lt;/p&gt;
 
@@ -28,6 +28,7 @@
 &lt;p&gt;예제 소스를 다음에서 다운 받는다.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; git clone https://github.com/mee-nam-lee/terraform_oci_paas.git
+&amp;gt; cd terraform_oci_paas
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;생성되는 각 컴포턴트는 이전 예제와 동일한 이름을 사용하였다. 컴포넌트 상세는 이전 글을 참고한다.&lt;/p&gt;
@@ -137,11 +138,33 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/3tier/terraform/01_env_sh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; cd terraform_oci_paas
-&amp;gt; source env.sh
+&lt;p&gt;수정한 환경 변수 파일을 실행 시키고 Terraform Provider를 설치한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; source env.sh
 &amp;gt; terraform init
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/images/3tier/terraform/01_terraform_init.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;variablestf-확인&quot;&gt;variables.tf 확인&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;variables.tf&lt;/strong&gt; 파일에는 사용하는 Compute Shape 및 Admin Password 등의 변수들이 선언되어 있다.
+이 파일을 열어 각 변수를 원하는 값으로 편집해도 된다.&lt;/p&gt;
+
+&lt;p&gt;참고로 Web용 Compute와 Coherence용 Compute는 이전 과정에서 만들어 둔 Custom Image를 참조하도록 Custom Image의 OCID로 설정되어 있다.
+Custom Image를 사용하지 못하거나, 다른 Image를 사용하려면 아래 부분을 수정하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;variable &quot;instance_image_ocid&quot; {
+  type = &quot;map&quot;
+
+  default = {
+    // custom image OCID
+    web= &quot;ocid1.image.oc1.phx.aaaaaaaa5bxabwjdny6dpaf2xr63rvxoofxslzkahjnfqlcpodfl5oobualq&quot;
+    coherence =&quot;ocid1.image.oc1.phx.aaaaaaaacp2wktef46wf255fh3lu3df6rea52dd2zjcqz34wmoj7tigbxeka&quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;변수들을 살펴봤으면 이제 적용해 보자&lt;/p&gt;
 
 &lt;h2 id=&quot;terraform-plan&quot;&gt;Terraform Plan&lt;/h2&gt;
 
@@ -168,6 +191,8 @@
 &lt;h2 id=&quot;network&quot;&gt;Network&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/3tier/terraform/05_network.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;load-balacner&quot;&gt;Load Balacner&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/3tier/terraform/06_loadbalancer.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -201,6 +226,10 @@ Web과 Coherence 인스턴스에 접속해서 서비스를 구동시키고, 웹�
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/3tier/terraform/11_destroy.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;리소스 삭제에도 약간의 시간이 걸린다. 모두 완료되면 다음과 같이 표시 될 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/terraform/12_destroy_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;이전-문서-참고&quot;&gt;이전 문서 참고&lt;/h1&gt;
 

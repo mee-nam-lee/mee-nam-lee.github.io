@@ -128,6 +128,7 @@
 <p>예제 소스를 다음에서 다운 받는다.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; git clone https://github.com/mee-nam-lee/terraform_oci_paas.git
+&gt; cd terraform_oci_paas
 </code></pre></div></div>
 
 <p>생성되는 각 컴포턴트는 이전 예제와 동일한 이름을 사용하였다. 컴포넌트 상세는 이전 글을 참고한다.</p>
@@ -237,11 +238,33 @@
 
 <p><img src="/assets/images/3tier/terraform/01_env_sh.png" alt="" /></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cd terraform_oci_paas
-&gt; source env.sh
+<p>수정한 환경 변수 파일을 실행 시키고 Terraform Provider를 설치한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; source env.sh
 &gt; terraform init
 </code></pre></div></div>
 <p><img src="/assets/images/3tier/terraform/01_terraform_init.png" alt="" /></p>
+
+<h2 id="variablestf-확인">variables.tf 확인</h2>
+
+<p><strong>variables.tf</strong> 파일에는 사용하는 Compute Shape 및 Admin Password 등의 변수들이 선언되어 있다.
+이 파일을 열어 각 변수를 원하는 값으로 편집해도 된다.</p>
+
+<p>참고로 Web용 Compute와 Coherence용 Compute는 이전 과정에서 만들어 둔 Custom Image를 참조하도록 Custom Image의 OCID로 설정되어 있다.
+Custom Image를 사용하지 못하거나, 다른 Image를 사용하려면 아래 부분을 수정하면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>variable "instance_image_ocid" {
+  type = "map"
+
+  default = {
+    // custom image OCID
+    web= "ocid1.image.oc1.phx.aaaaaaaa5bxabwjdny6dpaf2xr63rvxoofxslzkahjnfqlcpodfl5oobualq"
+    coherence ="ocid1.image.oc1.phx.aaaaaaaacp2wktef46wf255fh3lu3df6rea52dd2zjcqz34wmoj7tigbxeka"
+  }
+}
+</code></pre></div></div>
+
+<p>변수들을 살펴봤으면 이제 적용해 보자</p>
 
 <h2 id="terraform-plan">Terraform Plan</h2>
 
@@ -268,6 +291,8 @@
 <h2 id="network">Network</h2>
 
 <p><img src="/assets/images/3tier/terraform/05_network.png" alt="" /></p>
+
+<h2 id="load-balacner">Load Balacner</h2>
 
 <p><img src="/assets/images/3tier/terraform/06_loadbalancer.png" alt="" /></p>
 
@@ -301,6 +326,10 @@ Web과 Coherence 인스턴스에 접속해서 서비스를 구동시키고, 웹�
 </code></pre></div></div>
 
 <p><img src="/assets/images/3tier/terraform/11_destroy.png" alt="" /></p>
+
+<p>리소스 삭제에도 약간의 시간이 걸린다. 모두 완료되면 다음과 같이 표시 될 것이다.</p>
+
+<p><img src="/assets/images/3tier/terraform/12_destroy_2.png" alt="" /></p>
 
 <h1 id="이전-문서-참고">이전 문서 참고</h1>
 
