@@ -173,6 +173,10 @@ Oracle Cloud Console에 접속해서 리소스들이 잘 생성되었는지 확�
 
 ![](/assets/images/3tier/oci_rm/16_destroy.png)
 
+모두 삭제되었다.
+
+![](/assets/images/3tier/oci_rm/16_destroy2.png)
+
 # 이전 문서 참고
 
 - [Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기](/cloud/2019/basic-3tier-arch/)
