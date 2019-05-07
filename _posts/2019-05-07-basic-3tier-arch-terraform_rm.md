@@ -154,6 +154,14 @@ Job이 **Accepted**가 되었고 곧 **In Progress** 상태로 전환될 것이�
 
 ![](/assets/images/3tier/oci_rm/13_output.png)
 
+**Apply** 작업이 완료된 후 Terraform State 파일을 다운로드 받을 수도 있다. **Download Terraform State** 버튼을 클릭하여 상태를 다운 받는다.
+
+![](/assets/images/3tier/oci_rm/14_apply_succeed.png)
+
+다운 받은 파일을 **terraform.tfstate**로 rename하여 상태를 Local 환경에서도 확인해 볼 수 있다.
+
+![](/assets/images/3tier/oci_rm/15_tfstate.png)
+
 # 생성 확인
 
 Oracle Cloud Console에 접속해서 리소스들이 잘 생성되었는지 확인한다.
@@ -163,6 +171,7 @@ Oracle Cloud Console에 접속해서 리소스들이 잘 생성되었는지 확�
 
 **Destroy** 역시 Job으로 생성해서 수행한다.
 
+![](/assets/images/3tier/oci_rm/16_destroy.png)
 
 # 이전 문서 참고
 
