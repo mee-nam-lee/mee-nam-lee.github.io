@@ -1,4 +1,257 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-03T14:52:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)" /><published>2019-05-03T00:00:00+09:00</published><updated>2019-05-03T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-terraform</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch-regional/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)&lt;/a&gt;에서는 각 Tier에 필요한 모든 컴포넌트들을 &lt;strong&gt;Oracle Cloud Console&lt;/strong&gt;을 통해 Step by Step으로 생성하였었다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-07T15:11:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/" rel="alternate" type="text/html" title="Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기" /><published>2019-05-07T00:00:00+09:00</published><updated>2019-05-07T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch-terraform/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)&lt;/a&gt;에서는 몇 차례 기고를 통해 설명했던 &lt;strong&gt;Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기&lt;/strong&gt;에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 &lt;strong&gt;Terraform&lt;/strong&gt;을 통해 Batch 형태로 구성하는 과정을 설명했었다.&lt;/p&gt;
+
+&lt;p&gt;보통 Terraform을 이용한 Provision을 위해서는 Terraform 환경을 별도로 구축하거나 Local 환경에 설치하여 작업하지만, Oracle Cloud Infrastructure에서는 별도의 Terraform 환경 구성 없이도 Terraform 구성 파일만을 Oracle Cloud에 업로드 하여 리소스를 생성할 수 있도록 하는 기능을 제공하고 있다. Oracle Cloud Infrastructure는 이를 &lt;strong&gt;Resource Manager&lt;/strong&gt;라는 이름으로 제공한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.cloud.oracle.com/iaas/Content/ResourceManager/Concepts/resourcemanager.htm&quot;&gt;Overview of Resource Manager&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;여기에서는 이전에 작성한 Terraform 구성 파일들을 Oracle Cloud Infrastructure(OCI)의 &lt;strong&gt;Resource Manager&lt;/strong&gt;로 생성하여 원하는 리소스를 Provision하는 과정에 대해 설명하려고 한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;OCI의 Resource Manager에서는 현재까지는 &lt;strong&gt;oci&lt;/strong&gt; provider만 지원되고, 추가적인 Plugin을 설치할 수 없기 때문에 이전 과정에서 사용한 &lt;strong&gt;oraclepaas&lt;/strong&gt;  Provider 부분은 제외해야 한다. 즉 Java Cloud Service(JCS) 부분의 Provision은 &lt;strong&gt;Resource Manager&lt;/strong&gt;를 통해서 수행할 수 없다.
+따라서 여기에서는 JCS 부분을 제외한 다른 리소스들만 생성해 볼 것이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Oracle Cloud Infrastucture&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;3-tier-예제-소스&quot;&gt;3-Tier 예제 소스&lt;/h1&gt;
+
+&lt;p&gt;이전 과정을 진행하지 않았었다면 여기서 새롭게 예제 소스를 다운 받는다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; git clone https://github.com/mee-nam-lee/terraform_oci_paas.git
+&amp;gt; cd terraform_oci_paas/oci_resourcemanager
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;terraform-파일-설명&quot;&gt;Terraform 파일 설명&lt;/h2&gt;
+
+&lt;p&gt;사용하는 Terraform Configuration 파일은 이전과 동일하지만 &lt;strong&gt;Resource Manager&lt;/strong&gt;를 통해 생성할 수 없는 PaaS 부분인 Java Cloud Service(JCS) 구성파일은 제외되었다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;파일명&lt;/th&gt;
+      &lt;th&gt;생성되는 Resource&lt;/th&gt;
+      &lt;th&gt;설명&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;del&gt;env.sh&lt;/del&gt;&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;(삭제됨)&lt;/strong&gt; Oracle Cloud에 연결하기 위한 정보가 들어있는 파일&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;provider.tf&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;(수정됨)&lt;/strong&gt; oci, oraclepaas provider 구성 정보&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;variables.tf&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;(수정됨)&lt;/strong&gt; 다른 terraform 파일에서 참고하는 variable 정도들이 들어있음&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;data.tf&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;OCI 정보 조회&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;vcn.tf&lt;/td&gt;
+      &lt;td&gt;VCN&lt;/td&gt;
+      &lt;td&gt;VCN 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;subnet.tf&lt;/td&gt;
+      &lt;td&gt;Subnet&lt;/td&gt;
+      &lt;td&gt;3개의 Subnet 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;routetable.tf&lt;/td&gt;
+      &lt;td&gt;RouteTable&lt;/td&gt;
+      &lt;td&gt;2개 (PublicRT, PrivateRT) RouteTable 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;securitylist.tf&lt;/td&gt;
+      &lt;td&gt;SecurityList&lt;/td&gt;
+      &lt;td&gt;3개 (PublicSL, PrivateSL, DBSL)의 Security List와 Ingress, Egress Rule 정의&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;internetgw.tf&lt;/td&gt;
+      &lt;td&gt;Internet Gateway&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;servicegw.tf&lt;/td&gt;
+      &lt;td&gt;Service Gateway&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;db.tf&lt;/td&gt;
+      &lt;td&gt;DB System&lt;/td&gt;
+      &lt;td&gt;DemoDB 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;object.tf&lt;/td&gt;
+      &lt;td&gt;ObjectStorage&lt;/td&gt;
+      &lt;td&gt;JCS Backup용 Object Storage Bucket 2개 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;del&gt;jcs.tf&lt;/del&gt;&lt;/td&gt;
+      &lt;td&gt;Java Cloud Service&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;(삭제됨)&lt;/strong&gt; AD1, AD2에 각각 JCS 1개 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;compute_web.tf&lt;/td&gt;
+      &lt;td&gt;Compute Instance&lt;/td&gt;
+      &lt;td&gt;Web용 Custom Image로 Compute Instance 2개 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;compute_coh.tf&lt;/td&gt;
+      &lt;td&gt;Compute Instance&lt;/td&gt;
+      &lt;td&gt;Coherence 용 Custom Image로 Compute Instance 2개 생성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;loadbalancer.tf&lt;/td&gt;
+      &lt;td&gt;LoadBalancer&lt;/td&gt;
+      &lt;td&gt;Loadbalancer 생성 후 Web 인스턴스에 연결하는 BackendSet 구성&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;output.tf&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;필요 정보 출력&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;providertf&quot;&gt;provider.tf&lt;/h2&gt;
+
+&lt;p&gt;위에서 설명한 데로 &lt;strong&gt;Resource Manager&lt;/strong&gt;에서는 OCI Provider만 사용할 수 있고, Parameter로 &lt;strong&gt;user_ocid&lt;/strong&gt;, &lt;strong&gt;fingerprint&lt;/strong&gt;, &lt;strong&gt;private_key_path&lt;/strong&gt; 같은 보안 관련 파라미터를 구성파일 내에 두지 못하게 하기 때문에 이전 파일에서 보안 관련 파라미터들을 제거해야 한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;OCI 내에서 작업이 진행되는 것이기 때문에 이 정보가 요구되지 않는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;변경된 파일은 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;provider &quot;oci&quot; {
+  tenancy_ocid         = &quot;${var.tenancy_ocid}&quot;
+  region               = &quot;${var.region}&quot;
+  disable_auto_retries = &quot;${var.disable_auto_retries}&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;variablestf&quot;&gt;variables.tf&lt;/h2&gt;
+
+&lt;p&gt;이전 Local Terraform Provision에서는 TF_VAR 환경 변수를 참조하여 변수를 사용하도록 구성하였기 때문에 variables.tf에 default 값을 설정하지 않았다.
+&lt;strong&gt;Resource Manager&lt;/strong&gt;에서는 환경 변수 Export를 통한 변수 참조가 가능하지 않기 때문에 variable 값을 셋팅해줘야 하는데, 다음의 3가지 방법으로 수행할 수 있다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;tfvars 파일 생성&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Resource Manager&lt;/strong&gt;에서 variable 값을 콘솔을 통해서 입력&lt;/li&gt;
+  &lt;li&gt;variables.tf의 default 값 setting&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;여기에서는 3번 방법으로 수행하였다. 따라서 variables.tf 파일도 수정이 되어야 한다.
+사용하지 않는 variable들을 삭제하고 default 값을 설정해준 variables.tf 파일은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/01_variables.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;terraform-configuration-archive-생성&quot;&gt;Terraform Configuration Archive 생성&lt;/h2&gt;
+
+&lt;p&gt;준비된 Terraform Configuration 파일을 zip으로 묶는다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; zip ../../tf_oci_rm.zip *.tf 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/02_zip.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;resource-manager-생성&quot;&gt;Resource Manager 생성&lt;/h1&gt;
+
+&lt;p&gt;Oracle Cloud Console에 접속하여 &lt;strong&gt;Resource Manager&lt;/strong&gt; 메뉴로 이동한다. &lt;strong&gt;Create Stack&lt;/strong&gt;을 클릭하여 Stack을 하나 생성한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/03_stack.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Stack 이름을 입력하고, 압축해두었던 zip 파일을 업로드한다. 그러고 나면 variable 값이 파싱되어서 화면에 보여질 것이다. 값들을 확인한 후 하단의 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/04_create_stack.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Stack이 하나 만들어졌다.&lt;/p&gt;
+
+&lt;h2 id=&quot;variable-설정&quot;&gt;Variable 설정&lt;/h2&gt;
+
+&lt;p&gt;variables.tf 파일로 default 값들을 설정하였지만 보안 상의 이유로 configuration file에 정의할 수 없는 &lt;strong&gt;ssh_public_key&lt;/strong&gt; 같은 변수는 공백으로 남겨져 있다.
+이 값은 Resource Manager의 콘솔을 통해 값을 셋팅하도록 할 것이다.
+&lt;strong&gt;Variables&lt;/strong&gt; 메뉴에서 &lt;strong&gt;Edit Variables&lt;/strong&gt;를 클릭하여 변수 값을 설정해 준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/10_var.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;ssh_public_key&lt;/strong&gt; 값을 입력하고 저장한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/11_save_var.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;terraform-plan&quot;&gt;Terraform Plan&lt;/h2&gt;
+
+&lt;p&gt;생성한 Stack으로 이동하여 Plan/Apply/Destroy 작업을 수행할 수 있는 &lt;strong&gt;Job&lt;/strong&gt;을 하나 생성한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/05_job.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;먼저 &lt;strong&gt;Plan&lt;/strong&gt; 부터 생성한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/06_plan.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Job이 &lt;strong&gt;Accepted&lt;/strong&gt;가 되었고 곧 &lt;strong&gt;In Progress&lt;/strong&gt; 상태로 전환될 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/07_job_accepted.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;진행 사항을 다음처럼 Log에서 확인할 수가 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/08_log1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/08_log2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;terraform-apply&quot;&gt;Terraform Apply&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;apply&lt;/strong&gt; Job도 위에서 처럼 생성한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/09_apply.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Apply&lt;/strong&gt; Job의 진행사항도 Log에서 다음과 같이 확인이 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/12_apply_log.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 기다리기만 하면 원하는 리소스들이 생성되어 있을 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;outputs.tf&lt;/strong&gt;에 정의한 output 결과는 &lt;strong&gt;Outputs&lt;/strong&gt; 메뉴에서 확인 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3tier/oci_rm/13_output.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;생성-확인&quot;&gt;생성 확인&lt;/h1&gt;
+
+&lt;p&gt;Oracle Cloud Console에 접속해서 리소스들이 잘 생성되었는지 확인한다.
+생성된 내용은 이전과 동일한 내용이니 여기에서는 생략하도록 하겠다.&lt;/p&gt;
+
+&lt;h1 id=&quot;terraform-destroy--환경-지우기&quot;&gt;Terraform destroy : 환경 지우기&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Destroy&lt;/strong&gt; 역시 Job으로 생성해서 수행한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;이전-문서-참고&quot;&gt;이전 문서 참고&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/cloud/2019/basic-3tier-arch/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/cloud/2019/basic-3tier-arch-regional/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/cloud/2019/basic-3tier-arch-terraform/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.terraform.io/docs/providers/oci/&quot;&gt;Terraform Oracle Cloud Infrastructure Provider&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.cloud.oracle.com/iaas/Content/ResourceManager/Concepts/resourcemanager.htm&quot;&gt;Overview of Resource Manager&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="Oracle Cloud" /><category term="Virtual Cloud Network" /><category term="IaaS" /><category term="3 Tier Architecture" /><category term="HA" /><category term="Terraform" /><category term="Resource Manager" /><summary type="html">이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)에서는 몇 차례 기고를 통해 설명했던 Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 Terraform을 통해 Batch 형태로 구성하는 과정을 설명했었다.</summary></entry><entry><title type="html">Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)</title><link href="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/" rel="alternate" type="text/html" title="Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)" /><published>2019-05-03T00:00:00+09:00</published><updated>2019-05-03T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/basic-3tier-arch-terraform</id><content type="html" xml:base="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform/">&lt;p&gt;이전 문서 &lt;a href=&quot;/cloud/2019/basic-3tier-arch-regional/&quot;&gt;Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)&lt;/a&gt;에서는 각 Tier에 필요한 모든 컴포넌트들을 &lt;strong&gt;Oracle Cloud Console&lt;/strong&gt;을 통해 Step by Step으로 생성하였었다.&lt;/p&gt;
 
 &lt;p&gt;여기에서는 이전 문서에서 설명한 모든 필요 컴포넌트를 &lt;strong&gt;Terraform&lt;/strong&gt;을 이용해서 프로비전 하는 과정에 대해서 설명할 것이다.&lt;/p&gt;
 
@@ -28,7 +281,7 @@
 &lt;p&gt;예제 소스를 다음에서 다운 받는다.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; git clone https://github.com/mee-nam-lee/terraform_oci_paas.git
-&amp;gt; cd terraform_oci_paas
+&amp;gt; cd terraform_oci_paas/oci_with_paas
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;생성되는 각 컴포턴트는 이전 예제와 동일한 이름을 사용하였다. 컴포넌트 상세는 이전 글을 참고한다.&lt;/p&gt;
@@ -2273,123 +2526,4 @@ Intent List에 구현된 Intent들이 다 나오지 않는다면, &lt;strong&gt;
   &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Insight" /><summary type="html">이 Lab에서는 지금까지 만든 챗봇에 분석 기능을 추가해 볼 것 입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기" /><published>2019-04-01T00:00:00+09:00</published><updated>2019-04-01T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_5</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_5/">&lt;p&gt;이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;모바일android-채널-생성&quot;&gt;모바일(Android) 채널 생성&lt;/h1&gt;
-&lt;p&gt;좌측 메인 메뉴의 &lt;strong&gt;Channels&lt;/strong&gt; 메뉴를 선택합니다.
-&lt;img src=&quot;/assets/images/chatbot_lecture/channel/01_channel_settings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;+ Channel&lt;/strong&gt; 버튼을 클릭하여 새로운 채널을 생성하도록 합니다.&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Name : PizzaBot_{SEQ}.Android
-    &lt;blockquote&gt;
-      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
-  &lt;li&gt;Channel Type : &lt;strong&gt;Android&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/07_android.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 채널이 만들어 진 것을 확인 합니다. 아직 채널이 활성화 된 상태는 아닙니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/08_android_after_create.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만든 채널을 각자의 PizzaBot과 연결하기 위해 &lt;strong&gt;Route To&lt;/strong&gt;를 클릭하여 본인의 Bot과 연결되게 합니다.&lt;/p&gt;
-
-&lt;p&gt;아래와 같이 연결되었는지를 확인하고 &lt;strong&gt;Channel Enabled&lt;/strong&gt;를 활성화 시킵니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/09_android_route.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;채널 생성은 완료되었습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;모바일-앱-다운-받기&quot;&gt;모바일 앱 다운 받기&lt;/h2&gt;
-&lt;p&gt;Oracle Digital Assistant는 Android 앱에서 채팅 기능을 사용할 수 있도록 SDK와 샘플 애플리케이션을 제공하고 있습니다.
-이 제공되는 샘플 SDK를 다운 받아 앱을 수정하여 빌드하고 배포하여서 테스트 하도록 되어있지만, 이 Lab에서는 미리 미리 빌드된 apk를 제공하여 설치 후 바로 테스트 할 수 있도록 하였습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;참고--android-용-sample-다운로드&quot;&gt;참고 : Android 용 Sample 다운로드&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/topics/cloud/downloads/amce-downloads-4478270.html&quot;&gt;Oracle Digital Assistant (ODA) and Oracle Mobile Cloud (OMC) Downloads&lt;/a&gt; :  &lt;strong&gt;bots-client-sdk-android-samples-19.1.3.0.zip&lt;/strong&gt;을 다운로드 합니다.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/digital-assistant/use-chatbot/channels-topic.html#GUID-4B97C781-6972-44B9-A7D3-9F2F57CE09B9&quot;&gt;Android 앱 설정&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;미리-빌드된-샘플-sdk-apk-설치&quot;&gt;미리 빌드된 샘플 SDK APK 설치&lt;/h3&gt;
-&lt;p&gt;위 샘플을 빌드한 APK를 다음에서 다운받아 안드로드이 폰에 설치 합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mee-nam-lee/chatbot_lecture/raw/master/labfiles/mobilechat/app-release.apk&quot;&gt;ChatSample SDK APK 다운로드&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;설치 후 앱을 실행 시킵니다. 다음과 같은 화면이 보일 것 입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/15_android_01.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;방금 전에 만든 채널의 &lt;strong&gt;App ID&lt;/strong&gt;를 아래와 같이 Text Box에 입력한 후 &lt;strong&gt;계속&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/16_android_appid.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음 화면에서 챗봇과 대화하기를 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/17_android_before_chat.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 대화가 바로 이루어지는 것을 볼 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/18_android_chat.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;모바일ios-채널-생성&quot;&gt;모바일(iOS) 채널 생성&lt;/h1&gt;
-
-&lt;p&gt;iOS용 모바일 앱을 위한 채널도 하나 생성해  봅니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Name : PizzaBot_{SEQ}.iOS
-    &lt;blockquote&gt;
-      &lt;p&gt;본인이 생성한 PizzaBot과 동일 명으로 합니다&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Descrption : 학생이름 = [본인이름]&lt;/li&gt;
-  &lt;li&gt;Channel Type : &lt;strong&gt;iOS&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/10_ios_create.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;채널이 생성되었으면 Route To와 Enabled를 설정해 줍니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/11_ios_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;참고--ios-용-sample-다운로드&quot;&gt;참고 : iOS 용 Sample 다운로드&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/topics/cloud/downloads/amce-downloads-4478270.html&quot;&gt;Oracle Digital Assistant (ODA) and Oracle Mobile Cloud (OMC) Downloads&lt;/a&gt; : &lt;strong&gt;bots-client-sdk-ios-samples-19.1.3.0.zip&lt;/strong&gt;을 다운로드 합니다.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/digital-assistant/use-chatbot/channels-topic.html#GUID-4B97C781-6972-44B9-A7D3-9F2F57CE09B9&quot;&gt;Android 앱 설정&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;iOS용 배포 파일은 제공되지 않습니다. 위 샘플 코드를 받아서 iOS XCode Simulator를 통해 시연해 보면 다음과 같이 보여지게 됩니다.&lt;/p&gt;
-
-&lt;p&gt;iOS 앱에서 실행된 화면은 다음과 같습니다. 동일한 방법으로 App ID를 입력해 줍니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/12_ios_appid.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Chat with your Bot&lt;/strong&gt;을 클릭하여 대화를 시작합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/13_ios_start_chat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;피자 주문을 해 보면 다음과 같이 보여집니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/channel/14_ios_chat_pizza.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;과정을 완료하였습니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_5/&quot;&gt;챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Channel" /><category term="mobile" /><summary type="html">이 Lab에서는 지금까지 만든 챗봇을 모바일 앱을 통해 연결하는 실습을 해 볼 것 입니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Insight" /><summary type="html">이 Lab에서는 지금까지 만든 챗봇에 분석 기능을 추가해 볼 것 입니다.</summary></entry></feed>

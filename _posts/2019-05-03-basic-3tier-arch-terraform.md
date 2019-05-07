@@ -33,7 +33,7 @@ tags: [Oracle Cloud, Virtual Cloud Network,IaaS, 3 Tier Architecture, HA, Java C
 
 ```
 > git clone https://github.com/mee-nam-lee/terraform_oci_paas.git
-> cd terraform_oci_paas
+> cd terraform_oci_paas/oci_with_paas
 ```
 
 생성되는 각 컴포턴트는 이전 예제와 동일한 이름을 사용하였다. 컴포넌트 상세는 이전 글을 참고한다.

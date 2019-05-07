@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)에서는 몇 차례 기고를 통해 설명했던 Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 Terraform을 통해 Batch 형태로 구성하는 과정을 설명했었다." />
+<meta property="og:description" content="이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)에서는 몇 차례 기고를 통해 설명했던 Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 Terraform을 통해 Batch 형태로 구성하는 과정을 설명했었다." />
+<link rel="canonical" href="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/" />
+<meta property="og:url" content="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-07T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)에서는 몇 차례 기고를 통해 설명했던 Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 Terraform을 통해 Batch 형태로 구성하는 과정을 설명했었다.","@type":"BlogPosting","url":"http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/","headline":"Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기","dateModified":"2019-05-07T00:00:00+09:00","datePublished":"2019-05-07T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- begin _includes/seo.html --><title>Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기 - MN Lee’s IT Blog</title>
+<meta name="description" content="이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)에서는 몇 차례 기고를 통해 설명했던 Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 Terraform을 통해 Batch 형태로 구성하는 과정을 설명했었다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MN Lee's IT Blog">
+<meta property="og:title" content="Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기">
+<meta property="og:url" content="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/">
+
+
+  <meta property="og:description" content="이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)에서는 몇 차례 기고를 통해 설명했던 Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 Terraform을 통해 Batch 형태로 구성하는 과정을 설명했었다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-05-07T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/cloud/2019/basic-3tier-arch-terraform_rm/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+<link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">Archive</a><a class="page-link" href="/search/">검색</a></div></nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-05-07T00:00:00+09:00" itemprop="datePublished">May 7, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>이전 문서 <a href="/cloud/2019/basic-3tier-arch-terraform/">Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)</a>에서는 몇 차례 기고를 통해 설명했던 <strong>Oracle Cloud 상에 3 Tier 아키텍쳐 구성하기</strong>에 필요한 각 컴포넌트들을 하나 하나 수동으로 생성하는 것이 아닌 <strong>Terraform</strong>을 통해 Batch 형태로 구성하는 과정을 설명했었다.</p>
+
+<p>보통 Terraform을 이용한 Provision을 위해서는 Terraform 환경을 별도로 구축하거나 Local 환경에 설치하여 작업하지만, Oracle Cloud Infrastructure에서는 별도의 Terraform 환경 구성 없이도 Terraform 구성 파일만을 Oracle Cloud에 업로드 하여 리소스를 생성할 수 있도록 하는 기능을 제공하고 있다. Oracle Cloud Infrastructure는 이를 <strong>Resource Manager</strong>라는 이름으로 제공한다.</p>
+
+<ul>
+  <li><a href="https://docs.cloud.oracle.com/iaas/Content/ResourceManager/Concepts/resourcemanager.htm">Overview of Resource Manager</a></li>
+</ul>
+
+<p>여기에서는 이전에 작성한 Terraform 구성 파일들을 Oracle Cloud Infrastructure(OCI)의 <strong>Resource Manager</strong>로 생성하여 원하는 리소스를 Provision하는 과정에 대해 설명하려고 한다.</p>
+
+<blockquote>
+  <p>OCI의 Resource Manager에서는 현재까지는 <strong>oci</strong> provider만 지원되고, 추가적인 Plugin을 설치할 수 없기 때문에 이전 과정에서 사용한 <strong>oraclepaas</strong>  Provider 부분은 제외해야 한다. 즉 Java Cloud Service(JCS) 부분의 Provision은 <strong>Resource Manager</strong>를 통해서 수행할 수 없다.
+따라서 여기에서는 JCS 부분을 제외한 다른 리소스들만 생성해 볼 것이다.</p>
+</blockquote>
+
+<h1 id="prerequisites">Prerequisites</h1>
+
+<ul>
+  <li>Oracle Cloud Infrastucture</li>
+</ul>
+
+<h1 id="3-tier-예제-소스">3-Tier 예제 소스</h1>
+
+<p>이전 과정을 진행하지 않았었다면 여기서 새롭게 예제 소스를 다운 받는다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; git clone https://github.com/mee-nam-lee/terraform_oci_paas.git
+&gt; cd terraform_oci_paas/oci_resourcemanager
+</code></pre></div></div>
+
+<h2 id="terraform-파일-설명">Terraform 파일 설명</h2>
+
+<p>사용하는 Terraform Configuration 파일은 이전과 동일하지만 <strong>Resource Manager</strong>를 통해 생성할 수 없는 PaaS 부분인 Java Cloud Service(JCS) 구성파일은 제외되었다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>파일명</th>
+      <th>생성되는 Resource</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><del>env.sh</del></td>
+      <td> </td>
+      <td><strong>(삭제됨)</strong> Oracle Cloud에 연결하기 위한 정보가 들어있는 파일</td>
+    </tr>
+    <tr>
+      <td>provider.tf</td>
+      <td> </td>
+      <td><strong>(수정됨)</strong> oci, oraclepaas provider 구성 정보</td>
+    </tr>
+    <tr>
+      <td>variables.tf</td>
+      <td> </td>
+      <td><strong>(수정됨)</strong> 다른 terraform 파일에서 참고하는 variable 정도들이 들어있음</td>
+    </tr>
+    <tr>
+      <td>data.tf</td>
+      <td> </td>
+      <td>OCI 정보 조회</td>
+    </tr>
+    <tr>
+      <td>vcn.tf</td>
+      <td>VCN</td>
+      <td>VCN 생성</td>
+    </tr>
+    <tr>
+      <td>subnet.tf</td>
+      <td>Subnet</td>
+      <td>3개의 Subnet 생성</td>
+    </tr>
+    <tr>
+      <td>routetable.tf</td>
+      <td>RouteTable</td>
+      <td>2개 (PublicRT, PrivateRT) RouteTable 생성</td>
+    </tr>
+    <tr>
+      <td>securitylist.tf</td>
+      <td>SecurityList</td>
+      <td>3개 (PublicSL, PrivateSL, DBSL)의 Security List와 Ingress, Egress Rule 정의</td>
+    </tr>
+    <tr>
+      <td>internetgw.tf</td>
+      <td>Internet Gateway</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>servicegw.tf</td>
+      <td>Service Gateway</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>db.tf</td>
+      <td>DB System</td>
+      <td>DemoDB 생성</td>
+    </tr>
+    <tr>
+      <td>object.tf</td>
+      <td>ObjectStorage</td>
+      <td>JCS Backup용 Object Storage Bucket 2개 생성</td>
+    </tr>
+    <tr>
+      <td><del>jcs.tf</del></td>
+      <td>Java Cloud Service</td>
+      <td><strong>(삭제됨)</strong> AD1, AD2에 각각 JCS 1개 생성</td>
+    </tr>
+    <tr>
+      <td>compute_web.tf</td>
+      <td>Compute Instance</td>
+      <td>Web용 Custom Image로 Compute Instance 2개 생성</td>
+    </tr>
+    <tr>
+      <td>compute_coh.tf</td>
+      <td>Compute Instance</td>
+      <td>Coherence 용 Custom Image로 Compute Instance 2개 생성</td>
+    </tr>
+    <tr>
+      <td>loadbalancer.tf</td>
+      <td>LoadBalancer</td>
+      <td>Loadbalancer 생성 후 Web 인스턴스에 연결하는 BackendSet 구성</td>
+    </tr>
+    <tr>
+      <td>output.tf</td>
+      <td> </td>
+      <td>필요 정보 출력</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="providertf">provider.tf</h2>
+
+<p>위에서 설명한 데로 <strong>Resource Manager</strong>에서는 OCI Provider만 사용할 수 있고, Parameter로 <strong>user_ocid</strong>, <strong>fingerprint</strong>, <strong>private_key_path</strong> 같은 보안 관련 파라미터를 구성파일 내에 두지 못하게 하기 때문에 이전 파일에서 보안 관련 파라미터들을 제거해야 한다.</p>
+
+<blockquote>
+  <p>OCI 내에서 작업이 진행되는 것이기 때문에 이 정보가 요구되지 않는다.</p>
+</blockquote>
+
+<p>변경된 파일은 다음과 같다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>provider "oci" {
+  tenancy_ocid         = "${var.tenancy_ocid}"
+  region               = "${var.region}"
+  disable_auto_retries = "${var.disable_auto_retries}"
+}
+</code></pre></div></div>
+
+<h2 id="variablestf">variables.tf</h2>
+
+<p>이전 Local Terraform Provision에서는 TF_VAR 환경 변수를 참조하여 변수를 사용하도록 구성하였기 때문에 variables.tf에 default 값을 설정하지 않았다.
+<strong>Resource Manager</strong>에서는 환경 변수 Export를 통한 변수 참조가 가능하지 않기 때문에 variable 값을 셋팅해줘야 하는데, 다음의 3가지 방법으로 수행할 수 있다.</p>
+
+<ol>
+  <li>tfvars 파일 생성</li>
+  <li><strong>Resource Manager</strong>에서 variable 값을 콘솔을 통해서 입력</li>
+  <li>variables.tf의 default 값 setting</li>
+</ol>
+
+<p>여기에서는 3번 방법으로 수행하였다. 따라서 variables.tf 파일도 수정이 되어야 한다.
+사용하지 않는 variable들을 삭제하고 default 값을 설정해준 variables.tf 파일은 다음과 같다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/01_variables.png" alt="" /></p>
+
+<h2 id="terraform-configuration-archive-생성">Terraform Configuration Archive 생성</h2>
+
+<p>준비된 Terraform Configuration 파일을 zip으로 묶는다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; zip ../../tf_oci_rm.zip *.tf 
+</code></pre></div></div>
+<p><img src="/assets/images/3tier/oci_rm/02_zip.png" alt="" /></p>
+
+<h1 id="resource-manager-생성">Resource Manager 생성</h1>
+
+<p>Oracle Cloud Console에 접속하여 <strong>Resource Manager</strong> 메뉴로 이동한다. <strong>Create Stack</strong>을 클릭하여 Stack을 하나 생성한다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/03_stack.png" alt="" /></p>
+
+<p>Stack 이름을 입력하고, 압축해두었던 zip 파일을 업로드한다. 그러고 나면 variable 값이 파싱되어서 화면에 보여질 것이다. 값들을 확인한 후 하단의 <strong>Create</strong> 버튼을 클릭한다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/04_create_stack.png" alt="" /></p>
+
+<p>Stack이 하나 만들어졌다.</p>
+
+<h2 id="variable-설정">Variable 설정</h2>
+
+<p>variables.tf 파일로 default 값들을 설정하였지만 보안 상의 이유로 configuration file에 정의할 수 없는 <strong>ssh_public_key</strong> 같은 변수는 공백으로 남겨져 있다.
+이 값은 Resource Manager의 콘솔을 통해 값을 셋팅하도록 할 것이다.
+<strong>Variables</strong> 메뉴에서 <strong>Edit Variables</strong>를 클릭하여 변수 값을 설정해 준다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/10_var.png" alt="" /></p>
+
+<p><strong>ssh_public_key</strong> 값을 입력하고 저장한다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/11_save_var.png" alt="" /></p>
+
+<h2 id="terraform-plan">Terraform Plan</h2>
+
+<p>생성한 Stack으로 이동하여 Plan/Apply/Destroy 작업을 수행할 수 있는 <strong>Job</strong>을 하나 생성한다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/05_job.png" alt="" /></p>
+
+<p>먼저 <strong>Plan</strong> 부터 생성한다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/06_plan.png" alt="" /></p>
+
+<p>Job이 <strong>Accepted</strong>가 되었고 곧 <strong>In Progress</strong> 상태로 전환될 것이다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/07_job_accepted.png" alt="" /></p>
+
+<p>진행 사항을 다음처럼 Log에서 확인할 수가 있다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/08_log1.png" alt="" /></p>
+
+<p><img src="/assets/images/3tier/oci_rm/08_log2.png" alt="" /></p>
+
+<h2 id="terraform-apply">Terraform Apply</h2>
+
+<p><strong>apply</strong> Job도 위에서 처럼 생성한다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/09_apply.png" alt="" /></p>
+
+<p><strong>Apply</strong> Job의 진행사항도 Log에서 다음과 같이 확인이 된다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/12_apply_log.png" alt="" /></p>
+
+<p>이제 기다리기만 하면 원하는 리소스들이 생성되어 있을 것이다.</p>
+
+<p><strong>outputs.tf</strong>에 정의한 output 결과는 <strong>Outputs</strong> 메뉴에서 확인 할 수 있다.</p>
+
+<p><img src="/assets/images/3tier/oci_rm/13_output.png" alt="" /></p>
+
+<h1 id="생성-확인">생성 확인</h1>
+
+<p>Oracle Cloud Console에 접속해서 리소스들이 잘 생성되었는지 확인한다.
+생성된 내용은 이전과 동일한 내용이니 여기에서는 생략하도록 하겠다.</p>
+
+<h1 id="terraform-destroy--환경-지우기">Terraform destroy : 환경 지우기</h1>
+
+<p><strong>Destroy</strong> 역시 Job으로 생성해서 수행한다.</p>
+
+<h1 id="이전-문서-참고">이전 문서 참고</h1>
+
+<ul>
+  <li><a href="/cloud/2019/basic-3tier-arch/">Oracle IaaS와 Java Cloud Service를 사용하여 멀티 AD(Availability Domain)에 3 Tier 아키텍쳐 구축하기</a></li>
+  <li><a href="/cloud/2019/basic-3tier-arch-regional/">Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)</a></li>
+  <li><a href="/cloud/2019/basic-3tier-arch-terraform/">Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)</a></li>
+</ul>
+
+<h1 id="참고-자료">참고 자료</h1>
+
+<ul>
+  <li><a href="https://www.terraform.io/docs/providers/oci/">Terraform Oracle Cloud Infrastructure Provider</a></li>
+  <li><a href="https://docs.cloud.oracle.com/iaas/Content/ResourceManager/Concepts/resourcemanager.htm">Overview of Resource Manager</a></li>
+</ul>
+
+
+
+  </div><div>
+  <p>
+    <!--img src="/assets/images/tag.png"/--><a href="/tags/3 Tier Architecture/" class="keywords" rel="tag">3 Tier Architecture</a>&nbsp&nbsp<a href="/tags/HA/" class="keywords" rel="tag">HA</a>&nbsp&nbsp<a href="/tags/IaaS/" class="keywords" rel="tag">IaaS</a>&nbsp&nbsp<a href="/tags/Oracle Cloud/" class="keywords" rel="tag">Oracle Cloud</a>&nbsp&nbsp<a href="/tags/Resource Manager/" class="keywords" rel="tag">Resource Manager</a>&nbsp&nbsp<a href="/tags/Terraform/" class="keywords" rel="tag">Terraform</a>&nbsp&nbsp<a href="/tags/Virtual Cloud Network/" class="keywords" rel="tag">Virtual Cloud Network</a></p>
+</div><div>
+  <p>
+    <!--img src="/assets/images/share.png"/-->
+  
+    <a href="https://twitter.com/intent/tweet?text=Oracle+Cloud+Infrastructure+Resource+Manager%EB%A5%BC+%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC+Terraform+%EA%B5%AC%EC%84%B1+%EB%A6%AC%EC%86%8C%EC%8A%A4+Provision+%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch-terraform_rm%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch-terraform_rm%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch-terraform_rm%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fbasic-3tier-arch-terraform_rm%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/cloud/2019/basic-3tier-arch-terraform/" title="Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Terraform을 통한 Provision)
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">&nbsp&nbsp Next &nbsp&nbsp</a></nav>
+</div>
+</div><a class="u-url" href="/cloud/2019/basic-3tier-arch-terraform_rm/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>
