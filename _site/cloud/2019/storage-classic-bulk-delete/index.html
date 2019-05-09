@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 먼저 Object들을 다 지우고 Container를 지워야 한다. 오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다." />
+<meta property="og:description" content="Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 먼저 Object들을 다 지우고 Container를 지워야 한다. 오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다." />
+<link rel="canonical" href="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/" />
+<meta property="og:url" content="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-07T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 먼저 Object들을 다 지우고 Container를 지워야 한다. 오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다.","@type":"BlogPosting","url":"http://localhost:4000/cloud/2019/storage-classic-bulk-delete/","headline":"Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용","dateModified":"2019-05-07T00:00:00+09:00","datePublished":"2019-05-07T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cloud/2019/storage-classic-bulk-delete/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- begin _includes/seo.html --><title>Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용 - MN Lee’s IT Blog</title>
+<meta name="description" content="Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 먼저 Object들을 다 지우고 Container를 지워야 한다.오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MN Lee's IT Blog">
+<meta property="og:title" content="Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용">
+<meta property="og:url" content="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/">
+
+
+  <meta property="og:description" content="Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 먼저 Object들을 다 지우고 Container를 지워야 한다.오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-05-07T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+<link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">Archive</a><a class="page-link" href="/search/">검색</a></div></nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-05-07T00:00:00+09:00" itemprop="datePublished">May 7, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 <strong>먼저 Object들을 다 지우고 Container를 지워야 한다.</strong>
+오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다.</p>
+
+<p>따라서 이 경우 REST API를 이용하여서 Object를 지워줘야 하는데, 이를 위해서 <strong>Bulk Delete</strong>하는 REST API를 제공한다.
+이를 통해서 금방 다 지울 수 있을 것 같지만 지우려고 하는 Object가 수천개라면 수천 개 List를 Bulk Delete API에 한방에 보내서 처리할 수가 없다.
+테스트 해 본 결과 안정적으로 처리 후 응답을 받을 수 있는 Object 갯수는 70개 내외였다.</p>
+
+<p>Object List를 70개 내외로 잘라내서 매번 REST API를 돌려주는 것도 상당히 번거로운 일이기 때문에, 다음과 같이 정해진 수의 Input을 받아서 Bulk Delete API를 호출하는 스크립트를 만들어 주면 작업은 훨씬 간편해 진다.</p>
+
+<h1 id="bulk-deletesh">bulk-delete.sh</h1>
+
+<p>스크립트의 내용은 다음과 같다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># Connection Info</span>
+<span class="nv">container</span><span class="o">=</span><span class="s2">"ContainerName"</span>
+<span class="nv">iddomain</span><span class="o">=</span><span class="s2">"Identity Domain Name"</span>
+<span class="nv">username</span><span class="o">=</span><span class="s2">"User Name"</span>
+<span class="nv">password</span><span class="o">=</span><span class="s2">"Password"</span>
+
+<span class="c"># get AuthToken</span>
+curl <span class="nt">-I</span> <span class="nt">-X</span> GET <span class="nt">-H</span> <span class="s2">"X-Storage-User: Storage-</span><span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span><span class="s2">:</span><span class="k">${</span><span class="nv">username</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Storage-Pass: </span><span class="k">${</span><span class="nv">password</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+      https://<span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span>.us.storage.oraclecloud.com/auth/v1.0 <span class="o">&gt;</span> output.txt 
+
+<span class="nv">token</span><span class="o">=</span><span class="sb">`</span><span class="nb">grep </span>AUTH output.txt | <span class="nb">head</span> <span class="nt">-n1</span> |  <span class="nb">awk</span> <span class="s1">'{print $2}'</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="k">${</span><span class="nv">token</span><span class="k">}</span>
+
+<span class="c">## Looping Count는 원하는 대로</span>
+<span class="k">for</span> <span class="o">((</span> <span class="nv">c</span><span class="o">=</span>1<span class="p">;</span> c&lt;<span class="o">=</span>5<span class="p">;</span> c++ <span class="o">))</span>
+<span class="k">do
+</span><span class="nb">echo</span> <span class="s2">"========= </span><span class="nv">$c</span><span class="s2"> ======================="</span>
+<span class="nb">cp</span> /dev/null object1.txt
+<span class="nb">cp</span> /dev/null object2.txt
+
+<span class="c"># Get Object List</span>
+curl <span class="nt">-H</span> <span class="s2">"X-Auth-Token: </span><span class="k">${</span><span class="nv">token</span><span class="k">}</span><span class="s2">"</span> https://<span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span>.us.storage.oraclecloud.com/v1/Storage-<span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span>/<span class="k">${</span><span class="nv">container</span><span class="k">}</span> <span class="nt">-o</span> object1.txt
+
+python3 ./object.py <span class="k">${</span><span class="nv">container</span><span class="k">}</span>
+
+<span class="c"># Bulk Delete</span>
+curl <span class="nt">-X</span> DELETE <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Auth-Token: </span><span class="k">${</span><span class="nv">token</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-H</span> <span class="s2">"Content-Type: text/plain"</span> <span class="se">\</span>
+     <span class="nt">-T</span> object2.txt <span class="se">\</span>
+     <span class="s2">"https://</span><span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span><span class="s2">.us.storage.oraclecloud.com/v1/Storage-</span><span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span><span class="s2">/?bulk-delete"</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<h1 id="objectpy">object.py</h1>
+<p>스크립트 내부에서 <strong>Python</strong> 파일을 수행하는데, 이것이 하는 역할은 Object 이름 앞에 Container의 이름을 달아 주는 것이다.
+여기서 bulk delete에 사용할 input 값의 크기를 조정하면 된다. 예제에서는 70으로 설정하였다.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">fr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"object1.txt"</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf8'</span><span class="p">)</span>
+
+<span class="n">fw</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"object2.txt"</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span>
+
+<span class="n">container</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">linenum</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fr</span><span class="p">:</span>
+    <span class="n">linenum</span> <span class="o">=</span> <span class="n">linenum</span> <span class="o">+</span><span class="mi">1</span> 
+    <span class="s">''' print("line", line) '''</span>
+    <span class="n">fw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">container</span><span class="o">+</span><span class="s">"/"</span> <span class="o">+</span> <span class="n">line</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">linenum</span> <span class="o">&gt;</span> <span class="mi">70</span><span class="p">:</span>
+       <span class="k">break</span>
+<span class="n">fr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">fw</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h1 id="사용법">사용법</h1>
+
+<p>bulk-delete.sh의 Connection 관련 정보와 Container 명을 수정한 후 스크립트만 돌려주면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; bulk-delete.sh
+</code></pre></div></div>
+
+<p>루핑을 돌면서 잘 지워지고 있다.</p>
+
+<p><img src="/assets/images/storage/01_result.png" alt="" /></p>
+
+<p>Object가 다 지워지고 나면 Container는 콘솔에서 삭제하면 된다.</p>
+
+<h1 id="참고-자료">참고 자료</h1>
+
+<ul>
+  <li><a href="https://docs.oracle.com/en/cloud/iaas/storage-cloud/cssto/deleting-multiple-objects-single-operation.html">Deleting Multiple Objects in a Single Operation</a></li>
+</ul>
+
+
+
+
+  </div><div>
+  <p>
+    <!--img src="/assets/images/tag.png"/--><a href="/tags/Object Storage/" class="keywords" rel="tag">Object Storage</a>&nbsp&nbsp<a href="/tags/Oracle Cloud/" class="keywords" rel="tag">Oracle Cloud</a>&nbsp&nbsp<a href="/tags/Python/" class="keywords" rel="tag">Python</a>&nbsp&nbsp<a href="/tags/REST API/" class="keywords" rel="tag">REST API</a></p>
+</div><div>
+  <p>
+    <!--img src="/assets/images/share.png"/-->
+  
+    <a href="https://twitter.com/intent/tweet?text=Oracle+Storage+Classic%EC%9D%98+Object+%EC%A7%80%EC%9A%B0%EA%B8%B0+-+Bulk+Delete+REST+API+%EC%9D%B4%EC%9A%A9%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fstorage-classic-bulk-delete%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fstorage-classic-bulk-delete%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fstorage-classic-bulk-delete%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fstorage-classic-bulk-delete%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/cloud/2019/basic-3tier-arch-terraform_rm/" title="Oracle Cloud Infrastructure Resource Manager를 이용하여 Terraform 구성 리소스 Provision 하기
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">&nbsp&nbsp Next &nbsp&nbsp</a></nav>
+</div>
+</div><a class="u-url" href="/cloud/2019/storage-classic-bulk-delete/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>

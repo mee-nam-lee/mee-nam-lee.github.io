@@ -129,6 +129,10 @@
 <lastmod>2019-05-07T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/cloud/2019/storage-classic-bulk-delete/</loc>
+<lastmod>2019-05-07T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/tags/3%20Tier%20Architecture/</loc>
 </url>
 <url>
@@ -222,6 +226,9 @@
 <loc>http://localhost:4000/tags/Node.js/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/tags/Object%20Storage/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/tags/Oracle%20Cloud/</loc>
 </url>
 <url>
@@ -235,6 +242,12 @@
 </url>
 <url>
 <loc>http://localhost:4000/tags/Prometheus/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/tags/Python/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/tags/REST%20API/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/tags/Resource%20Manager/</loc>
