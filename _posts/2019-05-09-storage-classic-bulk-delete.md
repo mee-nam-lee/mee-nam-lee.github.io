@@ -47,7 +47,12 @@ cp /dev/null object2.txt
 # Get Object List
 curl -H "X-Auth-Token: ${token}" https://${iddomain}.us.storage.oraclecloud.com/v1/Storage-${iddomain}/${container} -o object1.txt
 
-python3 ./object.py ${container}
+# Python 코드 사용 시
+#python3 ./object.py ${container}
+
+# Container 이름 추가 부분 Script로 변경
+# 한 번에 delete할 Object의 수는 "-nObject수"로 조정
+cat object1.txt | head -n30 | awk -v var="$container" '{print var "/" $1}' > object2.txt
 
 # Bulk Delete
 curl -X DELETE \
@@ -58,6 +63,10 @@ done
 ```
 
 # object.py
+
+> Python 코드 사용 부분을 Script로 대체하였기 때문에 이 코드는 이제 필요 없다.
+> 참고 용으로 지우지 않고 그대로 둠
+
 스크립트 내부에서 **Python** 파일을 수행하는데, 이것이 하는 역할은 Object 이름 앞에 Container의 이름을 달아 주는 것이다.
 여기서 bulk delete에 사용할 input 값의 크기를 조정하면 된다. 예제에서는 70으로 설정하였다.
 
