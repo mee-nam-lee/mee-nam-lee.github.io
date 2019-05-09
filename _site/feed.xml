@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-09T10:58:07+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용</title><link href="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/" rel="alternate" type="text/html" title="Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용" /><published>2019-05-09T00:00:00+09:00</published><updated>2019-05-09T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/storage-classic-bulk-delete</id><content type="html" xml:base="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/">&lt;p&gt;Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 &lt;strong&gt;먼저 Object들을 다 지우고 Container를 지워야 한다.&lt;/strong&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-09T17:51:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용</title><link href="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/" rel="alternate" type="text/html" title="Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용" /><published>2019-05-09T00:00:00+09:00</published><updated>2019-05-09T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/storage-classic-bulk-delete</id><content type="html" xml:base="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/">&lt;p&gt;Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 &lt;strong&gt;먼저 Object들을 다 지우고 Container를 지워야 한다.&lt;/strong&gt;
 오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다.&lt;/p&gt;
 
 &lt;p&gt;따라서 이 경우 REST API를 이용하여서 Object를 지워줘야 하는데, 이를 위해서 &lt;strong&gt;Bulk Delete&lt;/strong&gt;하는 REST API를 제공한다.
@@ -41,7 +41,12 @@ curl &lt;span class=&quot;nt&quot;&gt;-I&lt;/span&gt; &lt;span class=&quot;nt&qu
 &lt;span class=&quot;c&quot;&gt;# Get Object List&lt;/span&gt;
 curl &lt;span class=&quot;nt&quot;&gt;-H&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;X-Auth-Token: &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; https://&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;iddomain&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.us.storage.oraclecloud.com/v1/Storage-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;iddomain&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; object1.txt
 
-python3 ./object.py &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Python 코드 사용 시&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#python3 ./object.py ${container}&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Container 이름 추가 부분 Script로 변경&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 한 번에 delete할 Object의 수는 &quot;-nObject수&quot;로 조정&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;object1.txt | &lt;span class=&quot;nb&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n30&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$container&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'{print var &quot;/&quot; $1}'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; object2.txt
 
 &lt;span class=&quot;c&quot;&gt;# Bulk Delete&lt;/span&gt;
 curl &lt;span class=&quot;nt&quot;&gt;-X&lt;/span&gt; DELETE &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
@@ -52,6 +57,12 @@ curl &lt;span class=&quot;nt&quot;&gt;-X&lt;/span&gt; DELETE &lt;span class=&quo
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;objectpy&quot;&gt;object.py&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Python 코드 사용 부분을 Script로 대체하였기 때문에 이 코드는 이제 필요 없다.
+참고 용으로 지우지 않고 그대로 둠&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;p&gt;스크립트 내부에서 &lt;strong&gt;Python&lt;/strong&gt; 파일을 수행하는데, 이것이 하는 역할은 Object 이름 앞에 Container의 이름을 달아 주는 것이다.
 여기서 bulk delete에 사용할 input 값의 크기를 조정하면 된다. 예제에서는 70으로 설정하였다.&lt;/p&gt;
 

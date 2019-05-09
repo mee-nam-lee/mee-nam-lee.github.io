@@ -141,7 +141,12 @@ curl <span class="nt">-I</span> <span class="nt">-X</span> GET <span class="nt">
 <span class="c"># Get Object List</span>
 curl <span class="nt">-H</span> <span class="s2">"X-Auth-Token: </span><span class="k">${</span><span class="nv">token</span><span class="k">}</span><span class="s2">"</span> https://<span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span>.us.storage.oraclecloud.com/v1/Storage-<span class="k">${</span><span class="nv">iddomain</span><span class="k">}</span>/<span class="k">${</span><span class="nv">container</span><span class="k">}</span> <span class="nt">-o</span> object1.txt
 
-python3 ./object.py <span class="k">${</span><span class="nv">container</span><span class="k">}</span>
+<span class="c"># Python 코드 사용 시</span>
+<span class="c">#python3 ./object.py ${container}</span>
+
+<span class="c"># Container 이름 추가 부분 Script로 변경</span>
+<span class="c"># 한 번에 delete할 Object의 수는 "-nObject수"로 조정</span>
+<span class="nb">cat </span>object1.txt | <span class="nb">head</span> <span class="nt">-n30</span> | <span class="nb">awk</span> <span class="nt">-v</span> <span class="nv">var</span><span class="o">=</span><span class="s2">"</span><span class="nv">$container</span><span class="s2">"</span> <span class="s1">'{print var "/" $1}'</span> <span class="o">&gt;</span> object2.txt
 
 <span class="c"># Bulk Delete</span>
 curl <span class="nt">-X</span> DELETE <span class="se">\</span>
@@ -152,6 +157,12 @@ curl <span class="nt">-X</span> DELETE <span class="se">\</span>
 </code></pre></div></div>
 
 <h1 id="objectpy">object.py</h1>
+
+<blockquote>
+  <p>Python 코드 사용 부분을 Script로 대체하였기 때문에 이 코드는 이제 필요 없다.
+참고 용으로 지우지 않고 그대로 둠</p>
+</blockquote>
+
 <p>스크립트 내부에서 <strong>Python</strong> 파일을 수행하는데, 이것이 하는 역할은 Object 이름 앞에 Container의 이름을 달아 주는 것이다.
 여기서 bulk delete에 사용할 input 값의 크기를 조정하면 된다. 예제에서는 70으로 설정하였다.</p>
 
