@@ -10,7 +10,9 @@ Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Obje
 
 따라서 이 경우 REST API를 이용하여서 Object를 지워줘야 하는데, 이를 위해서 **Bulk Delete**하는 REST API를 제공한다.
 이를 통해서 금방 다 지울 수 있을 것 같지만 지우려고 하는 Object가 수천개라면 수천 개 List를 Bulk Delete API에 한방에 보내서 처리할 수가 없다.
-테스트 해 본 결과 안정적으로 처리 후 응답을 받을 수 있는 Object 갯수는 70개 내외였다.
+테스트 해 본 결과 안정적으로 처리 후 응답을 받을 수 있는 Object 갯수는 70개 내외였다. 
+
+> bulk-delete의 input object 수를 상황에 따라 적절히 조절하면서 스크립트를 수행한다.
 
 Object List를 70개 내외로 잘라내서 매번 REST API를 돌려주는 것도 상당히 번거로운 일이기 때문에, 다음과 같이 정해진 수의 Input을 받아서 Bulk Delete API를 호출하는 스크립트를 만들어 주면 작업은 훨씬 간편해 진다.
 
