@@ -1,4 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-09T17:51:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용</title><link href="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/" rel="alternate" type="text/html" title="Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용" /><published>2019-05-09T00:00:00+09:00</published><updated>2019-05-09T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/storage-classic-bulk-delete</id><content type="html" xml:base="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/">&lt;p&gt;Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 &lt;strong&gt;먼저 Object들을 다 지우고 Container를 지워야 한다.&lt;/strong&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-22T13:51:28+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Docker Compose를 사용한 WebLogic, MySQL 개발 환경</title><link href="http://localhost:4000/weblogic/2019/weblogic-mysql/" rel="alternate" type="text/html" title="Docker Compose를 사용한 WebLogic, MySQL 개발 환경" /><published>2019-05-22T00:00:00+09:00</published><updated>2019-05-22T00:00:00+09:00</updated><id>http://localhost:4000/weblogic/2019/weblogic-mysql</id><content type="html" xml:base="http://localhost:4000/weblogic/2019/weblogic-mysql/">&lt;p&gt;Local PC 환경에서 WebLogic을 데이터베이스와 함께 테스트하는 환경을 구축할 필요가 있을 때, 내 PC에 각종 소프트웨어들을 다 설치할 필요 없이 표준 이미지로 제공되는 Docker Image 이용하여 구동만 하면 매우 편리할 때가 많다.&lt;/p&gt;
+
+&lt;p&gt;여기에서는 MySQL을 DB로 사용하는 WebLogic 환경을 구축하는 간단한 방법을 설명할 것이다.&lt;/p&gt;
+
+&lt;h1 id=&quot;docker-compose파일-생성&quot;&gt;Docker-Compose 파일 생성&lt;/h1&gt;
+
+&lt;p&gt;Docker Compose 구성 파일에서 사용하는 필요한 내용들을 미리 준비해 둔다.&lt;/p&gt;
+
+&lt;h2 id=&quot;필요-파일&quot;&gt;필요 파일&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Docker Images : MySQL과 WebLogic Image는 &lt;a href=&quot;http://dockerhub.com&quot;&gt;Docker Hub&lt;/a&gt;에서 받을 수 있다.&lt;/li&gt;
+  &lt;li&gt;MySQL JDBC Driver : &lt;a href=&quot;https://dev.mysql.com/downloads/connector/j/&quot;&gt;Download Connector/J&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;다운 받은 jar 파일을 작업 디렉토리에 복사한다.&lt;/li&gt;
+      &lt;li&gt;작업 디렉토리는 WebLogic Container에 Volume으로 Attach 할 것이다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;domain.properties 파일 : 도메인 계정 정보를 담는 파일이다. 아래 내용을 참고해서 작업 디렉토리 내에 생성해 둔다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;domainproperties&quot;&gt;domain.properties&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;username=weblogic
+password=welcome1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;docker-composeyml&quot;&gt;docker-compose.yml&lt;/h3&gt;
+
+&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3'&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;mysql&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;container_name &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;some-mysql&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;welcome1&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_DATABASE&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./mysqldata:/var/lib/mysql&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.:/mnt/tmp&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3306:3306&quot;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;33060:33060&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;hostname&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;--default-authentication-plugin=mysql_native_password&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;weblogic&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;store/oracle/weblogic:12.2.1.3-dev&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;container_name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myweblogic&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;PRE_CLASSPATH&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/u01/oracle/properties/mysql-connector-java-8.0.16.jar:${PRE_CLASSPATH}&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.:/u01/oracle/properties&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;7001:7001&quot;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;9002:9002&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;stdin_open&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;tty&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;파일이 완료되었으면 컨테이너를 구동한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; docker-compose up -d
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;mysql-user-생성&quot;&gt;MySQL User 생성&lt;/h1&gt;
+&lt;p&gt;애플리케이션에서 사용할 DB User를 생성한다. 이 User는 WebLogic에서 DataSource를 생성할 때 사용할 것이다.
+현 작업 디렉토리가 MySQL Container에 Volume으로 연결되어 있으므로 사용자를 생성할 &lt;strong&gt;createuser.sql&lt;/strong&gt; 파일을 현 디렉토리 내에 다음 내용으로 생성한다. 별도의 필요한 DDL/DML이 있다면 여기에 추가하면 좋을 것이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'user1'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IDENTIFIED&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'welcome1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;GRANT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ALL&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;PRIVILEGES&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ON&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mysql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TO&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'user1'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'%'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;다음 command를 실행하면 사용자가 추가 될 것이다. 새롭게 생성되는 사용자는 &lt;strong&gt;mysql_native_password&lt;/strong&gt; plugin을 기본하도록 설정되어 있다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; docker exec -it some-mysql sh -c &quot;mysql -uroot -pwelcome1 mysql &amp;lt; /mnt/tmp/createuser.sql&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/mysql/01_mysql_user.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;datasource-생성&quot;&gt;DataSource 생성&lt;/h1&gt;
+
+&lt;p&gt;WebLogic Console에 접속해서 DataSource를 생성한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://localhost:9002/console&quot;&gt;https://localhost:9002/console&lt;/a&gt;로 접속한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/mysql/02_ds1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;적당한 드라이버를 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/mysql/02_ds2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;사용자 생성 시 사용했던 Password를 입력한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/mysql/02_ds3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Connection을 Test 해본다. 입력이 잘 되었다면 성공할 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/mysql/02_ds4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Finish&lt;/strong&gt;를 클릭하면 DataSource가 생성된다.&lt;/p&gt;
+
+&lt;p&gt;이제 애플리케이션에서 Connection을 얻어다 사용하기만 하면 된다.&lt;/p&gt;</content><author><name></name></author><category term="WebLogic" /><category term="MySQL" /><category term="Docker" /><category term="Docker Compose" /><summary type="html">Local PC 환경에서 WebLogic을 데이터베이스와 함께 테스트하는 환경을 구축할 필요가 있을 때, 내 PC에 각종 소프트웨어들을 다 설치할 필요 없이 표준 이미지로 제공되는 Docker Image 이용하여 구동만 하면 매우 편리할 때가 많다.</summary></entry><entry><title type="html">Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용</title><link href="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/" rel="alternate" type="text/html" title="Oracle Storage Classic의 Object 지우기 - Bulk Delete REST API 이용" /><published>2019-05-09T00:00:00+09:00</published><updated>2019-05-09T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/storage-classic-bulk-delete</id><content type="html" xml:base="http://localhost:4000/cloud/2019/storage-classic-bulk-delete/">&lt;p&gt;Object Storage에서 Container를 지우고 싶을 경우, Container 내에 Object들이 존재한다면 &lt;strong&gt;먼저 Object들을 다 지우고 Container를 지워야 한다.&lt;/strong&gt;
 오라클 Cloud에서는 이 작업을 Cloud Console을 통해서 수행할 수 있지만, Object가 수천개가 넘어 간다면 이를 일일이 수동으로 삭제하는 것이 거의 불가능하다.&lt;/p&gt;
 
 &lt;p&gt;따라서 이 경우 REST API를 이용하여서 Object를 지워줘야 하는데, 이를 위해서 &lt;strong&gt;Bulk Delete&lt;/strong&gt;하는 REST API를 제공한다.
@@ -2259,319 +2362,4 @@ Flow에서 Instant App을 호출하는 Built-in Component를 이용해야 합니
   &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Instant App" /><summary type="html">챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 Instant App이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.</summary></entry><entry><title type="html">챗봇 Hands-on Lab (7) - Custom Component 구현하기</title><link href="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/" rel="alternate" type="text/html" title="챗봇 Hands-on Lab (7) - Custom Component 구현하기" /><published>2019-04-09T00:00:00+09:00</published><updated>2019-04-09T00:00:00+09:00</updated><id>http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87%20Hands-on%20Lab_7</id><content type="html" xml:base="http://localhost:4000/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_7/">&lt;p&gt;커스텀 비즈니스 로직을 챗봇에 추가하기 위해서는 Node.js 기반의 챗봇 SDK를 사용하여 Custom 로직을 구현하여야 합니다. 이 Lab에서는 지금까지 만든 챗봇에 Custom Component를 구현하여 연결해 볼 것입니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;prerequisite&quot;&gt;Prerequisite&lt;/h1&gt;
-&lt;p&gt;기본적으로 커스텀 코드 작성을 위해서 각자의 로컬 환경에 개발툴과 Node.js, 챗봇 SDK를 설치하여 구현하여야 하지만 이 실습 과정에서는 개별 로컬 개발 환경 설정 과정을 생략하기 위해여 Cloud 기반의 소스 관리 및 빌드 기능을 이용하여 코드를 수정해 보는 과정으로 진행하도록 하겠습니다.
-이를 위해서 &lt;strong&gt;Oracle Developer Cloud&lt;/strong&gt;를 이용할 것이고, Developer Cloud 서비스 계정과 접속 정보가 제공될 것입니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;developer-cloud-접속--project생성&quot;&gt;Developer Cloud 접속 / Project 생성&lt;/h1&gt;
-
-&lt;p&gt;제공된 접속 정보와 계정 정보로 Developer Cloud에 접속합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/01_devcs_login.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Create&lt;/strong&gt; 버튼을 클릭하여 커스텀 코드를 관리하고 빌드할 &lt;strong&gt;Project&lt;/strong&gt;를 각자 하나씩 생성할 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/02_org.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;각자에게 부여된 &lt;strong&gt;Project 명&lt;/strong&gt;을 이용하여 Project를 생성합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Project Name : chatbot_{SEQ}&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Next&lt;/strong&gt;를 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/03_project1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Initial Repository&lt;/strong&gt; 옵션을 선택하고 &lt;strong&gt;Next&lt;/strong&gt;를 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/04_project2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Import existing repository&lt;/strong&gt; 옵션을 선택하고 text box에 다음 repository url을 입력합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;repository url : https://github.com/mee-nam-lee/chatbot_component.git&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;입력이 완료되었으면 &lt;strong&gt;Finish&lt;/strong&gt;를 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/05_project3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 Project에 필요한 컴포넌트들이 Provision 되는 것이 보일 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/06_project4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Project 생성이 완료되면 자동으로 Project Home 화면으로 이동됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/07_project5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;custom-code-이해하기&quot;&gt;Custom Code 이해하기&lt;/h1&gt;
-
-&lt;p&gt;이 Project는 챗봇의 Custom Code를 외부 Repository로부터 가져왔기 때문에 &lt;strong&gt;Git&lt;/strong&gt; 메뉴로 이동하면 해당 코드들을 볼 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/08_git.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Custom Component의 Main Component 코드는 다음 경로에 있습니다. 아래 경로로 이동해 봅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/09_src.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;ListStores.js&lt;/strong&gt;와 &lt;strong&gt;StoreService.js&lt;/strong&gt;가 custom component에서 사용하는 코드 입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;liststorejs&quot;&gt;ListStore.js&lt;/h2&gt;
-&lt;p&gt;검색 조건으로 입력된 &lt;strong&gt;location&lt;/strong&gt; 파라미터를 store 정보의 address와 비교하여 검색 조건을 주소에 포함하고 있는 store 정보만을 Card Layout 형태로 만들어서 Reply 해주는 컴포넌트 입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;storeservicejs&quot;&gt;StoreService.js&lt;/h2&gt;
-&lt;p&gt;stores.json에 미리 저장되어 있는 store 정보들 중에서 검색 조건 (location) 기반으로 필터하여 해당 조건에 맞는 store 정보만 리턴하는 컴포넌트 입니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;build-구성하기&quot;&gt;Build 구성하기&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;Builds&lt;/strong&gt; 메뉴로 들어가서 &lt;strong&gt;Create Job&lt;/strong&gt;을 클릭하여 Build Job을 하나 생성합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/10_createjob.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 입력하고 &lt;strong&gt;Software Template&lt;/strong&gt; 항목에서 미리 구성되어있는 &lt;strong&gt;node.js&lt;/strong&gt; 탬플릿을 선택한 후 &lt;strong&gt;Create Job&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/11_createjob.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Job이 생성되고 나면 Job Configuration 화면으로 이동됩니다. &lt;strong&gt;Source Control&lt;/strong&gt; 탭에서 빌드 대상의 Source가 들어 었는 Repository를 지정하기 위해서 우측의 &lt;strong&gt;Add Source Control&lt;/strong&gt;을 클릭하여 List되는 &lt;strong&gt;Git&lt;/strong&gt;을 선택해 줍니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/12_addsource.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Repository&lt;/strong&gt; 항목에서 이미 구성 되어있는 chatbot{SEQ}.git repository를 선택합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/13_selectrepo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Steps&lt;/strong&gt; 탭으로 이동하여 Build Step을 추가합니다. node.js로 개발된 소스에 필요한 package를을 설치하고 archiving하기 위해서 &lt;strong&gt;Unix Shell&lt;/strong&gt; Build Executor를 선택하도록 하겠습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/14_addstep.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Script&lt;/strong&gt; 입력 부분에 다음 3줄을 입력합니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd src
-npm install
-npm pack
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/15_npm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;빌드된 Artifact를 저장하기 위한 post build 작업이 필요하기 때문에 &lt;strong&gt;Post Build&lt;/strong&gt; 탭으로 이동합니다.
-&lt;strong&gt;Add Post Build Action&lt;/strong&gt; 메뉴에서 &lt;strong&gt;Artifact Archiver&lt;/strong&gt;를 선택합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/16_postbuild.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Archive할 파일을 다음과 같이 입력합니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Files to archive : src/*.tgz&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Save&lt;/strong&gt;를 클릭하여 구성된 내용을 저장합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/17_tgz.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;상단의 &lt;strong&gt;Build Now&lt;/strong&gt;를 클릭하면 구성된 내용으로 Build 작업이 시작됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/18_buildnow.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Build가 큐잉되고 실제 Build가 수행될 Runtime VM 환경이 준비되는 것을 기다리고 있습니다. VM이 할당되면 Build가 시작 될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/19_queue.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;빌드가 완료되면 각 빌드 번호별 상태를 아이콘으로 표시해 줍니다. 초록색 아이콘이 보이면 빌드가 정상적으로 완료된 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/20_ builddone.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Actions&lt;/strong&gt;의 아이콘을 클릭하여 빌드 상세 로그를 아리처럼 볼 수 있습니다. 빌드 로그에서도 빌드 과정이 잘 수행되었음을 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/21_buildlog.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;빌드된 Artifact는 &lt;strong&gt;Artifact&lt;/strong&gt; 메뉴클 클릭하여 확인할 수 있습니다. 아이콘을 클릭하여 들어갑니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/22_artifact.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;src&lt;/strong&gt; 폴더 모양의 아이콘을 클릭하면 component 압축 파일이 보일 것입니다. 이 파일은 Chatbot에 등록하여 서비스될 파일이기 때문에 파일명을 클릭하여 다운로드 받습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/23_artifact_tgz.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음처럼 다운된 파일을 잘 보관해 둡니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/24_download.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;챗봇에서-custom-component-등록하기&quot;&gt;챗봇에서 Custom Component 등록하기&lt;/h1&gt;
-
-&lt;p&gt;이제 개발된 Custom Component를 챗봇에서 사용하기 위하여 Chatbot 화면으로 이동해 옵니다.&lt;/p&gt;
-
-&lt;p&gt;각자의 &lt;strong&gt;PizzaBot_{SEQ}&lt;/strong&gt;을 엽니다. 좌측 메뉴의 Function 메뉴를 선택하고 &lt;strong&gt;+Service&lt;/strong&gt;를 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/25_addservice.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;서비스명을 &lt;strong&gt;store&lt;/strong&gt;로 입력하고 &lt;strong&gt;Embedded Container&lt;/strong&gt; 옵션을 선택합니다.
-Package File 부분에 이전 단계에서 다운로드 받아둔 Archive를 업로드 하면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/26_createservice.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Upload가 되면 다음과 같이 보입니다. &lt;strong&gt;Create&lt;/strong&gt;를 클릭하여 서비스 등록을 완료합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/27_upload.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;서비스 생성이 되고 나면 서비스 상태가 &lt;strong&gt;Ready&lt;/strong&gt;가 되며 등록된 Component가 좌측에 보이게 됩니다. &lt;strong&gt;ListStores&lt;/strong&gt;라는 custom component를 챗봇 flow에서 호출하여 사용하면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/component/28_servicecreated.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;챗봇에-영업점-조회-추가하기&quot;&gt;챗봇에 영업점 조회 추가하기&lt;/h1&gt;
-
-&lt;p&gt;영업점을 조회하는 &lt;strong&gt;ListStores&lt;/strong&gt;라는 custom component를 챗봇에 추가해 보도록 하겠습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;intent-추가&quot;&gt;Intent 추가&lt;/h2&gt;
-
-&lt;p&gt;현재는 영업점 조회를 위한 intent가 등록되어 있지 않습니다.&lt;/p&gt;
-
-&lt;p&gt;Intent Import를 위해 다음 파일을 다운 받습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/mee-nam-lee/chatbot_lecture/master/labfiles/intent/liststore-Intent.csv&quot;&gt;ListStore Intent 다운받기&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;피자봇으로 이동하여 &lt;strong&gt;Intent&lt;/strong&gt; 탭을 선택한 후 &lt;strong&gt;Import Intent&lt;/strong&gt;를 선택합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/01_importintent.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 단계에서 다운로드 받은 &lt;strong&gt;liststore-Intent.csv&lt;/strong&gt; 파일을 Import 합니다.&lt;/p&gt;
-
-&lt;p&gt;Intent가 Import 되고 나면 &lt;strong&gt;listStore&lt;/strong&gt; intent가 아래처럼 보이게 될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/02_imported.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;우측 상단의 &lt;strong&gt;Train&lt;/strong&gt; 메뉴를 클릭하여 새롭게 추가된 Intent를 학습시킵니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/03_train.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Try It Out&lt;/strong&gt;을 클릭하여 새롭게 추가된 Intent가 잘 동작하는 테스트 해 봅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/04_tryitout.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위와 같이 Intent Resolution이 잘 테스트 된다면 이제 Flow 수정 단계로 넘어갑니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;flow-수정&quot;&gt;Flow 수정&lt;/h2&gt;
-
-&lt;p&gt;Flow Icon을 클릭하여 Flow 수정 화면으로 이동합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/05_flow.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Intent State에 다음을 추가합니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Intent&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;variable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;iresult&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;unresolvedIntent&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Unresolved&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;OrderPasta&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPasta&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;ShowMenu&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ShowMenu&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;OrderPizza&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;OrderPizza&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;CancelPizza&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;CancelPizza&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;listStore&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;listStore&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 추가해 주세요&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/06_intentstate.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Confirmation&lt;/strong&gt; State 아래에 다음 state를 추가해 줍니다.&lt;/p&gt;
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;na&quot;&gt;listStore&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;System.Text&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;prompt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;검색하고자하는&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;영업점의&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;위치를&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;입력하세요&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;예:삼성,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;잠실&quot;&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;variable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;location&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt;
-    
-  &lt;span class=&quot;na&quot;&gt;listStoreResult&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ListStores&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${location}&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;transitions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-      &lt;span class=&quot;na&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;done&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/07_liststorestate.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;우측 상단의 &lt;strong&gt;Validate&lt;/strong&gt;를 클릭하여 Flow에 오류가 없나 확인 합니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;test&quot;&gt;Test&lt;/h2&gt;
-&lt;p&gt;이제 작성된 로직을 테스트 해 보도록 하겠습니다.
-&lt;strong&gt;Skill Tester&lt;/strong&gt; 아이콘을 클릭하여 Test 창을 엽니다.
-아래와 같이 &lt;strong&gt;listStore&lt;/strong&gt; intent에 해당하는 utterance를 입력합니다. 
-찾고자 하는 위치 정보를 입력해 주고, 원하는 결과가 나오는지 확인 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/08_Test.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;custom-component-수정-하기&quot;&gt;Custom Component 수정 하기&lt;/h1&gt;
-
-&lt;p&gt;이 단계에서는 Custom Component 로직의 수정이 필요할 경우를 가정하여 로직 변경 후 반영하는 방법에 대해서 실습해 보겠습니다.&lt;/p&gt;
-
-&lt;p&gt;영업정 조회 결과로 나오는 링크 버튼의 label을 수정해야 하는 상황이라고 가정합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/09_label.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;developer-cloud에서-소스-수정-후-빌드&quot;&gt;Developer Cloud에서 소스 수정 후 빌드&lt;/h2&gt;
-
-&lt;p&gt;소스 코드 수정을 위해 Source Repository로 사용하고 있는 Developer Cloud로 이동합니다.
-각자 생성한 Project로 이동하여 &lt;strong&gt;Git&lt;/strong&gt; 메뉴에서 ListStores.js 파일을 찾아 갑니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/10_dev_liststore.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;우측 상단의 &lt;strong&gt;Edit&lt;/strong&gt; 아이콘을 클릭하여 Edit Mode로 변경합니다. 아래 Label 내용이 들어있는 부분을 다른 Label로 변경해 봅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/11_edit.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;아래와 같이 코드를 수정하고 우측 상단의 &lt;strong&gt;Commit&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/12_codeupdate.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Confirmation 화면에서 &lt;strong&gt;Commit&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/13_commit_confirm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;소스 코드 변경 시 자동으로 Build Job을 수행 시키는 Trigger 설정을 해 두지 않았기 때문에 명시적으로 빌드를 수행시켜줘야 합니다.
-&lt;strong&gt;Build&lt;/strong&gt; 메뉴로 이동하여 우측의 삼각형 모양의 Build 아이콘을 클릭해 주면 Build Job이 시작됩니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/14_build.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Build Job이 큐잉 되었습니다. 빌드 작업이 완료되기를 기다린 후 위 단계에서 했던 것처럼 빌드 산출물(Artifact)를 다운 받습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/15_buildqueue.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Artifacts&lt;/strong&gt;로 이동하여 최종 빌드 산출물을 다운 받습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/16_artifact.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;산출물 링크를 클릭하여 다운 받습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/17_download.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;챗봇에서-custom-component-파일-update&quot;&gt;챗봇에서 Custom Component 파일 Update&lt;/h2&gt;
-
-&lt;p&gt;다운 받은 산출물을 반영하기 위하여 챗봇의 Custom Service 등록 화면으로 이동 합니다.&lt;/p&gt;
-
-&lt;p&gt;등록되어 있는 &lt;strong&gt;Store&lt;/strong&gt; 서비스의 &lt;strong&gt;Package File&lt;/strong&gt;을 Update하기 위해 &lt;strong&gt;Change&lt;/strong&gt; 링크를 클릭해 줍니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/18_change.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음처럼 변경된 Package가 반영되고 있는 것을 볼 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/19_package.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;서비스의 &lt;strong&gt;Status&lt;/strong&gt;가 &lt;strong&gt;Ready&lt;/strong&gt;가 될 때까지 기다린 후 다시 챗봇을 Test 해 봅니다.
-다음처럼 변경된 Label이 보이는지 확인합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/chatbot_lecture/liststore/20_afterupdate.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이상으로 Custom Component 구현 과정을 완료하였습니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;chatbot-workshop-lab&quot;&gt;Chatbot-Workshop Lab&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_1/&quot;&gt;챗봇 Hands-on Lab (1) - Lab 개요&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_2/&quot;&gt;챗봇 Hands-on Lab (2) - 금융봇을 이용하여 챗봇 기본 기능 익히기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_3/&quot;&gt;챗봇 Hands-on Lab (3) - 피자봇 만들기 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_4/&quot;&gt;챗봇 Hands-on Lab (4) - [채널 연결] Web Chat 연결하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_5/&quot;&gt;챗봇 Hands-on Lab (5) - [채널 연결] Mobile 앱 연결하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_6/&quot;&gt;챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_7/&quot;&gt;챗봇 Hands-on Lab (7) - Custom Component 구현하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/chatbot/2019/챗봇-Hands-on-Lab_8/&quot;&gt;챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Custom Component" /><summary type="html">커스텀 비즈니스 로직을 챗봇에 추가하기 위해서는 Node.js 기반의 챗봇 SDK를 사용하여 Custom 로직을 구현하여야 합니다. 이 Lab에서는 지금까지 만든 챗봇에 Custom Component를 구현하여 연결해 볼 것입니다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="chatbot" /><category term="오라클 챗봇" /><category term="Hands-on-Lab" /><category term="Instant App" /><summary type="html">챗봇에서 text 기반으로 대화를 주고 받다가, 다수의 정보의 입력이 필요하거나 다양한 포맷의 응답을 제공해 줄 필요가 있을때는 웹 애플리케이션에서 익숙하게 사용하는 Form 형태의 인터페이스가 필요할 경우가 있습니다. 이렇게 필요시에만 앱의 형태 처럼 접근하게 해주고 다시 대화형 인터페이스로 돌아갈 수 있게 해주는 형태를 Instant App이란 용어로 부르고 있는데, 이번 Lab에서는 Instant App을 만들고 챗봇에서 연결하는 방법에 대해서 실습할 것입니다.</summary></entry></feed>
