@@ -137,6 +137,10 @@
 <lastmod>2019-05-22T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/cloud/2019/vbcs/</loc>
+<lastmod>2019-05-30T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/tags/3%20Tier%20Architecture/</loc>
 </url>
 <url>
@@ -227,6 +231,9 @@
 <loc>http://localhost:4000/tags/Logstash/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/tags/Low%20Code%20Development/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/tags/MySQL/</loc>
 </url>
 <url>
@@ -243,6 +250,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/tags/Oracle%20Kubernetes%20Engine/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/tags/PaaS/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/tags/Persistent%20Volume/</loc>
@@ -267,6 +277,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/tags/Virtual%20Cloud%20Network/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/tags/Visual%20Builder/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/tags/WebLogic/</loc>
