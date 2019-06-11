@@ -2,7 +2,7 @@
 layout: post
 title:  Digital Assistant(챗봇)과 Autonomous Data Warehouse(ADW) 연계하기
 categories: Chatbot
-tags: [chatbot, 오라클 챗봇, ADW, Autonomous Data Warehouse]
+tags: [chatbot, 오라클 챗봇, ADW, Autonomous Data Warehouse, Autonomous Database]
 ---
 
 오라클 챗봇인 **Digital Assistant**에서는 커스텀 비즈니스 코드를 작성을 지원하기 위해 **Custom Component**라는 기능을 제공하고 있습니다. 

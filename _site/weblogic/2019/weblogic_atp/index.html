@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Oracle Autonomous Database (ADW, ATP)를 연결하기 위해서는 Wallet이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다." />
+<meta property="og:description" content="Oracle Autonomous Database (ADW, ATP)를 연결하기 위해서는 Wallet이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다." />
+<link rel="canonical" href="http://localhost:4000/weblogic/2019/weblogic_atp/" />
+<meta property="og:url" content="http://localhost:4000/weblogic/2019/weblogic_atp/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-10T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"Oracle Autonomous Database (ADW, ATP)를 연결하기 위해서는 Wallet이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다.","@type":"BlogPosting","url":"http://localhost:4000/weblogic/2019/weblogic_atp/","headline":"WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기","dateModified":"2019-06-10T00:00:00+09:00","datePublished":"2019-06-10T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/weblogic/2019/weblogic_atp/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- begin _includes/seo.html --><title>WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기 - MN Lee’s IT Blog</title>
+<meta name="description" content="Oracle Autonomous Database (ADW, ATP)를 연결하기 위해서는 Wallet이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MN Lee's IT Blog">
+<meta property="og:title" content="WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기">
+<meta property="og:url" content="http://localhost:4000/weblogic/2019/weblogic_atp/">
+
+
+  <meta property="og:description" content="Oracle Autonomous Database (ADW, ATP)를 연결하기 위해서는 Wallet이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-06-10T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/weblogic/2019/weblogic_atp/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+<link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">Archive</a><a class="page-link" href="/search/">검색</a></div></nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-06-10T00:00:00+09:00" itemprop="datePublished">Jun 10, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Oracle <strong>Autonomous Database (ADW, ATP)</strong>를 연결하기 위해서는 <strong>Wallet</strong>이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다.</p>
+
+<h1 id="사용-환경">사용 환경</h1>
+<ul>
+  <li>WebLogic Server 12.2.1.3.0</li>
+  <li>JDK 1.8.0_192</li>
+  <li>Autonomous Database : Autonomous Transaction Processiong (ATP)</li>
+</ul>
+
+<h1 id="사전-준비-사항">사전 준비 사항</h1>
+
+<h3 id="jdbc-driver-upgrade">JDBC Driver Upgrade</h3>
+
+<p>아래 문서에서 보듯이 WebLogic Server 12.2.1.3에서 Autonomous Database 연결을 위해서는 JDBC Driver Upgrade가 필요하다.</p>
+
+<ul>
+  <li><a href="https://www.oracle.com/technetwork/database/application-development/jdbc/documentation/atp-5073445.html#prereq">Java Connectivity with Autonomous Database (ATP or ADW) using 19c and 18.3 JDBC</a></li>
+</ul>
+
+<p>JDBC Driver 18.3 버전을 다운 받아서 아래와 같이 WebLogic 디렉토리에 복사한다.</p>
+<ul>
+  <li><a href="https://www.oracle.com/technetwork/database/application-development/jdbc/downloads/jdbc-ucp-183-5013470.html">JDBC Driver Download</a></li>
+</ul>
+
+<p><img src="/assets/images/atp/05_jdbc.png" alt="Alt text" /></p>
+
+<h3 id="wallet-download">Wallet Download</h3>
+<p>Autonomous Database 연결을 위한 Wallet을 다운 받는다.</p>
+
+<p><img src="/assets/images/atp/06_wallet_down.png" alt="Alt text" /></p>
+
+<p><strong>wallet</strong>을 담고 있는 <strong>zip</strong> 파일이 다운로드 될 것이다. 이 파일을 원하는 위치에 복사하고 압축을 풀어준다.</p>
+
+<p><img src="/assets/images/atp/04_wallet_loc.png" alt="Alt text" /></p>
+
+<p>다운받은 zip 내에는 <strong>tnsnames.ora</strong> 파일이 들어있다. 
+tnsnames.ora 파일은 다음과 같은 모습일 것이다.</p>
+
+<p><img src="/assets/images/atp/03_tnsnames.png" alt="Alt text" /></p>
+
+<p>이 서비스 중에서 원하는 작업 유형에 따라 서비스 명을 선택해서 접속하면 된다.
+아래 예제에서는 <strong>tp</strong> suffix 서비스 명을 사용할 것이다. 사전 정의된 서비스 명의 사용 유형은 아래를 참고하면 된다.</p>
+
+<ul>
+  <li><a href="https://docs.oracle.com/en/cloud/paas/atp-cloud/atpug/connect-predefined.html#GUID-9747539B-FD46-44F1-8FF8-F5AC650F15BE">Predefined Database Service Names for Autonomous Transaction Processing</a></li>
+</ul>
+
+<h1 id="jdbc-connection-생성">JDBC Connection 생성</h1>
+
+<p>WebLogic Server Console에 접속해서 DataSouce를 생성해 줄 차례이다. WebLogic에서는 여러 타입의 DataSource를 제공하는데 여기에서는 <strong>Generic</strong> DataSource와 <strong>UCP</strong> DataSource를 사용할 것이다.</p>
+
+<h2 id="generic-datasource">Generic DataSource</h2>
+<p><strong>Generic DataSource</strong> 타입을 선택한다.</p>
+
+<p><img src="/assets/images/atp/01_generic1.png" alt="Alt text" /></p>
+
+<p>원하는 DataSource Name과 JNDI Name을 입력한다.</p>
+
+<p><img src="/assets/images/atp/01_generic2.png" alt="Alt text" /></p>
+
+<p>JDBC Driver 유형을 선택한다.</p>
+
+<p><img src="/assets/images/atp/01_generic3.png" alt="Alt text" /></p>
+
+<p>트랜잭션 옵션을 선택한다.</p>
+
+<p><img src="/assets/images/atp/01_generic4.png" alt="Alt text" /></p>
+
+<p><strong>Database Name과 Host Name 란에 아무 값이나 입력한다. 이 값은 다음 페이지에서 변경해 줄 것이기 때문에 이 화면에서의 입력값은 의미 없다.</strong></p>
+
+<p><img src="/assets/images/atp/01_generic5.png" alt="Alt text" /></p>
+
+<p>이전 화면에서 입력한 정보를 바탕으로 Connection URL이 생성되었을 것이다.</p>
+
+<p><img src="/assets/images/atp/01_generic6.png" alt="Alt text" /></p>
+
+<p>이 URL을 다음과 같은 형태로 변경해 줘야 한다.
+TNS_ADMIN에는 Wallet이 위치한 Location을 적어준다.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Pattern</td>
+      <td>jdbc:oracle:thin:@dbname_tp?TNS_ADMIN=/users/test/wallet_dbname/</td>
+    </tr>
+    <tr>
+      <td>에제</td>
+      <td>jdbc:oracle:thin:@demo_tp?TNS_ADMIN=/u01/oracle/wallet</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>변경 후에 <strong>Test Configuration</strong> 버튼을 클릭하여 연결이 잘 되는지 확인해 본다.</p>
+
+<p><img src="/assets/images/atp/01_generic7.png" alt="Alt text" /></p>
+
+<p>DataSource 배포할 WebLogic Instance를 선택한다.</p>
+
+<p><img src="/assets/images/atp/01_generic8.png" alt="Alt text" /></p>
+
+<p>DataSource가 배포되고 Connection이 연결되어 있는 상태를 모니터링 할 수 있을 것이다.</p>
+
+<p><img src="/assets/images/atp/01_generic9.png" alt="Alt text" /></p>
+
+<h2 id="ucp-datasource">UCP DataSource</h2>
+
+<p>이번에는 UCP 타입의 DataSource를 만들어 볼 것이다. 설정 화면이 Generic DataSource와 약간 다른 것을 볼 수 있을 것이다.</p>
+
+<p><strong>UCP DataSource</strong> 타입을 선택한다.</p>
+
+<p><img src="/assets/images/atp/02_ucp1.png" alt="Alt text" /></p>
+
+<p>원하는 DataSource Name과 JNDI Name을 입력하고 JDBC Driver 유형을 선택한다.</p>
+
+<p><img src="/assets/images/atp/02_ucp2.png" alt="Alt text" /></p>
+
+<p>URL 부분에 위 예제에서 사용했던 Connection URL String을 입력한다.</p>
+
+<p><img src="/assets/images/atp/02_ucp3.png" alt="Alt text" /></p>
+
+<p>UCP 관련 옵션을 설정한다. 이 예제에서는 Pool Size 만 설정하였다.</p>
+
+<p><img src="/assets/images/atp/02_ucp4.png" alt="Alt text" /></p>
+
+<p><strong>Test Configuration</strong> 버튼을 클릭하여 연결이 잘 되는지 확인해 본다.</p>
+
+<p><img src="/assets/images/atp/02_ucp5.png" alt="Alt text" /></p>
+
+<p>테스트에 성공하였다.</p>
+
+<p><img src="/assets/images/atp/02_ucp6.png" alt="Alt text" /></p>
+
+<p>모니터링에서도 Connection이 잘 만들어진 것을 확인해 볼 수 있다.</p>
+
+<p><img src="/assets/images/atp/02_ucp7.png" alt="Alt text" /></p>
+
+<h2 id="참고-자료">참고 자료</h2>
+<ul>
+  <li><a href="https://www.oracle.com/technetwork/database/application-development/jdbc/documentation/atp-5073445.html#prereq">Java Connectivity with Autonomous Database (ATP or ADW) using 19c and 18.3 JDBC</a></li>
+</ul>
+
+
+
+
+  </div><div>
+  <p>
+    <!--img src="/assets/images/tag.png"/--><a href="/tags/ATP/" class="keywords" rel="tag">ATP</a>&nbsp&nbsp<a href="/tags/Autonomous Database/" class="keywords" rel="tag">Autonomous Database</a>&nbsp&nbsp<a href="/tags/JDBC/" class="keywords" rel="tag">JDBC</a>&nbsp&nbsp<a href="/tags/Wallet/" class="keywords" rel="tag">Wallet</a>&nbsp&nbsp<a href="/tags/WebLogic/" class="keywords" rel="tag">WebLogic</a></p>
+</div><div>
+  <p>
+    <!--img src="/assets/images/share.png"/-->
+  
+    <a href="https://twitter.com/intent/tweet?text=WebLogic%EC%97%90%EC%84%9C+JDBC%EB%A5%BC+%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC+Autonomous+Database+%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fweblogic%2F2019%2Fweblogic_atp%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fweblogic%2F2019%2Fweblogic_atp%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fweblogic%2F2019%2Fweblogic_atp%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fweblogic%2F2019%2Fweblogic_atp%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/cloud/2019/vbcs/" title="Low Code Development 솔루션 - Oracle Visual Builder Cloud
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">&nbsp&nbsp Next &nbsp&nbsp</a></nav>
+</div>
+</div><a class="u-url" href="/weblogic/2019/weblogic_atp/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>

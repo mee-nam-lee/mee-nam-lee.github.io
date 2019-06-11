@@ -1,4 +1,143 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-31T11:17:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Low Code Development 솔루션 - Oracle Visual Builder Cloud</title><link href="http://localhost:4000/cloud/2019/vbcs/" rel="alternate" type="text/html" title="Low Code Development 솔루션 - Oracle Visual Builder Cloud" /><published>2019-05-30T00:00:00+09:00</published><updated>2019-05-30T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/vbcs</id><content type="html" xml:base="http://localhost:4000/cloud/2019/vbcs/">&lt;p&gt;Oracle PaaS 중에 Visual Builder라는 &lt;strong&gt;Low Code Development&lt;/strong&gt; 솔루션 Cloud Service가 있다. &lt;strong&gt;웹&lt;/strong&gt;과 &lt;strong&gt;모바일&lt;/strong&gt;을 애플리케이션을 Drag &amp;amp; Drop 만으로 개발할 수 있고, 데이터베이스도 내장하고 있어서 별도의 저장 공간을 준비하지 않아도 이 솔루션 만으로 간단히 애플리케이션을 개발해 낼 수가 있다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-06-11T13:53:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기</title><link href="http://localhost:4000/weblogic/2019/weblogic_atp/" rel="alternate" type="text/html" title="WebLogic에서 JDBC를 이용하여 Autonomous Database 연결하기" /><published>2019-06-10T00:00:00+09:00</published><updated>2019-06-10T00:00:00+09:00</updated><id>http://localhost:4000/weblogic/2019/weblogic_atp</id><content type="html" xml:base="http://localhost:4000/weblogic/2019/weblogic_atp/">&lt;p&gt;Oracle &lt;strong&gt;Autonomous Database (ADW, ATP)&lt;/strong&gt;를 연결하기 위해서는 &lt;strong&gt;Wallet&lt;/strong&gt;이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다.&lt;/p&gt;
+
+&lt;h1 id=&quot;사용-환경&quot;&gt;사용 환경&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;WebLogic Server 12.2.1.3.0&lt;/li&gt;
+  &lt;li&gt;JDK 1.8.0_192&lt;/li&gt;
+  &lt;li&gt;Autonomous Database : Autonomous Transaction Processiong (ATP)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;사전-준비-사항&quot;&gt;사전 준비 사항&lt;/h1&gt;
+
+&lt;h3 id=&quot;jdbc-driver-upgrade&quot;&gt;JDBC Driver Upgrade&lt;/h3&gt;
+
+&lt;p&gt;아래 문서에서 보듯이 WebLogic Server 12.2.1.3에서 Autonomous Database 연결을 위해서는 JDBC Driver Upgrade가 필요하다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/database/application-development/jdbc/documentation/atp-5073445.html#prereq&quot;&gt;Java Connectivity with Autonomous Database (ATP or ADW) using 19c and 18.3 JDBC&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;JDBC Driver 18.3 버전을 다운 받아서 아래와 같이 WebLogic 디렉토리에 복사한다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/database/application-development/jdbc/downloads/jdbc-ucp-183-5013470.html&quot;&gt;JDBC Driver Download&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/05_jdbc.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;wallet-download&quot;&gt;Wallet Download&lt;/h3&gt;
+&lt;p&gt;Autonomous Database 연결을 위한 Wallet을 다운 받는다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/06_wallet_down.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;wallet&lt;/strong&gt;을 담고 있는 &lt;strong&gt;zip&lt;/strong&gt; 파일이 다운로드 될 것이다. 이 파일을 원하는 위치에 복사하고 압축을 풀어준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/04_wallet_loc.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다운받은 zip 내에는 &lt;strong&gt;tnsnames.ora&lt;/strong&gt; 파일이 들어있다. 
+tnsnames.ora 파일은 다음과 같은 모습일 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/03_tnsnames.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 서비스 중에서 원하는 작업 유형에 따라 서비스 명을 선택해서 접속하면 된다.
+아래 예제에서는 &lt;strong&gt;tp&lt;/strong&gt; suffix 서비스 명을 사용할 것이다. 사전 정의된 서비스 명의 사용 유형은 아래를 참고하면 된다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.oracle.com/en/cloud/paas/atp-cloud/atpug/connect-predefined.html#GUID-9747539B-FD46-44F1-8FF8-F5AC650F15BE&quot;&gt;Predefined Database Service Names for Autonomous Transaction Processing&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;jdbc-connection-생성&quot;&gt;JDBC Connection 생성&lt;/h1&gt;
+
+&lt;p&gt;WebLogic Server Console에 접속해서 DataSouce를 생성해 줄 차례이다. WebLogic에서는 여러 타입의 DataSource를 제공하는데 여기에서는 &lt;strong&gt;Generic&lt;/strong&gt; DataSource와 &lt;strong&gt;UCP&lt;/strong&gt; DataSource를 사용할 것이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;generic-datasource&quot;&gt;Generic DataSource&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Generic DataSource&lt;/strong&gt; 타입을 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic1.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;원하는 DataSource Name과 JNDI Name을 입력한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic2.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;JDBC Driver 유형을 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic3.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;트랜잭션 옵션을 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic4.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Database Name과 Host Name 란에 아무 값이나 입력한다. 이 값은 다음 페이지에서 변경해 줄 것이기 때문에 이 화면에서의 입력값은 의미 없다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic5.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이전 화면에서 입력한 정보를 바탕으로 Connection URL이 생성되었을 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic6.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 URL을 다음과 같은 형태로 변경해 줘야 한다.
+TNS_ADMIN에는 Wallet이 위치한 Location을 적어준다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Pattern&lt;/td&gt;
+      &lt;td&gt;jdbc:oracle:thin:@dbname_tp?TNS_ADMIN=/users/test/wallet_dbname/&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;에제&lt;/td&gt;
+      &lt;td&gt;jdbc:oracle:thin:@demo_tp?TNS_ADMIN=/u01/oracle/wallet&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;변경 후에 &lt;strong&gt;Test Configuration&lt;/strong&gt; 버튼을 클릭하여 연결이 잘 되는지 확인해 본다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic7.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DataSource 배포할 WebLogic Instance를 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic8.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DataSource가 배포되고 Connection이 연결되어 있는 상태를 모니터링 할 수 있을 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/01_generic9.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ucp-datasource&quot;&gt;UCP DataSource&lt;/h2&gt;
+
+&lt;p&gt;이번에는 UCP 타입의 DataSource를 만들어 볼 것이다. 설정 화면이 Generic DataSource와 약간 다른 것을 볼 수 있을 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;UCP DataSource&lt;/strong&gt; 타입을 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/02_ucp1.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;원하는 DataSource Name과 JNDI Name을 입력하고 JDBC Driver 유형을 선택한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/02_ucp2.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;URL 부분에 위 예제에서 사용했던 Connection URL String을 입력한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/02_ucp3.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;UCP 관련 옵션을 설정한다. 이 예제에서는 Pool Size 만 설정하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/02_ucp4.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Test Configuration&lt;/strong&gt; 버튼을 클릭하여 연결이 잘 되는지 확인해 본다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/02_ucp5.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;테스트에 성공하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/02_ucp6.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;모니터링에서도 Connection이 잘 만들어진 것을 확인해 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/atp/02_ucp7.png&quot; alt=&quot;Alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/technetwork/database/application-development/jdbc/documentation/atp-5073445.html#prereq&quot;&gt;Java Connectivity with Autonomous Database (ATP or ADW) using 19c and 18.3 JDBC&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="WebLogic" /><category term="Autonomous Database" /><category term="ATP" /><category term="JDBC" /><category term="Wallet" /><summary type="html">Oracle Autonomous Database (ADW, ATP)를 연결하기 위해서는 Wallet이라는 인증 정보를 담고 있는 지갑이 필요하다. WebLogic Server에서 Database 연결을 위해서는 JDBC를 이용하는데, 아래에서는 Autonomous Database를 연결하기 위한 JDBC 설정 방법에 대해 설명 할 것이다.</summary></entry><entry><title type="html">Low Code Development 솔루션 - Oracle Visual Builder Cloud</title><link href="http://localhost:4000/cloud/2019/vbcs/" rel="alternate" type="text/html" title="Low Code Development 솔루션 - Oracle Visual Builder Cloud" /><published>2019-05-30T00:00:00+09:00</published><updated>2019-05-30T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/vbcs</id><content type="html" xml:base="http://localhost:4000/cloud/2019/vbcs/">&lt;p&gt;Oracle PaaS 중에 Visual Builder라는 &lt;strong&gt;Low Code Development&lt;/strong&gt; 솔루션 Cloud Service가 있다. &lt;strong&gt;웹&lt;/strong&gt;과 &lt;strong&gt;모바일&lt;/strong&gt;을 애플리케이션을 Drag &amp;amp; Drop 만으로 개발할 수 있고, 데이터베이스도 내장하고 있어서 별도의 저장 공간을 준비하지 않아도 이 솔루션 만으로 간단히 애플리케이션을 개발해 낼 수가 있다.&lt;/p&gt;
 
 &lt;p&gt;이전 버전은 Page Navigation Flow 등의 가시성 부분은 제공되지 않았었는데, 현재의 버전에서는 Page Navigation Flow 뿐만 아니라 Action에 대한 Flow도 가시적으로 보여주기 때문에 직관적 Flow UI를 통해 애플리케이션을 쉽게 개발 할 수 있다.&lt;/p&gt;
 
@@ -1953,353 +2092,4 @@ domain 디렉토리 내에 복사해 둔 애플리케이션이 보일 것이다.
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://oracle.github.io/weblogic-kubernetes-operator/&quot;&gt;Oracle WebLogic Server Kubernetes Operator&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="WebLogic" /><category term="Kubernetes" /><category term="Oracle Kubernetes Engine" /><category term="Persistent Volume" /><summary type="html">이 전 예제에서는 Docker Image 내에 WebLogic Binary와 Domain 구성 정보가 모두 들어있는 Sample을 이용하였다. 여기서는 WebLogic Binary는 Docker Image 내에 존재 하지만 Domain 정보는 Persistent Volume을 사용하여 외부에 구성하는 예제를 살펴볼 것 이다.</summary></entry><entry><title type="html">WebLogic Operator를 사용하여 Kubernetes에 WebLogic 올리기</title><link href="http://localhost:4000/cloud/2019/k8s-weblogic/" rel="alternate" type="text/html" title="WebLogic Operator를 사용하여 Kubernetes에 WebLogic 올리기" /><published>2019-04-15T00:00:00+09:00</published><updated>2019-04-15T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/k8s-weblogic</id><content type="html" xml:base="http://localhost:4000/cloud/2019/k8s-weblogic/">&lt;p&gt;Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 &lt;strong&gt;WebLogic Operator&lt;/strong&gt;를 지원하고 있다.&lt;/p&gt;
-
-&lt;p&gt;이 문서에서는 Managed Kubernetes Cloud 서비스인 &lt;strong&gt;Oracle Kubernetes Engine(OKE)&lt;/strong&gt;와 &lt;strong&gt;WebLogic Operator&lt;/strong&gt;를 사용하여 웹로직 도메인을 Provision하는 방법에 대해서 다룰 것이다.&lt;/p&gt;
-
-&lt;h1 id=&quot;architecture&quot;&gt;Architecture&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/arch.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;prerequistes&quot;&gt;Prerequistes&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Oracle Kubernetes Engine(OKE) : 여기에서는 OKE를 Provision하는 방법에 대해서 다루지 않을 것이다. OKE 프로비전 과정은 다음 문서를 참고한다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;https://www.oracle.com/webfolder/technetwork/tutorials/obe/oci/oke-full/index.html&quot;&gt;Creating a Cluster with Oracle Cloud Infrastructure Container Engine for Kubernetes&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;oke-접속-확인하기&quot;&gt;OKE 접속 확인하기&lt;/h1&gt;
-&lt;p&gt;위 과정을 따라 OKE를 생성하고 Kubeconfig까지 설정하였다고 하면 &lt;strong&gt;kubectl&lt;/strong&gt;을 통해 worker node의 상태를 확인해 본다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/01_getnode.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;OKE&lt;/strong&gt;를 통해 Kubernetes Cluster를 기본 설정으로 구성하면 Private Subnet 안에 Worker Node가 구성되므로 Node IP가 Private IP로 할당된다.&lt;/p&gt;
-
-&lt;h1 id=&quot;weblogic-operator-설치&quot;&gt;WebLogic Operator 설치&lt;/h1&gt;
-&lt;p&gt;WebLogic Operator는 &lt;strong&gt;helm&lt;/strong&gt;을 통해 설치 된다.
-먼저 WebLogic Operator를 위한 Repository를 추가해 준다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;helm repo add weblogic-operator https://oracle.github.io/weblogic-kubernetes-operator/charts
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;잘 추가되었는지 확인해 본다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/02_helm_wlsoperator.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;helm을 통해 weblogic-operator를 설치한다 default 설정으로 설치하면 &lt;strong&gt;defaut&lt;/strong&gt; namespace에 설치된다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;helm install weblogic-operator/weblogic-operator --name weblogic-operator --wait
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/02_install_wlsoperator.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;weblogic-image-준비&quot;&gt;WebLogic Image 준비&lt;/h1&gt;
-
-&lt;p&gt;WebLogic Domain을 생성하기 위해서는 WebLogic Server Image가 필요하다. Dockerhub에서 Oracle Certified WebLogic Server Image를 다운 받을 수 있다. 이 이미지를 사용하려면 License Agreement를 Accept 해야 한다. 이 과정을 거치면 이미지를 다운 받는 방법이 보여진다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://hub.docker.com/u/mnlee30/content/sub-b3c05bc6-7dbf-4e96-ad1c-e8d74a626643&quot;&gt;Oracle WebLogic Server Docker Image&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; docker login 
-
-&amp;gt; docker pull store/oracle/weblogic:12.2.1.3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/06_docker_pull_weblogic.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;weblogic-domain-준비&quot;&gt;WebLogic Domain 준비&lt;/h1&gt;
-
-&lt;p&gt;WebLogic Operator를 사용하여 원하는 형태의 WebLogic Domain을 만들어 프로비전 하려면 관련 Kubernetes Configuration File(YAML)이 필요하다.&lt;/p&gt;
-
-&lt;p&gt;WebLogic Operator 사이트에서 몇가지 샘플을 제공하고 있다.
-다음을 통해 소스를 받아온다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/oracle/weblogic-kubernetes-operator.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;weblogic-kubernetes-operator/kubernetes/samples/scripts&lt;/strong&gt;에 필요한 Script들이 존재하고 이 스크립트를 통해서 Kubernates configuration 파일을 생성시킬 것이다.&lt;/p&gt;
-
-&lt;p&gt;먼저 도메인 구성에 필요한 &lt;strong&gt;credential&lt;/strong&gt;을 생성한다. 제공된 &lt;strong&gt;create-weblogic-credentials.sh&lt;/strong&gt;을 통해 생성하면 된다. 사용법은 다음과 같다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./create-weblogic-credentials.sh -h
-usage: ./create-weblogic-credentials.sh -u username -p password [-d domainUID] [-n namespace] [-s secretName] [-h]
-  -u username, must be specified.
-  -p password, must be specified.
-  -d domainUID, optional. The default value is domain1. If specified, the secret will be labeled with the domainUID unless the given value is an empty string.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; cd scripts/create-weblogic-domain-credentials
-&amp;gt; ./create-weblogic-credentials.sh \
-   -u weblogic -p welcome1 \
-   -d domain1 -n default  \
-   -s domain1-weblogic-credentials
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;다음과 같이 생성 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/05_credential_created.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;kubectl&lt;/strong&gt;로 생성된 secret 정보를 확인해 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/07_desc_secret.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 Domain 생성에 필요한 구성 파일들을 생성할 단계가 되었다.&lt;/p&gt;
-
-&lt;p&gt;여러가지 샘플들 중에서 구성이 가장 간단한 &lt;strong&gt;Domain in a Docker image&lt;/strong&gt; Model를 먼저 사용해 볼 것이다.
-해당 디렉토리로 이동하여 &lt;strong&gt;create-domain.sh&lt;/strong&gt;를 수행한다. 사용법은 다음과 같다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; cd weblogic-kubernetes-operator/kubernetes/samples/scripts/create-weblogic-domain/domain-home-in-image
-&amp;gt; ./create-domain.sh \
-  -u username \
-  -p password \
-  -i create-domain-inputs.yaml \
-  -o /path/to/output-directory
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/08_createdomain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;진행 사항이 계속 보이고 마지막에 생성된 산출물들의 위치가 표시된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/08_createdomain2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;해당 디렉토리로 이동하여 생성된 산출물의 내용을 한번 확인해 보자&lt;/p&gt;
-
-&lt;p&gt;두개의 파일과 Docker Image가 생성된 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/08_createdomain3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;domainyaml-내용&quot;&gt;domain.yaml 내용&lt;/h3&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Copyright 2017, 2019, Oracle Corporation and/or its affiliates. All rights reserved.&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# This is an example of how to define a Domain resource.&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;weblogic.oracle/v3&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Domain&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;weblogic.resourceVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain-v2&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;weblogic.domainUID&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# The WebLogic Domain Home&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;domainHome&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/u01/oracle/user_projects/domains/domain1&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# If the domain home is in the image&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;domainHomeInImage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# The WebLogic Server Docker image that the Operator uses to start the domain&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;domain-home-in-image:12.2.1.3&quot;&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# imagePullPolicy defaults to &quot;Always&quot; if image version is :latest&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;imagePullPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;IfNotPresent&quot;&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# Identify which Secret contains the credentials for pulling an image&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#imagePullSecrets:&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#- name: &lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# Identify which Secret contains the WebLogic Admin credentials (note that there is an example of&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# how to create that Secret at the end of this file)&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;webLogicCredentialsSecret&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1-weblogic-credentials&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# Whether to include the server out file into the pod's stdout, default is true&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;includeServerOutInPodLog&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# Whether to enable log home&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# logHomeEnabled: false&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# The in-pod location for domain log, server logs, server out, and Node Manager log files&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# logHome: /shared/logs/domain1&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# serverStartPolicy legal values are &quot;NEVER&quot;, &quot;IF_NEEDED&quot;, or &quot;ADMIN_ONLY&quot;&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# This determines which WebLogic Servers the Operator will start up when it discovers this Domain&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# - &quot;NEVER&quot; will not start any server in the domain&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# - &quot;ADMIN_ONLY&quot; will start up only the administration server (no managed servers will be started)&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# - &quot;IF_NEEDED&quot; will start all non-clustered servers, including the administration server and clustered servers up to the replica count&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;serverStartPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;IF_NEEDED&quot;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;serverPod&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# an (optional) list of environment variable to be set on the servers&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;JAVA_OPTIONS&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-Dweblogic.StdoutDebugEnabled=false&quot;&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;USER_MEM_ARGS&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-Djava.security.egd=file:/dev/./urandom&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-Xms64m&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-Xmx256m&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# volumes:&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# - name: weblogic-domain-storage-volume&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;#   persistentVolumeClaim:&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;#     claimName: domain1-weblogic-sample-pvc&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# volumeMounts:&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# - mountPath: /shared&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;#   name: weblogic-domain-storage-volume&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# adminServer is used to configure the desired behavior for starting the administration server.&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;adminServer&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# serverStartState legal values are &quot;RUNNING&quot; or &quot;ADMIN&quot;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# &quot;RUNNING&quot; means the listed server will be started up to &quot;RUNNING&quot; mode&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# &quot;ADMIN&quot; means the listed server will be start up to &quot;ADMIN&quot; mode&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;serverStartState&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;RUNNING&quot;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# adminService:&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;#   channels:&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# The Admin Server's NodePort&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;#    - channelName: default&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;#      nodePort: 30701&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# Uncomment to export the T3Channel as a service&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;#    - channelName: T3Channel&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# clusters is used to configure the desired behavior for starting member servers of a cluster.  &lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# If you use this entry, then the rules will be applied to ALL servers that are members of the named clusters.&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;clusters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;clusterName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cluster-1&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;serverStartState&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;RUNNING&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;2&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# The number of managed servers to start for unlisted clusters&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# replicas: 1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;위 파일에서 &lt;strong&gt;image&lt;/strong&gt; 부분을 수정해 줄 것이다. 현재 Domain Image는 Local Repository에 존재하는데 Cloud의 OKE에서는 내 Local Repository에 접근할 수 없기 때문에, 이 이미지를 Docker Hub에 올려준 후 docker hub의 이미지를 참조하도록 할 것이다.&lt;/p&gt;
-
-&lt;p&gt;먼저 domain.yaml 파일을 수정해 준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Before&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;domain-home-in-image:12.2.1.3&quot;&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# After&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# image: &quot;[dockerhub repository name]/domain-home-in-image:12.2.1.3&quot;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;mnlee30/domain-home-in-image:12.2.1.3&quot;&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Domain Image를 Dockerhub에 push 하기 위해 tag를 변경해 준다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker tag domain-home-in-image:12.2.1.3 mnlee30/domain-home-in-image:12.2.1.3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/09_docker_tag.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;image를 docker hub에 push 한다&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker push mnlee30/domain-home-in-image:12.2.1.3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/10_docker_push.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 domain.yaml을 배포할 준비가 모두 완료되었다.
-다음을 수행한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kubectl apply -f domain.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;kubectl 명령어를 통해 domain이 잘 생성되고 있음을 확인 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/11_kubectl_apply.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Admin Server 1개와 Managed Server 2개로 구성된 도메인이 생성되었음을 확인할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/12_get_pods.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;service 정보를 확인해 보자. 앞서서 OKE의 Worker Node가 Private Subnet에 생성되었다고 설명하였다.
-따라서 WebLogic Instance들을 Node IP로는 접근할 수가 없다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/13_get_services.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 서비스들을 Load Balancer를 통해 서비스 될 수 있도록 &lt;strong&gt;LoadBalancer&lt;/strong&gt; Type을 사용하는 서비스를 추가해 줄 것이다.
-Admin Server(domain1-admin-server)의 콘솔에 접근하기 위한 서비스와 Cluster(domain1-cluster-cluster-1)에 접근하는 서비스가 필요하다.&lt;/p&gt;
-
-&lt;h3 id=&quot;admin-server용-서비스&quot;&gt;Admin Server용 서비스&lt;/h3&gt;
-
-&lt;p&gt;service-admin-lb.yaml 파일을 생성해 준다&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1-admin-lb-ext&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1-admin&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-shape&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;100Mbps&quot;&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-backend-protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;HTTP&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;LoadBalancer&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;http&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;6001&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;7001&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;weblogic.serverName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;admin-server&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;weblogic.domainUID&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;생성된 파일을 적용한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kubectl apply -f service-admin-lb.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;서비스가 생성되고 EXTERNAL-IP가 할당된 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/14_admin_service.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 IP를 이용하여 WebLogic Console에 접근해 본다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/15_weblogic_console.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 WebLogic Managed Sever들이 Running 중 임을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/15_weblogic_console2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 도메인에는 어떤 애플리케이션도 배포되어 있지 않기 때문에 Sample Application을 WebLogic Console을 통해 배포 한다.&lt;/p&gt;
-
-&lt;p&gt;배포 과정은 여기서는 생략 한다. 배포된 후의 모습은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/16_application.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;cluster용-서비스&quot;&gt;Cluster용 서비스&lt;/h3&gt;
-
-&lt;p&gt;위에서 배포한 애플리케이션을 테스트 해보기 위해서는 weblogic cluster 서비스에 접근해야 한다.
-이를 위해 LoadBalancer Type의 서비스를 하나 더 추가해 준다.&lt;/p&gt;
-
-&lt;p&gt;service-cluster-lb.yaml 파일을 생성해 준다&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1-cluster1-lb-ext&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1-cluster1&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-shape&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;100Mbps&quot;&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-backend-protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;HTTP&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;LoadBalancer&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;http&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;80&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;8001&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;weblogic.clusterName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cluster-1&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;weblogic.domainUID&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;생성된 파일을 적용한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kubectl apply -f service-cluster-lb.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/17_cluster_service.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;서비스가 생성되고 EXTERNAL-IP가 할당된 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;위 IP를 통해서 애플리케이션에 접속해 본다. 
-샘플 애플리케이션을 통해 WebLogic Managed Server 명과 구동되고 있는 Pod의 Hostname을 볼수 있다.&lt;/p&gt;
-
-&lt;p&gt;제공된 Session Insert / Update 기능을 통해 세션도 추가해 본다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/18_app_test1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;브라우저를 새로 열어 다른 Managed Server에 연결되게 해본다.
-라운드 로빈에 의해서 다른 서버에서 요청이 처리되는 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic/18_app_test2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Saling Up / Down은 다음 글에서 다룰 예정이다.&lt;/p&gt;
-
-&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://oracle.github.io/weblogic-kubernetes-operator/&quot;&gt;Oracle WebLogic Server Kubernetes Operator&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="WebLogic" /><category term="Kubernetes" /><category term="Oracle Kubernetes Engine" /><summary type="html">Oracle WebLogic Server 12c 버전 부터 Kubernetes Cluster에 WebLogic Domain을 쉽게 올릴 수 있도록 하는 WebLogic Operator를 지원하고 있다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="WebLogic" /><category term="Kubernetes" /><category term="Oracle Kubernetes Engine" /><category term="Persistent Volume" /><summary type="html">이 전 예제에서는 Docker Image 내에 WebLogic Binary와 Domain 구성 정보가 모두 들어있는 Sample을 이용하였다. 여기서는 WebLogic Binary는 Docker Image 내에 존재 하지만 Domain 정보는 Persistent Volume을 사용하여 외부에 구성하는 예제를 살펴볼 것 이다.</summary></entry></feed>
