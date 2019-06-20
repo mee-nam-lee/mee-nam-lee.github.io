@@ -131,14 +131,22 @@
 <p><strong>Import existing repository</strong> 옵션을 선택하고 text box에 다음 repository url을 입력합니다.</p>
 
 <ul>
-  <li>repository url : https://github.com/mee-nam-lee/.git</li>
+  <li>repository url : https://github.com/mee-nam-lee/chatbot.git</li>
 </ul>
+
+<blockquote>
+  <p>repository 경로를 변경하였습니다. 아래 그림과 다르니 주의하세요.</p>
+</blockquote>
 
 <p>입력이 완료되었으면 <strong>Finish</strong>를 클릭합니다.</p>
 
 <p><img src="/assets/images/chatbot_lecture/component/05_project3.png" alt="" /></p>
 
 <p>다음과 같이 Project에 필요한 컴포넌트들이 Provision 되는 것이 보일 것입니다.</p>
+
+<blockquote>
+  <p>Repostory 경로가 수정되면서 아래 folder 경로도 조금 수정되었습니다. 소스가 들어왔는지 만 확인 되면 됩니다.</p>
+</blockquote>
 
 <p><img src="/assets/images/chatbot_lecture/component/06_project4.png" alt="" /></p>
 
@@ -153,6 +161,10 @@
 <p><img src="/assets/images/chatbot_lecture/component/08_git.png" alt="" /></p>
 
 <p>Custom Component의 Main Component 코드는 다음 경로에 있습니다. 아래 경로로 이동해 봅니다.</p>
+
+<blockquote>
+  <p>bot-start/component 경로로 이동하면 됩니다.</p>
+</blockquote>
 
 <p><img src="/assets/images/chatbot_lecture/component/09_src.png" alt="" /></p>
 
@@ -186,10 +198,15 @@
 <p><img src="/assets/images/chatbot_lecture/component/14_addstep.png" alt="" /></p>
 
 <p><strong>Script</strong> 입력 부분에 다음 3줄을 입력합니다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd src
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd bot-start
 npm install
 npm pack
 </code></pre></div></div>
+
+<blockquote>
+  <p>경로가 변경되었으니 위 command를 참고하면 됩니다. (src –&gt; bot-start)</p>
+</blockquote>
+
 <p><img src="/assets/images/chatbot_lecture/component/15_npm.png" alt="" /></p>
 
 <p>빌드된 Artifact를 저장하기 위한 post build 작업이 필요하기 때문에 <strong>Post Build</strong> 탭으로 이동합니다.
@@ -200,7 +217,7 @@ npm pack
 <p>Archive할 파일을 다음과 같이 입력합니다.</p>
 
 <ul>
-  <li>Files to archive : src/*.tgz</li>
+  <li>Files to archive : bot-start/*.tgz</li>
 </ul>
 
 <p><strong>Save</strong>를 클릭하여 구성된 내용을 저장합니다.</p>
@@ -413,6 +430,7 @@ Package File 부분에 이전 단계에서 다운로드 받아둔 Archive를 업
   <li><a href="/chatbot/2019/챗봇-Hands-on-Lab_6/">챗봇 Hands-on Lab (6) - Insights(분석) 기능 사용하기</a></li>
   <li><a href="/chatbot/2019/챗봇-Hands-on-Lab_7/">챗봇 Hands-on Lab (7) - Custom Component 구현하기</a></li>
   <li><a href="/chatbot/2019/챗봇-Hands-on-Lab_8/">챗봇 Hands-on Lab (8) - Instant App 구현 및 챗봇 연계</a></li>
+  <li><a href="/chatbot/2019/챗봇-Hands-on-Lab_9/">챗봇 Hands-on Lab (9) - WebView 구현 및 챗봇 연계</a></li>
 </ul>
 
 
