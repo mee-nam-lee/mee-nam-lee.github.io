@@ -35,13 +35,17 @@ tags: [chatbot, 오라클 챗봇, Hands-on-Lab,Custom Component]
 
 **Import existing repository** 옵션을 선택하고 text box에 다음 repository url을 입력합니다.
 
-- repository url : https://github.com/mee-nam-lee/chatbot_component.git
+- repository url : https://github.com/mee-nam-lee/chatbot.git
+
+> repository 경로를 변경하였습니다. 아래 그림과 다르니 주의하세요.
 
 입력이 완료되었으면 **Finish**를 클릭합니다.
 
 ![](/assets/images/chatbot_lecture/component/05_project3.png)
 
 다음과 같이 Project에 필요한 컴포넌트들이 Provision 되는 것이 보일 것입니다.
+
+> Repostory 경로가 수정되면서 아래 folder 경로도 조금 수정되었습니다. 소스가 들어왔는지 만 확인 되면 됩니다.
 
 ![](/assets/images/chatbot_lecture/component/06_project4.png)
 
@@ -56,6 +60,8 @@ Project 생성이 완료되면 자동으로 Project Home 화면으로 이동됩�
 ![](/assets/images/chatbot_lecture/component/08_git.png)
 
 Custom Component의 Main Component 코드는 다음 경로에 있습니다. 아래 경로로 이동해 봅니다.
+
+> bot-start/component 경로로 이동하면 됩니다.
 
 ![](/assets/images/chatbot_lecture/component/09_src.png)
 
@@ -90,10 +96,13 @@ Job이 생성되고 나면 Job Configuration 화면으로 이동됩니다. **Sou
 
 **Script** 입력 부분에 다음 3줄을 입력합니다. 
 ```
-cd src
+cd bot-start
 npm install
 npm pack
 ```
+
+> 경로가 변경되었으니 위 command를 참고하면 됩니다. (src --> bot-start)
+
 ![](/assets/images/chatbot_lecture/component/15_npm.png)
 
 빌드된 Artifact를 저장하기 위한 post build 작업이 필요하기 때문에 **Post Build** 탭으로 이동합니다.
@@ -103,7 +112,7 @@ npm pack
 
 Archive할 파일을 다음과 같이 입력합니다.
 
-- Files to archive : src/*.tgz
+- Files to archive : bot-start/*.tgz
 
 **Save**를 클릭하여 구성된 내용을 저장합니다.
 
