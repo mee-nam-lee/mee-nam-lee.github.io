@@ -38,6 +38,7 @@ WebView 애플리케이션 소스를 다음에서 다운 받습니다.
 ```
 git clone https://github.com/mee-nam-lee/chatbot.git
 cd bot_webview 
+npm install
 node index.js
 ```
 기본 포트는 3000으로 동작합니다.
