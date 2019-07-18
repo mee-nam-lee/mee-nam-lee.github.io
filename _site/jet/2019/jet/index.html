@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Oracle JET 샘플 - Chatbot 실습 용 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Oracle JET 샘플 - Chatbot 실습 용" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Oracle JET를 이용하여 간단하게 웹 애플리케이션을 생성하는 예제로 Oracle JET에서 제공하는 Nav Bar Starter 탬플릿을 이용하여 웹애플리케이션 프로젝트를 구성하고, Chatbot Hands On Lab에 필요한 교육생들의 환경 정보 관리 및 실습에서 사용하는 Web Channel과 WebView를 연결해 둔 샘플이다." />
+<meta property="og:description" content="Oracle JET를 이용하여 간단하게 웹 애플리케이션을 생성하는 예제로 Oracle JET에서 제공하는 Nav Bar Starter 탬플릿을 이용하여 웹애플리케이션 프로젝트를 구성하고, Chatbot Hands On Lab에 필요한 교육생들의 환경 정보 관리 및 실습에서 사용하는 Web Channel과 WebView를 연결해 둔 샘플이다." />
+<link rel="canonical" href="http://localhost:4000/jet/2019/jet/" />
+<meta property="og:url" content="http://localhost:4000/jet/2019/jet/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-07-18T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"Oracle JET를 이용하여 간단하게 웹 애플리케이션을 생성하는 예제로 Oracle JET에서 제공하는 Nav Bar Starter 탬플릿을 이용하여 웹애플리케이션 프로젝트를 구성하고, Chatbot Hands On Lab에 필요한 교육생들의 환경 정보 관리 및 실습에서 사용하는 Web Channel과 WebView를 연결해 둔 샘플이다.","@type":"BlogPosting","url":"http://localhost:4000/jet/2019/jet/","headline":"Oracle JET 샘플 - Chatbot 실습 용","dateModified":"2019-07-18T00:00:00+09:00","datePublished":"2019-07-18T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jet/2019/jet/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- begin _includes/seo.html --><title>Oracle JET 샘플 - Chatbot 실습 용 - MN Lee’s IT Blog</title>
+<meta name="description" content="Oracle JET를 이용하여 간단하게 웹 애플리케이션을 생성하는 예제로 Oracle JET에서 제공하는 Nav Bar Starter 탬플릿을 이용하여 웹애플리케이션 프로젝트를 구성하고, Chatbot Hands On Lab에 필요한 교육생들의 환경 정보 관리 및 실습에서 사용하는 Web Channel과 WebView를 연결해 둔 샘플이다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MN Lee's IT Blog">
+<meta property="og:title" content="Oracle JET 샘플 - Chatbot 실습 용">
+<meta property="og:url" content="http://localhost:4000/jet/2019/jet/">
+
+
+  <meta property="og:description" content="Oracle JET를 이용하여 간단하게 웹 애플리케이션을 생성하는 예제로 Oracle JET에서 제공하는 Nav Bar Starter 탬플릿을 이용하여 웹애플리케이션 프로젝트를 구성하고, Chatbot Hands On Lab에 필요한 교육생들의 환경 정보 관리 및 실습에서 사용하는 Web Channel과 WebView를 연결해 둔 샘플이다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-07-18T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/jet/2019/jet/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+<link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">Archive</a><a class="page-link" href="/search/">검색</a></div></nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Oracle JET 샘플 - Chatbot 실습 용</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-07-18T00:00:00+09:00" itemprop="datePublished">Jul 18, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><strong>Oracle JET</strong>를 이용하여 간단하게 웹 애플리케이션을 생성하는 예제로 Oracle JET에서 제공하는 <strong>Nav Bar Starter</strong> 탬플릿을 이용하여 웹애플리케이션 프로젝트를 구성하고, Chatbot Hands On Lab에 필요한 교육생들의 환경 정보 관리 및 실습에서 사용하는 Web Channel과 WebView를 연결해 둔 샘플이다.</p>
+
+<h1 id="환경-구성">환경 구성</h1>
+<p>이 애플리케이션을 구동하기 위해서는 Oracle JET과 JET을 구동하기위해 필요한 패키지들이 사전에 설치되어 있어야 한다.</p>
+
+<ul>
+  <li><a href="https://docs.oracle.com/en/middleware/developer-tools/jet/7/develop/choose-development-environment-oracle-jet.html#GUID-8A2D524A-3822-4D5D-8E87-1E1B39283999">JET 설치 문서</a></li>
+</ul>
+
+<h1 id="애플리케이션-다운로드-및-구동">애플리케이션 다운로드 및 구동</h1>
+
+<p>소스를 Git으로 다운 받아 다음과 같이 ojet 커맨드로 구동하면 샘플 애플리케이션이 구동된다.</p>
+
+<ul>
+  <li>기본 포트는 8000으로 동작</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/mee-nam-lee/jet.git
+cd jet/training
+ojet serve
+</code></pre></div></div>
+
+<blockquote>
+  <p>training/src/bot-client-sdk-js는 Chatbot에서 제공하는 SDK 피일들이다. Oracle Download Site에서 해당 SDK를 받아서 구동할 환경에 맞게 configure 명령어를 수행 후 생성된 소스들을 이 디렉토리에 두면 된다.</p>
+</blockquote>
+
+<p><img src="/assets/images/jet/chatbot_env/01_login.png" alt="" /></p>
+
+<p>로그인을 수행하고 Environment 페이지로 Routing이 되면 Chatting 창이 열리게 된다.
+채팅창이 그림과 깉이 보이지 않을 경우에는 <strong>App ID 설정</strong> 버튼을 클릭하여 유효한 App ID를 입력하게 되면 채팅 아이콘이 보일 것이다.</p>
+
+<p><img src="/assets/images/jet/chatbot_env/02_env.png" alt="" /></p>
+
+<p>채팅 버튼을 클릭하여 채팅을 수행한다.</p>
+
+<p><img src="/assets/images/jet/chatbot_env/03_chat.png" alt="" /></p>
+
+<p>Chatbot Hands on Lab에서 사용하는 <strong>WebView</strong>도 여기에서 서비스 되는데
+이 서비스는 REST API도 함께 구동되어 있어야 하기 때문에 <strong>ojet serve</strong>로 구동된 Embedded Web Container에서는 테스트해 볼 수 없고
+별도의 Express Http Server를 구동 시켜줘야 한다.</p>
+
+<p>기존의 <strong>ojet serve</strong>로 구동된 프로세스를 종료하고 다음과 같이 수행한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd training/web
+npm install
+node server.js
+</code></pre></div></div>
+<p>위에서 본 것과 동일한 환경이 별도의 HTTP Container에서 구동되는 환경이다. 
+동일하게 8000 포트에서 동작하므로 Browser에서 <a href="http://localhost:8000">http://localhost:8000</a> 으로 접속하면 된다.
+로그인 후 WebView URL 링크를 클릭하면 WebView 샘플을 확인해 볼 수 있다.
+챗봇에서의 연결은 WebView Hands On Lab을 그대로 따라 하면 된다.</p>
+
+<p><img src="/assets/images/jet/chatbot_env/04_webview.png" alt="" /></p>
+
+<blockquote>
+  <p>노트북 이미지는 danawa 사이트에서 참고한 것으로 직접 저장된 이미지는 없고 링크로만 연결되어 있음</p>
+</blockquote>
+
+<h1 id="참고-자료">참고 자료</h1>
+<ul>
+  <li><a href="https://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html">Oracle JET Cookbook</a></li>
+  <li><a href="https://www.oracle.com/downloads/cloud/amce-downloads.html">Oracle Chatbot Javascript SDK</a></li>
+</ul>
+
+
+
+  </div><div>
+  <p>
+    <!--img src="/assets/images/tag.png"/--><a href="/tags/Channel/" class="keywords" rel="tag">Channel</a>&nbsp&nbsp<a href="/tags/chatbot/" class="keywords" rel="tag">chatbot</a>&nbsp&nbsp<a href="/tags/JET/" class="keywords" rel="tag">JET</a>&nbsp&nbsp<a href="/tags/WebView/" class="keywords" rel="tag">WebView</a></p>
+</div><div>
+  <p>
+    <!--img src="/assets/images/share.png"/-->
+  
+    <a href="https://twitter.com/intent/tweet?text=Oracle+JET+%EC%83%98%ED%94%8C+-+Chatbot+%EC%8B%A4%EC%8A%B5+%EC%9A%A9%20http%3A%2F%2Flocalhost%3A4000%2Fjet%2F2019%2Fjet%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fjet%2F2019%2Fjet%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fjet%2F2019%2Fjet%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fjet%2F2019%2Fjet%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/chatbot/2019/%EC%B1%97%EB%B4%87-Hands-on-Lab_9/" title="챗봇 Hands-on Lab (9) - WebView 구현 및 챗봇 연계
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">&nbsp&nbsp Next &nbsp&nbsp</a></nav>
+</div>
+</div><a class="u-url" href="/jet/2019/jet/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>
