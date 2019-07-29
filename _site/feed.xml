@@ -1,4 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-07-26T09:59:20+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Cloud Infrastructure - WAF 설정</title><link href="http://localhost:4000/cloud/2019/waf/" rel="alternate" type="text/html" title="Oracle Cloud Infrastructure - WAF 설정" /><published>2019-07-24T00:00:00+09:00</published><updated>2019-07-24T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/waf</id><content type="html" xml:base="http://localhost:4000/cloud/2019/waf/">&lt;p&gt;&lt;strong&gt;Oracle Cloud Infrasture(OCI)&lt;/strong&gt;의 WAF Policy 생성하고 적용하는 방법에 대해 설명하는 문서 임.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-07-29T11:22:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">MN Lee’s IT Blog</title><subtitle>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</subtitle><entry><title type="html">Oracle Cloud Infrastructure - DNS - Traffic Management Steering Policy</title><link href="http://localhost:4000/cloud/2019/dns-traffic/" rel="alternate" type="text/html" title="Oracle Cloud Infrastructure - DNS - Traffic Management Steering Policy" /><published>2019-07-29T00:00:00+09:00</published><updated>2019-07-29T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/dns-traffic</id><content type="html" xml:base="http://localhost:4000/cloud/2019/dns-traffic/">&lt;p&gt;&lt;strong&gt;Oracle Cloud Infrasture(OCI)&lt;/strong&gt;의 &lt;strong&gt;DNS&lt;/strong&gt;와 &lt;strong&gt;Traffic Management&lt;/strong&gt; 기능을 이용하여 Cloud Region 간 또는 Cloud와 On-Premise 간의 로드발란싱을 구성할 수가 있다.
+Traffic Management는 여러가지 Steering Policy를 제공하는데, 이 문서에서는 &lt;strong&gt;LOAD BALANCER&lt;/strong&gt; Steering Policy에 대해서 알아 볼 것이다.&lt;/p&gt;
+
+&lt;p&gt;사용자가 웹사이트에 접근하기 위해 DNS Lookup을 수행하면 DNS에 적용된 Traffic Management의 Steering Policy를 통해서 제공되는 Origin Server IP를 발란싱해서 전달해주고 사용자 요청이 여러 Region 간에 분배될 수 있게 해준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/dns_lb.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;prerequiste&quot;&gt;Prerequiste&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;도메인
+    &lt;ul&gt;
+      &lt;li&gt;설정에 사용할 도메인이 있어야 한다. 이 예제에서는 무료 도메인 발급 사이트에서 발급받은 &lt;strong&gt;mnlee.cf&lt;/strong&gt;를 사용했다.&lt;/li&gt;
+      &lt;li&gt;도메인 등록 사이트에서 Name Server를 &lt;strong&gt;OCI DNS&lt;/strong&gt;의 Name Server로 연결되게 구성해 주어야 한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/waf/00_nameserver.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;traffic-management-steering-policy-생성&quot;&gt;Traffic Management Steering Policy 생성&lt;/h1&gt;
+
+&lt;p&gt;OCI 콘솔에 접속해서 &lt;strong&gt;Traffic Management Steering Policy&lt;/strong&gt;를 생성해 준다.
+여러 Policy Type 중에서 &lt;strong&gt;LOAD BALANCER&lt;/strong&gt; 타입을 선택한다.
+이름과 TTL을 적당한 값으로 입력하고 로드발란싱을 적용할 DNS Record를 추가해 준다.
+이 예제에서 &lt;strong&gt;pho.mnlee.cf&lt;/strong&gt;는 &lt;strong&gt;Phoenix&lt;/strong&gt; 리전에서 서비스하고, &lt;strong&gt;ash.mnlee.cf&lt;/strong&gt;는 &lt;strong&gt;Ashburn&lt;/strong&gt; 리전에서 서비스 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/create_traffic_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Region에서 서비스되고 있는 인스턴스나 서비스의 &lt;strong&gt;Health&lt;/strong&gt;를 체크하여 &lt;strong&gt;Healthy&lt;/strong&gt;한 서비스가 리턴 되도록 &lt;strong&gt;Health Check&lt;/strong&gt; 기능을 연결해도 되지만 이 예제에서는 간단한 테스를 위하여 이 기능은 Attach하지 않았다.
+Policy를 Attach할 도메인을 선택하고 &lt;strong&gt;Create Policy&lt;/strong&gt;를 클릭한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/create_traffic_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Traffic Management Policy가 만들어지고 난 후의 화면이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/after_traffic_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/after_traffic_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;dns-설정&quot;&gt;DNS 설정&lt;/h1&gt;
+
+&lt;p&gt;DNS Zone 관리 화면에서 로드발란싱을 수행할 두개의 CNAME Record를 다음과 같이 추가해 준다.
+추가 후에는 &lt;strong&gt;Publish Changes&lt;/strong&gt;를 눌러줘야 변경사항이 반영된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/dns_record.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;test&quot;&gt;Test&lt;/h1&gt;
+
+&lt;p&gt;DNS Lookup 로드발란싱이 잘 수행되는지 &lt;strong&gt;dig&lt;/strong&gt; 커맨드를 통해서 테스트해 본다
+첫번째 dig 명령어에서는 &lt;strong&gt;ash.mnlee.cf&lt;/strong&gt;가 리턴 되었다.
+TTL을 60초로 설정해 두었기 때문에 TTL 내에서는 동일한 Answer가 보이게 될 것이다.&lt;/p&gt;
+
+&lt;p&gt;TTL 경과 후 다시 DNS Lookup을 수행하면 &lt;strong&gt;pho.mnlee.cf&lt;/strong&gt;가 리턴되는 것을 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/dig_ash_pho.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;브라우저에서 테스트 해보자.
+두 Region 중 하나에서 응답을 받을 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/browser_ash.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;브라우저에서는 DNS lookup 후 리턴되는 서버 IP를 캐싱하여 가지고 있기 때문에 TTL 후에도 계속 같은 Region에서 응답을 받게 될 것이다.&lt;/p&gt;
+
+&lt;p&gt;사용하는 브라우저 별로 DNS 캐시 Clear하는 방법을 참고하여 Cache를 지운 후에 다시 테스트 해보자.
+Chrome 브라우저에서는 다음과 같이 하면 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/chrome_dns_clear.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다시 테스트 해보면 다른 Region에서 응답을 받게 될 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/traffic/lb/browser_pho.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.cloud.oracle.com/iaas/Content/TrafficManagement/Concepts/overview.htm&quot;&gt;Overview of the Traffic Management Steering Policies Service&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="Oracle Cloud" /><category term="OCI" /><category term="Traffic Management" /><category term="DNS" /><category term="Steering Policy" /><summary type="html">Oracle Cloud Infrasture(OCI)의 DNS와 Traffic Management 기능을 이용하여 Cloud Region 간 또는 Cloud와 On-Premise 간의 로드발란싱을 구성할 수가 있다. Traffic Management는 여러가지 Steering Policy를 제공하는데, 이 문서에서는 LOAD BALANCER Steering Policy에 대해서 알아 볼 것이다.</summary></entry><entry><title type="html">Oracle Cloud Infrastructure - WAF 설정</title><link href="http://localhost:4000/cloud/2019/waf/" rel="alternate" type="text/html" title="Oracle Cloud Infrastructure - WAF 설정" /><published>2019-07-24T00:00:00+09:00</published><updated>2019-07-24T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/waf</id><content type="html" xml:base="http://localhost:4000/cloud/2019/waf/">&lt;p&gt;&lt;strong&gt;Oracle Cloud Infrasture(OCI)&lt;/strong&gt;의 WAF Policy 생성하고 적용하는 방법에 대해 설명하는 문서 임.&lt;/p&gt;
 
 &lt;h1 id=&quot;prerequiste&quot;&gt;Prerequiste&lt;/h1&gt;
 &lt;ul&gt;
@@ -1248,229 +1323,4 @@ Web과 Coherence 인스턴스에 접속해서 서비스를 구동시키고, 웹�
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.terraform.io/docs/providers/oci/&quot;&gt;Terraform Oracle Cloud Infrastructure Provider&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.terraform.io/docs/providers/oraclepaas/index.html&quot;&gt;Terraform Oracle Cloud Platform Provider&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="Oracle Cloud" /><category term="Virtual Cloud Network" /><category term="IaaS" /><category term="3 Tier Architecture" /><category term="HA" /><category term="Java Cloud Service" /><category term="Terraform" /><summary type="html">이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)에서는 각 Tier에 필요한 모든 컴포넌트들을 Oracle Cloud Console을 통해 Step by Step으로 생성하였었다.</summary></entry><entry><title type="html">WebLogic on Oracle Kubernetes Engine(OKE) - 로그 모니터링 (ELK)</title><link href="http://localhost:4000/cloud/2019/k8s-weblogic-elk/" rel="alternate" type="text/html" title="WebLogic on Oracle Kubernetes Engine(OKE) - 로그 모니터링 (ELK)" /><published>2019-04-29T00:00:00+09:00</published><updated>2019-04-29T00:00:00+09:00</updated><id>http://localhost:4000/cloud/2019/k8s-weblogic-elk</id><content type="html" xml:base="http://localhost:4000/cloud/2019/k8s-weblogic-elk/">&lt;p&gt;이 문서에서는 &lt;strong&gt;ELK(Elasticsearch, Logstash, Kibana)&lt;/strong&gt;를 통해 이전에 배포한 &lt;strong&gt;WebLogic Operator&lt;/strong&gt;와 &lt;strong&gt;WebLogic Domain&lt;/strong&gt; 환경의 로그를 수잡하여 모니터링하는 방법에 대해서 다룰 것이다.&lt;/p&gt;
-
-&lt;h1 id=&quot;architecture&quot;&gt;Architecture&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/00_arch5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;kubernetes-weblogic-operator-구성-변경&quot;&gt;Kubernetes WebLogic Operator 구성 변경&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;Kubernetes WebLogic Operator&lt;/strong&gt;에는 &lt;strong&gt;ELK&lt;/strong&gt;를 통해 로그 모니터링을 하는 환경이 기본적으로 설정되어있다. 
-WebLogic Operator POD 내에 logstach container를 구동하도록 설정되어 있는데 기본적으로는 이 구성이 &lt;strong&gt;disable&lt;/strong&gt;로 되어있기 때문에 &lt;strong&gt;elkIntegrationEnabled&lt;/strong&gt;라는 속성 항목을 &lt;strong&gt;true&lt;/strong&gt;로 변경하여야 &lt;strong&gt;logstash&lt;/strong&gt; container가 구동된다.
-WebLogic Operator은 이전 과정에서 helm을 통해 이미 설치 되어있기 때문에 기존 설치된 weblogic-operator의 &lt;strong&gt;upgrade&lt;/strong&gt;를 통해 속성 값을 변경해 줄 것이다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;helm upgrade weblogic-operator weblogic-operator/weblogic-operator --set elkIntegrationEnabled=true
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;weblogic-operator&lt;/strong&gt;가 upgrade 되면서 REVISION 값이 변경되는 것을 확인할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/01_helm_upgrade.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;속성 값이 잘 반영되었는지 다음으로도 확인할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/02_helm_get_values.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;history&lt;/strong&gt;로 보게 되면 REVISION 값이 변경되어있는 것을 확인 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/03_upgrade_complete.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;weblogic-operator&lt;/strong&gt;의 POD 정보를 보면 &lt;strong&gt;logstash&lt;/strong&gt; container가 기동되었기 때문에 Running Container 수가 2로 변경된 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/04_operator2running.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;elasticsearch-kibana-배포&quot;&gt;Elasticsearch, Kibana 배포&lt;/h1&gt;
-
-&lt;p&gt;제공되는 샘플 스크립트 디렉토리로 이동하면 Elasticsearch와 Kibana를 배포할 수 있는 구성파일이 존재한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd weblogic-kubernetes-operator/kubernetes/samples/scripts/elasticsearch-and-kibana
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;elasticsearch_and_kibana.yaml&lt;/strong&gt; 파일을 열어서 Service 항목을 살펴보자. Elasticsearch와 Kibana를 위한 각각의 서비스 항목이 있을 것이다. 이 문서의 설명에서는 외부에서 Elasticsearch에 접속할 필요는 없기 때문에 elasticsearch 서비스는 그대로 두고 &lt;strong&gt;kibana&lt;/strong&gt; 서비스만 아래와 같이 &lt;strong&gt;LoadBalancer&lt;/strong&gt; type으로 수정해 준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;v1&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Service&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;default&quot;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kibana&quot;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kibana&quot;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-shape&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;100Mbps&quot;&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;service.beta.kubernetes.io/oci-load-balancer-backend-protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;HTTP&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-&lt;span class=&quot;c1&quot;&gt;#  type: &quot;NodePort&quot;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;LoadBalancer&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5601&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5601&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-    &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kibana&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;변경한 파일을 적용한다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kubectl apply -f elasticsearch_and_kibana.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/04_elk_apply.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;생성된 POD를 확인한다. Elasticsearch container에 직접 접속하여 구성이 잘 되었는지 확인해 본다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/05_elastic_logstash.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 Kibana 콘솔에 접속하기 위하여 Kibana 서비스의 External IP를 확인한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/06_kibana_svc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;브라우저에 다음과 같이 입력하여 상태가 &lt;strong&gt;Green&lt;/strong&gt;이면 정상이다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;http://[kibana-service-external-ip]:5601/status&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/07_kibana_status.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;식별할 Elasticsearch의 Index Pattern을 구성하고 &lt;strong&gt;Create&lt;/strong&gt;를 클릭하면 바로 수집된 로그가 Kibana에서 보여진다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/08_kibana_config.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Discover&lt;/strong&gt; 탭에서 수집된 로그들을 아래와 같이 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/09_kibana_discover.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;여기까지는 WebLogic Kubernetes Operator의 로그 수집 과정이었다.&lt;/p&gt;
-
-&lt;h1 id=&quot;weblogic-server-로그-수집&quot;&gt;WebLogic Server 로그 수집&lt;/h1&gt;
-
-&lt;p&gt;이제 WebLogic Domain의 각 WebLogic Server들의 로그를 수집해 보자. 위 과정에서 사용한 &lt;strong&gt;Logstash&lt;/strong&gt;는 WebLogic Kubernetes Operator 구성에 포함된 것으로, 이 설정을 이용해서는 외부의 WebLogic Domain 로그를 수집할 수 없다.
-이 내장 &lt;strong&gt;Logstash&lt;/strong&gt; 설정을 변경하는 대신 새롭게 WebLogic Domain 로그를 수집할 &lt;strong&gt;Logstash&lt;/strong&gt;를 추가로 구성해 볼 것이다.&lt;/p&gt;
-
-&lt;p&gt;여기에서 사용하는 WebLogic Domain은 이전 글에서 생성한 &lt;strong&gt;Persistent Volume&lt;/strong&gt;을 사용하는 WebLogic Domain이다. 따라서 이 WebLogic Domain의 log들은 &lt;strong&gt;Persistent Volume&lt;/strong&gt;, &lt;strong&gt;/shared/logs&lt;/strong&gt;에 저장되도록 설정되어있다.&lt;/p&gt;
-
-&lt;p&gt;추가로 구성하는 &lt;strong&gt;Logstash&lt;/strong&gt;는 shared log 디렉토리 내의 로그들을 수집하도록 구성할 것이다.&lt;/p&gt;
-
-&lt;h2 id=&quot;logstash-구성&quot;&gt;Logstash 구성&lt;/h2&gt;
-
-&lt;p&gt;추가의 &lt;strong&gt;Logstach&lt;/strong&gt; 구성을 위한 &lt;strong&gt;logstash.yaml&lt;/strong&gt; 파일을 다음과 같이 작성한다.
-이 파일에서는 &lt;strong&gt;/shared&lt;/strong&gt;를 참조하는 미리 만들어진 &lt;strong&gt;weblogic-domain-storage-volume&lt;/strong&gt;을 mount할 것이다.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deployment&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;logstash&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;1&lt;/span&gt; 
-  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;logstash&quot;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;logstash&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;weblogic-domain-storage-volume&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;persistentVolumeClaim&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;claimName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;domain1-weblogic-sample-pvc&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;logstash&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;logstash:6.6.0&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-f&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/shared/logstash/logstash.conf&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ELASTICSEARCH_HOST&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;elasticsearch.default.svc.cluster.local&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ELASTICSEARCH_PORT&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;9200&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;imagePullPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;IfNotPresent&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;volumeMounts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mountPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/shared&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;weblogic-domain-storage-volume&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5044&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;logstash&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위 파일을 적용하기 앞서서 logstash 시작에 필요한 커스텀 구성 파일 &lt;strong&gt;logstash.conf&lt;/strong&gt; 파일을 작성해 주어야 한다.
-이 파일은 &lt;strong&gt;Persistent Volume&lt;/strong&gt;으로 mount될 &lt;strong&gt;/shared&lt;/strong&gt; 디렉토리 내에 폴더를 만들어 구성하고 이를 참조해서 Logstash가 구동되도록 할 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Public Subnet&lt;/strong&gt;에 구성해 둔 &lt;strong&gt;Bastion Server&lt;/strong&gt;에 접속하여 Shared File System에 접속해서 작업하도록 한다. (접속 방법은 이전 글 참고)&lt;/p&gt;
-
-&lt;p&gt;shared 폴더로 이동하여 &lt;strong&gt;logstash&lt;/strong&gt; 폴더를 추가해 주고 &lt;strong&gt;logstash.conf&lt;/strong&gt; 파일을 생성한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 :&lt;br /&gt;
-Bastion Server에서 사용하는 Mount Path는 꼭 /shared가 아닌 다른 위치에 mount해서 사용해도 된다.
-아래 예시에서는 /mnt/shared에 Mount되어있다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/14_logstash_conf.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;logstash.conf&lt;/strong&gt; 파일의 내용을 다음과 같이 작성해 준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; {
-  &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; {
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s2&quot;&gt;&quot;/shared/logs/domain1/*.log*&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;start_position&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s2&quot;&gt;&quot;beginning&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s2&quot;&gt;&quot;weblogic-server&quot;&lt;/span&gt;
-  }
-}
-
-&lt;span class=&quot;n&quot;&gt;filter&lt;/span&gt; {
-  &lt;span class=&quot;n&quot;&gt;grok&lt;/span&gt; {
-       &lt;span class=&quot;n&quot;&gt;match&lt;/span&gt; =&amp;gt; [ &lt;span class=&quot;s2&quot;&gt;&quot;message&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;%{DATA:log_timestamp}&amp;gt; &amp;lt;%{WORD:log_level}&amp;gt; &amp;lt;%{WORD:thread}&amp;gt; &amp;lt;%{HOSTNAME:hostname}&amp;gt; &amp;lt;%{HOSTNAME:servername}&amp;gt; &amp;lt;%{DATA:timer}&amp;gt; &amp;lt;&amp;lt;%{DATA:kernel}&amp;gt;&amp;gt; &amp;lt;&amp;gt; &amp;lt;%{DATA:uuid}&amp;gt; &amp;lt;%{NUMBER:timestamp}&amp;gt; &amp;lt;%{DATA:misc}&amp;gt; &amp;lt;%{DATA:log_number}&amp;gt; &amp;lt;%{DATA:log_message}&amp;gt;&quot;&lt;/span&gt; ]
-  }
-  &lt;span class=&quot;n&quot;&gt;date&lt;/span&gt; {
-     &lt;span class=&quot;n&quot;&gt;match&lt;/span&gt; =&amp;gt; [ &lt;span class=&quot;s2&quot;&gt;&quot;timestamp&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;MM-dd-YYYY'T'HH:mm:ss.SSSZ&quot;&lt;/span&gt; ]
-     &lt;span class=&quot;n&quot;&gt;locale&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s2&quot;&gt;&quot;en&quot;&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;timezone&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s2&quot;&gt;&quot;UTC&quot;&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s2&quot;&gt;&quot;@timestamp&quot;&lt;/span&gt;
-  }
-  &lt;span class=&quot;n&quot;&gt;mutate&lt;/span&gt; {
-     &lt;span class=&quot;n&quot;&gt;remove_field&lt;/span&gt; =&amp;gt; [&lt;span class=&quot;s2&quot;&gt;&quot;message&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;timestamp&quot;&lt;/span&gt;]
-  }
-}
-
-&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; {
-  &lt;span class=&quot;n&quot;&gt;elasticsearch&lt;/span&gt; {
-    &lt;span class=&quot;n&quot;&gt;hosts&lt;/span&gt; =&amp;gt; [&lt;span class=&quot;s2&quot;&gt;&quot;${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}&quot;&lt;/span&gt;]
-  }
-  &lt;span class=&quot;n&quot;&gt;stdout&lt;/span&gt; { &lt;span class=&quot;n&quot;&gt;codec&lt;/span&gt; =&amp;gt; &lt;span class=&quot;n&quot;&gt;rubydebug&lt;/span&gt; }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;파일 준비가 완료되었으면 logstash POD를 생성한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kubectl apply -f logstash.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;다음과 깉이 새로운 logstash Pod가 생성될 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/10_logstash_pod.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;logstash에서 Log를 잘 수집하고 있는지 Container 로그를 살펴본다. 로그가 수집되고 있는 상황이 계속 Logging 될 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/11_logstash_logs.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Kibana&lt;/strong&gt;에 들어가서 로그를 살펴보면 아래와 같이 &lt;strong&gt;webLogic-server&lt;/strong&gt; type의 로그가 들어온 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/12_kibana_logs.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;그 동안 쌓여있는 WebLogic Log들이 많았기 때문에 기존에 수집한 WebLogic Operator 로그와 수를 비교해 보면 WebLogic Server 로그가 상대적으로 매우 많은 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/13_kibana_graph.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 로그 수집을 위한 모든 준비가 다 되었으니 원하는 형태로 로그를 보기 위해 &lt;strong&gt;Dashboard&lt;/strong&gt;를 꾸며서 보기만 하면 된다.
-&lt;strong&gt;Dev Tool&lt;/strong&gt;을 이용해 Elasticsearch를 API 기반으로 조회해 보고 결과를 확인해 보는 것도 좋을 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/16_kibana_devtool.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;아래는 샘플로 두개의 Graph를 넣어 만든 Dashboard 이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/kubeweblogic5/15_kibana_dashboard.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;여기까지 Kubernetes에 배포된 WebLogic Server의 로그 모니터링에 대한 방법에 대해 다루었다.&lt;/p&gt;
-
-&lt;h1 id=&quot;참고-자료&quot;&gt;참고 자료&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://oracle.github.io/weblogic-kubernetes-operator/&quot;&gt;Oracle WebLogic Server Kubernetes Operator&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="WebLogic" /><category term="Kubernetes" /><category term="Oracle Kubernetes Engine" /><category term="ELK" /><category term="Elasticsearch" /><category term="Logstash" /><category term="Kibana" /><summary type="html">이 문서에서는 ELK(Elasticsearch, Logstash, Kibana)를 통해 이전에 배포한 WebLogic Operator와 WebLogic Domain 환경의 로그를 수잡하여 모니터링하는 방법에 대해서 다룰 것이다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="Oracle Cloud" /><category term="Virtual Cloud Network" /><category term="IaaS" /><category term="3 Tier Architecture" /><category term="HA" /><category term="Java Cloud Service" /><category term="Terraform" /><summary type="html">이전 문서 Oracle IaaS와 Java Cloud Service를 사용하여 3 Tier 아키텍쳐 구축하기 (Regional Subnet 사용)에서는 각 Tier에 필요한 모든 컴포넌트들을 Oracle Cloud Console을 통해 Step by Step으로 생성하였었다.</summary></entry></feed>
