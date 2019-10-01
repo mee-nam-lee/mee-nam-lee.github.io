@@ -157,8 +157,12 @@
 <lastmod>2019-07-24T00:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/cloud/2019/dns-traffic/</loc>
+<loc>http://localhost:4000/cloud/2019/dns-traffic-copy/</loc>
 <lastmod>2019-07-29T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/cloud/2019/mysql-replica/</loc>
+<lastmod>2019-10-01T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/tags/3%20Tier%20Architecture/</loc>
@@ -302,6 +306,9 @@
 <loc>http://localhost:4000/tags/Pipeline/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/tags/Private%20Load%20Balancer/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/tags/Prometheus/</loc>
 </url>
 <url>
@@ -309,6 +316,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/tags/REST%20API/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/tags/Read%20Replica/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/tags/Resource%20Manager/</loc>
@@ -384,6 +394,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/page8/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page9/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/google42bc57defce8662f.html</loc>
