@@ -21,6 +21,7 @@ Replication 구성은 **www** Database에 대해서 구성되어있다.
 
 ## Master
 
+
 Public Subnet에 존재하는 MySQL Client를 통해 Master 노드로 Remote로 접속한다.
 Master Node의 Private IP는 10.0.2.2 이다.
 
