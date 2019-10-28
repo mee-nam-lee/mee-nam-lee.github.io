@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Events와 Functions을 사용한 Thumb Nail Image 생성하기 | MN Lee’s IT Blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Events와 Functions을 사용한 Thumb Nail Image 생성하기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 문서에서는 Object Storage에 저장되는 이미지를 OCI의 Events Service와 Serverless 서비스인 Functions을 사용하여 자동으로 Thumb Nail Image를 생성하는 방법에 대해서 설명할 것이다. 사용되는 서비스들과 서비스들 간의 호출 관계는 다음과 같다." />
+<meta property="og:description" content="이 문서에서는 Object Storage에 저장되는 이미지를 OCI의 Events Service와 Serverless 서비스인 Functions을 사용하여 자동으로 Thumb Nail Image를 생성하는 방법에 대해서 설명할 것이다. 사용되는 서비스들과 서비스들 간의 호출 관계는 다음과 같다." />
+<link rel="canonical" href="http://localhost:4000/cloud/2019/event-fn-resize/" />
+<meta property="og:url" content="http://localhost:4000/cloud/2019/event-fn-resize/" />
+<meta property="og:site_name" content="MN Lee’s IT Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-10-28T00:00:00+09:00" />
+<script type="application/ld+json">
+{"description":"이 문서에서는 Object Storage에 저장되는 이미지를 OCI의 Events Service와 Serverless 서비스인 Functions을 사용하여 자동으로 Thumb Nail Image를 생성하는 방법에 대해서 설명할 것이다. 사용되는 서비스들과 서비스들 간의 호출 관계는 다음과 같다.","@type":"BlogPosting","url":"http://localhost:4000/cloud/2019/event-fn-resize/","headline":"Events와 Functions을 사용한 Thumb Nail Image 생성하기","dateModified":"2019-10-28T00:00:00+09:00","datePublished":"2019-10-28T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cloud/2019/event-fn-resize/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- begin _includes/seo.html --><title>Events와 Functions을 사용한 Thumb Nail Image 생성하기 - MN Lee’s IT Blog</title>
+<meta name="description" content="이 문서에서는 Object Storage에 저장되는 이미지를 OCI의 Events Service와 Serverless 서비스인 Functions을 사용하여 자동으로 Thumb Nail Image를 생성하는 방법에 대해서 설명할 것이다.사용되는 서비스들과 서비스들 간의 호출 관계는 다음과 같다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MN Lee's IT Blog">
+<meta property="og:title" content="Events와 Functions을 사용한 Thumb Nail Image 생성하기">
+<meta property="og:url" content="http://localhost:4000/cloud/2019/event-fn-resize/">
+
+
+  <meta property="og:description" content="이 문서에서는 Object Storage에 저장되는 이미지를 OCI의 Events Service와 Serverless 서비스인 Functions을 사용하여 자동으로 Thumb Nail Image를 생성하는 방법에 대해서 설명할 것이다.사용되는 서비스들과 서비스들 간의 호출 관계는 다음과 같다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-10-28T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/cloud/2019/event-fn-resize/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+<link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="MN Lee's IT Blog" /><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136222427-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136222427-1');
+</script>
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">MN Lee&#39;s IT Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">Archive</a><a class="page-link" href="/search/">검색</a></div></nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Events와 Functions을 사용한 Thumb Nail Image 생성하기</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-10-28T00:00:00+09:00" itemprop="datePublished">Oct 28, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>이 문서에서는 Object Storage에 저장되는 이미지를 OCI의 <strong>Events Service</strong>와 Serverless 서비스인 <strong>Functions</strong>을 사용하여 자동으로 Thumb Nail Image를 생성하는 방법에 대해서 설명할 것이다.
+사용되는 서비스들과 서비스들 간의 호출 관계는 다음과 같다.</p>
+
+<p><img src="/assets/images/fn_resize/00_arch.png" alt="" /></p>
+
+<h1 id="prerequistes">Prerequistes</h1>
+<p>이 예제에서 사용하는 서비스들은 다음과 같다.</p>
+
+<ul>
+  <li>OCI Events Service</li>
+  <li>OCI Notification Service</li>
+  <li>OCI Functions Service</li>
+  <li>OCI Object Storage Service</li>
+</ul>
+
+<h1 id="fn-app-생성">Fn App 생성</h1>
+
+<p>제일 먼저 Function을 배포할 애플리케이션을 생성한다. 
+<strong>Functions</strong> 메뉴는 다음에서 찾으면 된다.</p>
+
+<p><img src="/assets/images/fn_resize/01_fn_menu.png" alt="" /></p>
+
+<p><strong>Create Application</strong> 버튼을 클릭하여 Fn를 배포할 애플리케이션을 생성한다.</p>
+
+<p><img src="/assets/images/fn_resize/02_create_fn_app.png" alt="" /></p>
+
+<p>애플리케이션 이름과 애플리케이션을 생성할 <strong>Virtual Cloud Network (VCN)</strong>과  <strong>Subnet</strong>을 선택하고, Fn의 Log 저장 옵션으로 <strong>Object Storage</strong>를 선택한다.</p>
+
+<p><img src="/assets/images/fn_resize/02_create_fn_app2.png" alt="" /></p>
+
+<p>다음과 같이 애플리케이션이 생성되어 있는 것을 볼 수 있다.</p>
+
+<p><img src="/assets/images/fn_resize/03_fn_app_list.png" alt="" /></p>
+
+<h1 id="resize-function-deploy">Resize Function Deploy</h1>
+
+<p>생성한 애플리케이션에 <strong>fn</strong>을 배포해 볼 것이다. 로컬 환경에 Fn 구축을 위한 절차와, OCI Functions에 접속하는 절차는 다음을 참고한다.</p>
+
+<ul>
+  <li><a href="https://docs.cloud.oracle.com/iaas/Content/Functions/Tasks/functionsconfiguringtenancies.htm">Configuring Your Tenancy for Function Development</a></li>
+</ul>
+
+<p><strong>Fn Project</strong> CLI를 Client에 설치하고 OCI Functions 서비스와의 연결을 설정하고 나면 로컬 환경에서 <strong>fn</strong> 커맨드를 통해서 다음과 같이 연결된 <strong>context</strong>를 확인할 수 있다
+Current Context가 OCI Functions를 사용하는 것으로 설정되어있는지 확인한다. ***** 표시가 되어있는 Context가 Current Context이다</p>
+
+<p><img src="/assets/images/fn_resize/04_fn_contexts.png" alt="" /></p>
+
+<p>여기에서 사용할 예제 fn은 Object Storage Bucket으로부터 image를 읽어와서 <strong>Sharp</strong> 모듈로 이미지 사이즈를 조정한 후에 다시 Object Storage에 넣는 예제이다.</p>
+
+<ul>
+  <li><a href="https://sharp.pixelplumbing.com/en/stable/">Sharp</a></li>
+</ul>
+
+<p>다음에서 필요한 소스를 받아온다.
+Function Code는 func.js를 참고하면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; git clone https://github.com/mee-nam-lee/NodeJS_Work.git
+&gt; cd myapp/resizefn
+</code></pre></div></div>
+
+<p>resizefn 디렉토리로 이동하여 fn을 배포한다.
+아래 커맨드를 수행하면 resizefn이 myapp 애플리케이션에 배포되게 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; fn -v deploy --app myapp
+</code></pre></div></div>
+
+<p><img src="/assets/images/fn_resize/05_fn_deploy.png" alt="" /></p>
+
+<p>OCI 콘솔의 Functions Application으로 들어가면 방금 Deploy한 Function이 아래와 같이 보이는 것을 확인할 수 있을 것이다.</p>
+
+<p><img src="/assets/images/fn_resize/06_fn_list.png" alt="" /></p>
+
+<h1 id="object-bucket-생성">Object Bucket 생성</h1>
+
+<p>이제 이미지를 저장할 Object Storage Bucket을 다음과 같이 생성한다.
+<strong>org_image</strong>는 Original 이미지가 저장된 Bucket이고 <strong>small_image</strong>는 Thumb Nail로 사이즈 조정된 이미지가 저장될 Bucket이다.</p>
+
+<p><img src="/assets/images/fn_resize/07_object.png" alt="" /></p>
+
+<h1 id="notification-service-생성">Notification Service 생성</h1>
+
+<p>Bucket에 Object가 생성되면 Object Create 이벤트가 발생하고 이 이벤트에 의해서 이메일 Notification을 해주기 위해서 Email 통지를 받는 Notification을 먼저 생성해 준다.</p>
+
+<p><img src="/assets/images/fn_resize/08_create_topic.png" alt="" /></p>
+
+<p>이메일 Notification을 받기 위하여 <strong>PROTOCOL</strong> 항목을 <strong>Email</strong>로 선택하고 메일 주소를 입력한다.</p>
+
+<p><img src="/assets/images/fn_resize/09_subscription.png" alt="" /></p>
+
+<h1 id="event-serivce-생성">Event Serivce 생성</h1>
+
+<p>이제 Bucket에 Object가 생성되면 resize fn를 호출하고 Email Notification을 호출할 Event 서비스를 만들어 보도록 하겠다.</p>
+
+<p>먼저 <strong>org_image</strong>에 Original Image가 생성되면 resizefn을 호출하는 Event Rule를 생성해 준다.
+다음과 같이 Event Condition과 Action 항목을 입력해 준다.</p>
+
+<p><img src="/assets/images/fn_resize/10_event_rule1.png" alt="" /></p>
+
+<p>Thumb Nail Image가 만들어지고 <strong>small_image</strong> Bucket에 이미지가 저장되면 Email 통지를 해주기 위한 Event Rule도 생성한다.
+이 Event Condition에서 사용하는 BucketName 조건을 입력하고 Action 항목에 생성해 둔 Notification 서비스를 선택해 준다.</p>
+
+<p><img src="/assets/images/fn_resize/11_event_rule2.png" alt="" /></p>
+
+<p>다음과 같이 두개의 Rule이 생성된 것을 볼 수 있다.</p>
+
+<p><img src="/assets/images/fn_resize/12_event_list.png" alt="" /></p>
+
+<h1 id="test">Test</h1>
+
+<p>이제 준비는 다 되었다. Object Storage Console로 이동하여 원본 크기의 이미지를 <strong>org_image</strong> Bucket에 Upload 해보자</p>
+
+<p><img src="/assets/images/fn_resize/13_upload.png" alt="" /></p>
+
+<p>이미지가 업로드 되었다.</p>
+
+<p><img src="/assets/images/fn_resize/14_uploaded.png" alt="" /></p>
+
+<p>Object가 생성되고 나서 Event가 정상적으로 발생하였는지 확인하기 위해서 Event의 Metrics 페이지를 확인해 본다. Event가 발생하였고 성공적으로 Function을 호출했음을 알 수 있다.</p>
+
+<p><img src="/assets/images/fn_resize/15_event_metric.png" alt="" /></p>
+
+<p>Functions Metrics에서도 해당 fn이 성공적으로 수행되었음을 볼 수 있다.</p>
+
+<p><img src="/assets/images/fn_resize/16_fn_metric.png" alt="" /></p>
+
+<p><strong>small_image</strong> Bucket에 가 보면 Thumb Nail이 생성되어 있는 것을 확인할 수 있다.</p>
+
+<p><img src="/assets/images/fn_resize/17_small_image.png" alt="" /></p>
+
+<p>이미지가 잘 변환되었는지 다운 받아서 확인해 본다.</p>
+
+<p><img src="/assets/images/fn_resize/18_download.png" alt="" /></p>
+
+<p><img src="/assets/images/fn_resize/19_thumb.png" alt="" /></p>
+
+<p>이벤트 규칙에 의해서 Thumb Nail 이미지 생성 Event에 의해서 Email 통지 또한 수행 되었다.</p>
+
+<p><img src="/assets/images/fn_resize/20_email.png" alt="" /></p>
+
+<h1 id="참고-자료">참고 자료</h1>
+
+<ul>
+  <li><a href="https://fnproject.io/tutorials/node/intro/">Introduction to Fn with Node.js</a></li>
+  <li><a href="https://docs.cloud.oracle.com/iaas/Content/Functions/Tasks/functionsconfiguringtenancies.htm">Configuring Your Tenancy for Function Development</a></li>
+</ul>
+
+
+
+  </div><div>
+  <p>
+    <!--img src="/assets/images/tag.png"/--><a href="/tags/Event/" class="keywords" rel="tag">Event</a>&nbsp&nbsp<a href="/tags/fn project/" class="keywords" rel="tag">fn project</a>&nbsp&nbsp<a href="/tags/Functions/" class="keywords" rel="tag">Functions</a>&nbsp&nbsp<a href="/tags/Node.js/" class="keywords" rel="tag">Node.js</a>&nbsp&nbsp<a href="/tags/OCI/" class="keywords" rel="tag">OCI</a>&nbsp&nbsp<a href="/tags/Oracle Cloud/" class="keywords" rel="tag">Oracle Cloud</a>&nbsp&nbsp<a href="/tags/Sharp/" class="keywords" rel="tag">Sharp</a></p>
+</div><div>
+  <p>
+    <!--img src="/assets/images/share.png"/-->
+  
+    <a href="https://twitter.com/intent/tweet?text=Events%EC%99%80+Functions%EC%9D%84+%EC%82%AC%EC%9A%A9%ED%95%9C+Thumb+Nail+Image+%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fevent-fn-resize%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fevent-fn-resize%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fevent-fn-resize%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcloud%2F2019%2Fevent-fn-resize%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  </p> 
+</div>
+  
+
+  <!-- POST NAVIGATION --><div class="center">
+<div class="pagination">
+  <nav><a href="/cloud/2019/mysql-replica/" title="Private Load Balancer를 이용한 MySQL Read Replica 로드 발란싱 하기
+">Previous </a><span class="sep">&nbsp&nbsp</span><a href="#">&nbsp&nbsp Next &nbsp&nbsp</a></nav>
+</div>
+</div><a class="u-url" href="/cloud/2019/event-fn-resize/" hidden></a>
+</article>
+
+      </div>
+
+    </main><div>
+<footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <!--
+    <h2 class="footer-heading">MN Lee&#39;s IT Blog</h2>
+    -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">MN Lee&#39;s IT Blog</li><li><a class="u-email" href="mailto:mnlee30@gmail.com"><span style="font-size:0.75rem"> mnlee30@gmail.com</span></a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mee-nam-lee"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mee-nam-lee</span></a></li><li><a href="https://www.linkedin.com/in/mee-nam-lee-315695a5"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">mee-nam-lee-315695a5</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>이 사이트의 Article들은 개인의 경험을 기술한 것으로 특정 제품의 공식 가이드가 아닙니다. 기술된 제품들의 버전에 따라 문서의 방법이 바르게 동작하지 않을 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</div></body>
+
+</html>
